@@ -5,7 +5,7 @@
  */
 package application;
 
-import com.sun.security.ntlm.Client;
+import controller.UsuarioController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JDesktopPane;
@@ -15,7 +15,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
-import view.Cliente;
+import view.UsuarioView;
 
 /**
  *
@@ -26,15 +26,16 @@ public class TelaPrincipal extends JFrame implements ActionListener {
     private JMenu jMenu;
     private JMenuBar jMenuBar;
     private JMenuItem jMenuItemUsuario, jMenuItemCliente, jMenuItemFornecedor, jMenuItemMarca, jMenuItemProduto, jMenuItemServico;
-    private Cliente jInternalFrame;
-    private JDesktopPane jDesktopPane;
+    private UsuarioView jInternalFrame;
+    public JDesktopPane jDesktopPane;
+    private UsuarioController usuarioController;
 
     public TelaPrincipal() {
         jMenu = new JMenu();
         jMenuBar = new JMenuBar();
-        jInternalFrame = new Cliente();
+        jInternalFrame = new UsuarioView();
         jDesktopPane = new JDesktopPane();
-        jDesktopPane.add(jInternalFrame);
+        //jDesktopPane.add(jInternalFrame);
         jMenuItemUsuario = new JMenuItem();
         jMenuItemCliente = new JMenuItem();
         jMenuItemFornecedor = new JMenuItem();
@@ -71,14 +72,13 @@ public class TelaPrincipal extends JFrame implements ActionListener {
         this.setSize(400, 400);
         this.setVisible(true);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-     
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jMenuItemUsuario) {
-            // implemetar controller usuario
+            this.usuarioController = new UsuarioController(this);
         }
     }
 

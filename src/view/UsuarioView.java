@@ -7,6 +7,8 @@ package view;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 
@@ -14,9 +16,11 @@ import javax.swing.JPanel;
  *
  * @author Bruno
  */
-public class Cliente extends JInternalFrame {
+public class UsuarioView extends JInternalFrame {
 
-    public Cliente() {
+    private JButton jb;
+
+    public UsuarioView() {
         super(
                 "cadastro de Cliente",
                 true, //resizable
@@ -33,5 +37,12 @@ public class Cliente extends JInternalFrame {
 
         Container container = getContentPane();
         container.add(panel);
+
+        this.jb = new JButton("botão");
+        panel.add(jb);
+    }
+
+    public void adicionaOuvinte(ActionListener actionListener) {
+        jb.addActionListener(actionListener);
     }
 }
