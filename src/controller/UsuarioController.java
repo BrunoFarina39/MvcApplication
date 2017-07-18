@@ -27,7 +27,7 @@ public class UsuarioController extends AbstractController implements ActionListe
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(null, "Olá");
+        JOptionPane.showMessageDialog(null, e.getActionCommand());
     }
 
     @Override

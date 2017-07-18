@@ -5,17 +5,10 @@
  */
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -33,7 +26,7 @@ public class UsuarioView extends AbstractView {
     public UsuarioView() {
         super("Cadastro de Usuário", true, true, true, true);
         setVisible(true);
-        setSize(400, 300);
+        setSize(450, 350);
         this.jlCodigo = new JLabel("Código:");
         this.jlNome = new JLabel("Nome:");
         this.jlLogin = new JLabel("Login:");
@@ -108,18 +101,6 @@ public class UsuarioView extends AbstractView {
         gbc.gridheight = 1;
         panelCampos.add(jtSenha, gbc);
         jlTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-
-        this.panelBotoes.setLayout(new FlowLayout());
-        this.panelBotoes.add(this.jbNovo);
-        this.panelBotoes.add(this.jbSalvar);
-        this.panelBotoes.add(this.jbEditar);
-        this.panelBotoes.add(this.jbExcluir);
-        this.panelBotoes.add(this.jbListar);
-
-        this.panel.setLayout(new BorderLayout());
-        panel.add(jlTitulo, BorderLayout.NORTH);
-        panel.add(panelCampos, BorderLayout.CENTER);
-        panel.add(panelBotoes, BorderLayout.SOUTH);
     }
 
     public void adicionaOuvinte(ActionListener actionListener) {
