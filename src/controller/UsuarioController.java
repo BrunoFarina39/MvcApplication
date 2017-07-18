@@ -15,7 +15,7 @@ import view.UsuarioView;
  *
  * @author Bruno
  */
-public class UsuarioController implements ActionListener {
+public class UsuarioController extends AbstractController implements ActionListener {
 
     UsuarioView usuarioView;
 
@@ -28,5 +28,25 @@ public class UsuarioController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JOptionPane.showMessageDialog(null, "Olá");
+    }
+
+    @Override
+    public void salvar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void editar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void excluir() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void listar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
