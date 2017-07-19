@@ -69,7 +69,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 
         setContentPane(jDesktopPane);
         this.setJMenuBar(jMenuBar);
-        this.setSize(400, 400);
+        this.setSize(800, 600);
         this.setVisible(true);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 

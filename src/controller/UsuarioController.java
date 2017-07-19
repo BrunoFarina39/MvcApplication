@@ -27,7 +27,12 @@ public class UsuarioController extends AbstractController implements ActionListe
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(null, e.getActionCommand());
+        if (e.getSource() == this.usuarioView.jbNovo) {
+            JOptionPane.showMessageDialog(null, "voce clicou em novo");
+        }
+        if (e.getSource() == this.usuarioView.jbEditar) {
+            JOptionPane.showMessageDialog(null, "Voce clicou em editar");
+        }
     }
 
     @Override

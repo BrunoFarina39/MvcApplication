@@ -26,7 +26,7 @@ public class UsuarioView extends AbstractView {
     public UsuarioView() {
         super("Cadastro de Usuário", true, true, true, true);
         setVisible(true);
-        setSize(450, 350);
+        setSize(650, 500);
         this.jlCodigo = new JLabel("Código:");
         this.jlNome = new JLabel("Nome:");
         this.jlLogin = new JLabel("Login:");
@@ -36,6 +36,7 @@ public class UsuarioView extends AbstractView {
         this.jtLogin = new JTextField(20);
         this.jtSenha = new JPasswordField(20);
         this.jlTitulo.setText("Manutenção de Usuário");
+        //inicio do posicionamento
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 0, 10, 10);
         gbc.anchor = GridBagConstraints.EAST;
@@ -105,5 +106,6 @@ public class UsuarioView extends AbstractView {
 
     public void adicionaOuvinte(ActionListener actionListener) {
         jbNovo.addActionListener(actionListener);
+        jbEditar.addActionListener(actionListener);
     }
 }
