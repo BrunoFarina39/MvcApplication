@@ -6,9 +6,17 @@
 package controller;
 
 import application.TelaPrincipal;
+import connection.Database;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.TableModel;
 import view.UsuarioView;
 
 /**
@@ -23,6 +31,15 @@ public class UsuarioController extends AbstractController implements ActionListe
         this.usuarioView = new UsuarioView();
         telaPrincipal.jDesktopPane.add(this.usuarioView);
         usuarioView.adicionaOuvinte(this);
+        Connection c = Database.getConnection();
+        try {
+            PreparedStatement ps = c.prepareStatement("select * from usuario", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = ps.executeQuery();
+            usuarioView.jTable.setModel(new TableModel(rs));
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     @Override

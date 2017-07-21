@@ -33,7 +33,7 @@ public class AbstractView extends JInternalFrame {
     protected JLabel jlTitulo;
     public JButton jbNovo, jbSalvar, jbEditar, jbExcluir, jbListar, jbPesquisar, jbInicio, jbUltimo, jbProximo, jbAnterior;
     protected JTextField jtPesquisar;
-    protected JTable jTable;
+    public JTable jTable;
 
     public AbstractView(String title, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(title, resizable, closable, maximizable, iconable);
@@ -63,23 +63,8 @@ public class AbstractView extends JInternalFrame {
         };
         this.jbProximo.setSize(new Dimension(10, 10));
         this.jbAnterior.setSize(new Dimension(10, 10));
-        this.jTable = new JTable(dados, colunas);
-        this.jTable.setPreferredScrollableViewportSize(new Dimension(240, 140));
-        DefaultTableCellRenderer rendererCentro = new DefaultTableCellRenderer();
-        rendererCentro.setHorizontalAlignment(SwingConstants.CENTER);
-        DefaultTableCellRenderer rendererDireita = new DefaultTableCellRenderer();
-        rendererDireita.setHorizontalAlignment(SwingConstants.RIGHT);
-        DefaultTableCellRenderer rendererEsquerda = new DefaultTableCellRenderer();
-        rendererEsquerda.setHorizontalAlignment(SwingConstants.LEFT);
-        JTableHeader header = jTable.getTableHeader();
-        header.setPreferredSize(new Dimension(100, 35));
-        TableColumnModel modeloDaColuna = jTable.getColumnModel();
-        modeloDaColuna.getColumn(0).setCellRenderer(rendererCentro);
-        modeloDaColuna.getColumn(1).setCellRenderer(rendererEsquerda);
-        modeloDaColuna.getColumn(2).setCellRenderer(rendererCentro);
-        modeloDaColuna.getColumn(0).setPreferredWidth(200);
-        modeloDaColuna.getColumn(1).setPreferredWidth(200);
-        modeloDaColuna.getColumn(2).setPreferredWidth(200);
+        this.jTable = new JTable();
+
         Container container = getContentPane();
         jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         JScrollPane scroll = new JScrollPane(jTable);
