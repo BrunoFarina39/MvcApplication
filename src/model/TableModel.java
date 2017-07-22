@@ -26,8 +26,9 @@ public class TableModel extends AbstractTableModel {
         this.rs = rs;
         try {
             this.rsMetaData = rs.getMetaData();
-            // this.rs.last();
-            //this.linhas = rs.getRow();
+            this.rs.last();
+            this.linhas = this.rs.getRow();
+            System.out.println(linhas);
         } catch (SQLException ex) {
             Logger.getLogger(TableModel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -41,13 +42,13 @@ public class TableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        this.linhas = 0;
+        this.colunas = 0;
         try {
-            this.linhas = this.rsMetaData.getColumnCount();
+            this.colunas = this.rsMetaData.getColumnCount();
         } catch (SQLException e) {
             System.err.println("Erro ao contar linhas da tabela: " + e);
         }
-        return linhas;
+        return this.colunas;
     }
 
     @Override

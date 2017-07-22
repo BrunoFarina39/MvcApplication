@@ -55,12 +55,7 @@ public class AbstractView extends JInternalFrame {
         this.jbAnterior = new JButton("<");
         this.jbInicio = new JButton("<<");
         this.jbUltimo = new JButton(">>");
-        Object[] colunas = new String[]{"Nome", "Telefone", "Email"};
-        Object[][] dados = {
-            {"Ana Monteiro", "48 9923-7898", "ana.monteiro@gmail.com"},
-            {"João da Silva", "48 8890-3345", "joaosilva@hotmail.com"},
-            {"Pedro Cascaes", "48 9870-5634", "pedrinho@gmail.com"}
-        };
+
         this.jbProximo.setSize(new Dimension(10, 10));
         this.jbAnterior.setSize(new Dimension(10, 10));
         this.jTable = new JTable();
