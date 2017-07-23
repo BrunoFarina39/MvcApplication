@@ -19,7 +19,8 @@ public class MvcApplication {
      */
     public static void main(String[] args) {
         Database.getConnection();
-        LoginController loginController = new LoginController();
+        //LoginController loginController = new LoginController();
+        TelaPrincipal telaPrincipal = new TelaPrincipal();
     }
 
 }

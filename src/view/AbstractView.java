@@ -29,7 +29,7 @@ import javax.swing.table.TableColumnModel;
  */
 public class AbstractView extends JInternalFrame {
 
-    protected JPanel panel, panelCampos, panelBotoes, panelSul, panelInstPesq, panelPesquisa;
+    protected JPanel panel, panelCampos, panelBotoes, panelSul, panelInstPesq, panelPesquisa,panelScroll;
     protected JLabel jlTitulo;
     public JButton jbNovo, jbSalvar, jbEditar, jbExcluir, jbListar, jbPesquisar, jbInicio, jbUltimo, jbProximo, jbAnterior;
     protected JTextField jtPesquisar;
@@ -43,6 +43,7 @@ public class AbstractView extends JInternalFrame {
         this.panelSul = new JPanel();
         this.panelInstPesq = new JPanel();
         this.panelPesquisa = new JPanel();
+        this.panelScroll = new JPanel();
         this.jbNovo = new JButton("Novo");
         this.jbSalvar = new JButton("Salvar");
         this.jbEditar = new JButton("Editar");
@@ -87,8 +88,10 @@ public class AbstractView extends JInternalFrame {
 
         this.panelPesquisa.setLayout(new BorderLayout());
         this.panelPesquisa.add(panelInstPesq, BorderLayout.NORTH);
-        this.panelPesquisa.add(scroll, BorderLayout.SOUTH);
+        this.panelPesquisa.add(panelScroll, BorderLayout.SOUTH);
 
+        scroll.setPreferredSize(new Dimension(600,300));  
+        this.panelScroll.add(scroll);
         this.panelInstPesq.setLayout(new FlowLayout());
         this.panelInstPesq.add(jtPesquisar);
         this.panelInstPesq.add(jbPesquisar);

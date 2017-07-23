@@ -52,6 +52,16 @@ public class TableModel extends AbstractTableModel {
     }
 
     @Override
+    public String getColumnName(int column){
+        try {
+            String str = rsMetaData.getColumnName(column+1).substring(1);
+            return this.rsMetaData.getColumnName(column+1).substring(0,1).toUpperCase()+str;
+        } catch (SQLException ex) {
+            return "";
+        }
+    }
+    
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         try {
             rs.absolute(rowIndex + 1);
