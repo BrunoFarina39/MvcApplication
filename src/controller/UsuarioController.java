@@ -33,9 +33,10 @@ public class UsuarioController extends AbstractController implements ActionListe
         usuarioView.adicionaOuvinte(this);
         Connection c = Database.getConnection();
         try {
-            PreparedStatement ps = c.prepareStatement("select id,login,nome,ultimo_acesso from usuario", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            PreparedStatement ps = c.prepareStatement("select id,login,nome from usuario", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = ps.executeQuery();
             usuarioView.jTable.setModel(new TableModel(rs));
+            usuarioView.jTable.getColumnModel().getColumn(0).setPreferredWidth(200);
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }

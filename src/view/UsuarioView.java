@@ -102,6 +102,7 @@ public class UsuarioView extends AbstractView {
         gbc.gridheight = 1;
         panelCampos.add(jtSenha, gbc);
         jlTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+        jTable.getTableHeader().getColumnModel().getColumn(0).setPreferredWidth(200);
     }
 
     public void adicionaOuvinte(ActionListener actionListener) {

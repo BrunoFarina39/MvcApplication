@@ -28,7 +28,6 @@ public class TableModel extends AbstractTableModel {
             this.rsMetaData = rs.getMetaData();
             this.rs.last();
             this.linhas = this.rs.getRow();
-            System.out.println(linhas);
         } catch (SQLException ex) {
             Logger.getLogger(TableModel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,15 +51,15 @@ public class TableModel extends AbstractTableModel {
     }
 
     @Override
-    public String getColumnName(int column){
+    public String getColumnName(int column) {
         try {
-            String str = rsMetaData.getColumnName(column+1).substring(1);
-            return this.rsMetaData.getColumnName(column+1).substring(0,1).toUpperCase()+str;
+            String str = rsMetaData.getColumnName(column + 1).substring(1);
+            return this.rsMetaData.getColumnName(column + 1).substring(0, 1).toUpperCase() + str;
         } catch (SQLException ex) {
             return "";
         }
     }
-    
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         try {

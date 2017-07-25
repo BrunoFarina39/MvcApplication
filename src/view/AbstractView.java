@@ -29,7 +29,7 @@ import javax.swing.table.TableColumnModel;
  */
 public class AbstractView extends JInternalFrame {
 
-    protected JPanel panel, panelCampos, panelBotoes, panelSul, panelInstPesq, panelPesquisa,panelScroll;
+    protected JPanel panel, panelCampos, panelBotoes, panelSul, panelInstPesq, panelPesquisa, panelScroll;
     protected JLabel jlTitulo;
     public JButton jbNovo, jbSalvar, jbEditar, jbExcluir, jbListar, jbPesquisar, jbInicio, jbUltimo, jbProximo, jbAnterior;
     protected JTextField jtPesquisar;
@@ -90,7 +90,7 @@ public class AbstractView extends JInternalFrame {
         this.panelPesquisa.add(panelInstPesq, BorderLayout.NORTH);
         this.panelPesquisa.add(panelScroll, BorderLayout.SOUTH);
 
-        scroll.setPreferredSize(new Dimension(600,300));  
+        scroll.setPreferredSize(new Dimension(600, 200));
         this.panelScroll.add(scroll);
         this.panelInstPesq.setLayout(new FlowLayout());
         this.panelInstPesq.add(jtPesquisar);
