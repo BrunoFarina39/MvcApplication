@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.UsuarioController;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
@@ -12,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import model.TableModel;
 
 /**
  *
@@ -102,11 +104,17 @@ public class UsuarioView extends AbstractView {
         gbc.gridheight = 1;
         panelCampos.add(jtSenha, gbc);
         jlTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        jTable.getTableHeader().getColumnModel().getColumn(0).setPreferredWidth(200);
+
+        UsuarioController usuarioController = new UsuarioController(this);
+        jbNovo.addActionListener(usuarioController);
+        jbEditar.addActionListener(usuarioController);
     }
 
-    public void adicionaOuvinte(ActionListener actionListener) {
-        jbNovo.addActionListener(actionListener);
-        jbEditar.addActionListener(actionListener);
+    public void povoaJtable(TableModel tb) {
+        jTable.setModel(tb);
+        jTable.getTableHeader().getColumnModel().getColumn(0).setPreferredWidth(100);
+        jTable.getTableHeader().getColumnModel().getColumn(1).setPreferredWidth(200);
+        jTable.getTableHeader().getColumnModel().getColumn(2).setPreferredWidth(300);
+        jTable.setFillsViewportHeight(true);
     }
 }

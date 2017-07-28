@@ -27,20 +27,17 @@ public class UsuarioController extends AbstractController implements ActionListe
 
     UsuarioView usuarioView;
 
-    public UsuarioController(TelaPrincipal telaPrincipal) {
-        this.usuarioView = new UsuarioView();
-        telaPrincipal.jDesktopPane.add(this.usuarioView);
-        usuarioView.adicionaOuvinte(this);
+    public UsuarioController(UsuarioView usuarioView) {
+        this.usuarioView = usuarioView;
+        //telaPrincipal.jDesktopPane.add(this.usuarioView);
         Connection c = Database.getConnection();
         try {
             PreparedStatement ps = c.prepareStatement("select id,login,nome from usuario", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = ps.executeQuery();
-            usuarioView.jTable.setModel(new TableModel(rs));
-            usuarioView.jTable.getColumnModel().getColumn(0).setPreferredWidth(200);
+            usuarioView.povoaJtable(new TableModel(rs));
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @Override

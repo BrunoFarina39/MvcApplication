@@ -33,7 +33,7 @@ public class AbstractView extends JInternalFrame {
     protected JLabel jlTitulo;
     public JButton jbNovo, jbSalvar, jbEditar, jbExcluir, jbListar, jbPesquisar, jbInicio, jbUltimo, jbProximo, jbAnterior;
     protected JTextField jtPesquisar;
-    public JTable jTable;
+    protected JTable jTable;
 
     public AbstractView(String title, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(title, resizable, closable, maximizable, iconable);

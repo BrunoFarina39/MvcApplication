@@ -78,7 +78,8 @@ public class TelaPrincipal extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jMenuItemUsuario) {
-            this.usuarioController = new UsuarioController(this);
+            UsuarioView usuarioView = new UsuarioView();
+            jDesktopPane.add(usuarioView);
         }
     }
 
