@@ -5,11 +5,7 @@
  */
 package model;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -18,57 +14,39 @@ import javax.swing.table.AbstractTableModel;
  */
 public class TableModel extends AbstractTableModel {
 
-    private int colunas, linhas;
-    private ResultSet rs;
-    private ResultSetMetaData rsMetaData;
+    private ArrayList<Usuario> lista;
+    private String[] colunas;
 
-    public TableModel(ResultSet rs) {
-        this.rs = rs;
-        try {
-            this.rsMetaData = rs.getMetaData();
-            this.rs.last();
-            this.linhas = this.rs.getRow();
-        } catch (SQLException ex) {
-            Logger.getLogger(TableModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        fireTableStructureChanged();
+    public TableModel(ArrayList<Usuario> lista, String[] colunas) {
+        this.lista = lista;
+        this.colunas = colunas;
     }
 
     @Override
     public int getRowCount() {
-        return linhas;
+        return this.lista.size();
     }
 
     @Override
     public int getColumnCount() {
-        this.colunas = 0;
-        try {
-            this.colunas = this.rsMetaData.getColumnCount();
-        } catch (SQLException e) {
-            System.err.println("Erro ao contar linhas da tabela: " + e);
-        }
-        return this.colunas;
+        return this.colunas.length;
     }
 
     @Override
     public String getColumnName(int column) {
-        try {
-            String str = rsMetaData.getColumnName(column + 1).substring(1);
-            return this.rsMetaData.getColumnName(column + 1).substring(0, 1).toUpperCase() + str;
-        } catch (SQLException ex) {
-            return "";
-        }
+        return this.colunas[column];
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        try {
-            rs.absolute(rowIndex + 1);
-            return rs.getObject(columnIndex + 1);
-        } catch (SQLException ex) {
-            Logger.getLogger(TableModel.class.getName()).log(Level.SEVERE, null, ex);
+        switch (columnIndex) {
+            case 0:
+                return lista.get(rowIndex).getId();
+            case 1:
+                return lista.get(rowIndex).getLogin();
+            case 2:
+                return lista.get(rowIndex).getNome();
         }
         return null;
     }
-
 }

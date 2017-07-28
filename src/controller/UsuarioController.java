@@ -13,10 +13,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.TableModel;
+import model.Usuario;
 import view.UsuarioView;
 
 /**
@@ -34,7 +36,15 @@ public class UsuarioController extends AbstractController implements ActionListe
         try {
             PreparedStatement ps = c.prepareStatement("select id,login,nome from usuario", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = ps.executeQuery();
-            usuarioView.povoaJtable(new TableModel(rs));
+            ArrayList<Usuario> usuarios = new ArrayList();
+            while (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setId(rs.getInt("id"));
+                usuario.setLogin(rs.getString("login"));
+                usuario.setNome(rs.getString("nome"));
+                usuarios.add(usuario);
+            }
+            usuarioView.povoaJtable(new TableModel(usuarios, new String[]{"Código", "Login", "Nome"}));
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }

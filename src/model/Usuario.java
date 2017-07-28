@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author Bruno Farina
  */
-public class Usuario {
+public class Usuario extends AbstractModel {
 
     private String login;
     private String senha;
