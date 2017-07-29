@@ -5,6 +5,8 @@
  */
 package model;
 
+import annotations.Coluna;
+
 /**
  *
  * @author Bruno
@@ -17,6 +19,7 @@ public abstract class AbstractModel {
 
     }
 
+    @Coluna(posicao = 0)
     public int getId() {
         return id;
     }

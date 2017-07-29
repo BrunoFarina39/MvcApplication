@@ -44,7 +44,7 @@ public class UsuarioController extends AbstractController implements ActionListe
                 usuario.setNome(rs.getString("nome"));
                 usuarios.add(usuario);
             }
-            usuarioView.povoaJtable(new TableModel(usuarios, new String[]{"Código", "Login", "Nome"}));
+            usuarioView.povoaJtable(new TableModel(usuarios));
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
