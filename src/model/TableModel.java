@@ -17,28 +17,41 @@ import javax.swing.table.AbstractTableModel;
 public class TableModel<T> extends AbstractTableModel {
 
     private ArrayList<T> lista;
-    private String[] colunas;
     private Class<?> classe;
 
     public TableModel(ArrayList<T> lista) {
         this.lista = lista;
-        this.colunas = colunas;
-        this.classe = classe;
     }
 
     @Override
     public int getRowCount() {
-        return 1;
+        return lista.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 3;
+        classe = lista.get(0).getClass();
+        int colunas = 0;
+        for (Method metodo : classe.getDeclaredMethods()) {
+            if (metodo.isAnnotationPresent(Coluna.class)) {
+                colunas++;
+            }
+        }
+        return colunas;
     }
 
     @Override
     public String getColumnName(int column) {
-        return "Test";
+        classe = lista.get(0).getClass();
+        for (Method metodo : classe.getDeclaredMethods()) {
+            if (metodo.isAnnotationPresent(Coluna.class)) {
+                Coluna anotacao = metodo.getAnnotation(Coluna.class);
+                if (anotacao.posicao() == column) {
+                    return anotacao.nome();
+                }
+            }
+        }
+        return "";
     }
 
     @Override
@@ -47,9 +60,11 @@ public class TableModel<T> extends AbstractTableModel {
             classe = lista.get(0).getClass();
             Object object = lista.get(rowIndex);
             for (Method method : classe.getDeclaredMethods()) {
-                Coluna c = method.getAnnotation(Coluna.class);
-                if (c != null && c.posicao() == columnIndex) {
-                    return method.invoke(object);
+                if (method.isAnnotationPresent(Coluna.class)) {
+                    Coluna c = method.getAnnotation(Coluna.class);
+                    if (c.posicao() == columnIndex) {
+                        return method.invoke(object);
+                    }
                 }
             }
         } catch (Exception e) {

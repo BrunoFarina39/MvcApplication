@@ -114,7 +114,7 @@ public class UsuarioView extends AbstractView {
         jTable.setModel(tb);
         jTable.getTableHeader().getColumnModel().getColumn(0).setPreferredWidth(100);
         jTable.getTableHeader().getColumnModel().getColumn(1).setPreferredWidth(200);
-        jTable.getTableHeader().getColumnModel().getColumn(2).setPreferredWidth(300);
+//        jTable.getTableHeader().getColumnModel().getColumn(2).setPreferredWidth(300);
         jTable.setFillsViewportHeight(true);
     }
 }

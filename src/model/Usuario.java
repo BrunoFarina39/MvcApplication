@@ -27,7 +27,12 @@ public class Usuario extends AbstractModel {
     public Usuario() {
     }
 
-    @Coluna(posicao = 1)
+    @Coluna(posicao = 0, nome="Código")
+    public int getId() {
+        return super.getId();
+    }
+    
+    @Coluna(posicao = 1, nome="Login")
     public String getLogin() {
         return login;
     }
@@ -44,7 +49,7 @@ public class Usuario extends AbstractModel {
         this.senha = senha;
     }
 
-    @Coluna(posicao = 2)
+    @Coluna(posicao = 2, nome="Nome")
     public String getNome() {
         return nome;
     }
