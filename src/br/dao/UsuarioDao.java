@@ -6,16 +6,11 @@
 package br.dao;
 
 import connection.Database;
-import controller.UsuarioController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import model.TableModel;
 import model.Usuario;
 
 /**

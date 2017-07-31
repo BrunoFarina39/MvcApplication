@@ -5,20 +5,11 @@
  */
 package controller;
 
-import application.TelaPrincipal;
 import br.dao.UsuarioDao;
-import connection.Database;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.TableModel;
 import model.Usuario;
@@ -33,43 +24,67 @@ public class UsuarioController extends AbstractController implements ActionListe
     private UsuarioView usuarioView;
     private Usuario usuario;
     private UsuarioDao usuarioDao;
+    private String status;
 
     public UsuarioController(UsuarioView usuarioView) {
         this.usuarioView = usuarioView;
         this.usuario = new Usuario();
         this.usuarioDao = new UsuarioDao();
+        status = new String("novo");
         usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Salvar")) {
-            salvar();
-        } else if (e.getActionCommand().equals("Editar")) {
-            editar();
-        } else if (e.getActionCommand().equals("Excluir")) {
-            excluir();
+        switch (e.getActionCommand()) {
+            case "Novo":
+                novo();
+                break;
+            case "Salvar":
+                salvar();
+                break;
+            case "Editar":
+                editar();
+                break;
+            case "Excluir":
+                excluir();
+                break;
         }
+    }
+
+    public void novo() {
+        status = "novo";
+        usuarioView.limpaCampos();
+        usuarioView.statusNovo();
     }
 
     @Override
     public void salvar() {
-        usuario.setLogin(usuarioView.getLogin());
-        usuario.setSenha(usuarioView.getSenha());
-        usuario.setNome(usuarioView.getNome());
-        JOptionPane.showMessageDialog(usuarioView, usuarioDao.salvar(usuario));
-        usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
+        if (status.equals("novo")) {
+            usuario.setLogin(usuarioView.getLogin());
+            usuario.setSenha(usuarioView.getSenha());
+            usuario.setNome(usuarioView.getNome());
+            JOptionPane.showMessageDialog(usuarioView, usuarioDao.salvar(usuario));
+            usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
+        } else {
+            usuario.setId(Integer.parseInt(usuarioView.getId()));
+            usuario.setLogin(usuarioView.getLogin());
+            usuario.setSenha(usuarioView.getSenha());
+            usuario.setNome(usuarioView.getNome());
+            JOptionPane.showMessageDialog(usuarioView, usuarioDao.editar(usuario));
+            usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
+            usuarioView.limpaCampos();
+            status = new String("novo");
+        }
+        usuarioView.limpaCampos();
+        usuarioView.statusSalvar();
     }
 
     @Override
     public void editar() {
-        usuario.setId(Integer.parseInt(usuarioView.getId()));
-        usuario.setLogin(usuarioView.getLogin());
-        usuario.setSenha(usuarioView.getSenha());
-        usuario.setNome(usuarioView.getNome());
-        JOptionPane.showMessageDialog(usuarioView, usuarioDao.editar(usuario));
-        usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
+        status = "editar";
+        usuarioView.statusEditar();
     }
 
     @Override
@@ -77,6 +92,8 @@ public class UsuarioController extends AbstractController implements ActionListe
         usuario.setId(Integer.parseInt(usuarioView.getId()));
         JOptionPane.showMessageDialog(usuarioView, usuarioDao.excluir(usuario));
         usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
+        usuarioView.limpaCampos();
+        usuarioView.statusInicial();
 
     }
 
@@ -87,7 +104,8 @@ public class UsuarioController extends AbstractController implements ActionListe
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        JOptionPane.showMessageDialog(null, "ola");
+        usuarioView.preencheCampos();
+        usuarioView.statusLista();
     }
 
     @Override

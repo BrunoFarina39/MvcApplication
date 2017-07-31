@@ -8,7 +8,6 @@ package view;
 import controller.UsuarioController;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -106,10 +105,12 @@ public class UsuarioView extends AbstractView {
         jlTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 
         UsuarioController usuarioController = new UsuarioController(this);
+        jbNovo.addActionListener(usuarioController);
         jbSalvar.addActionListener(usuarioController);
         jbEditar.addActionListener(usuarioController);
         jbExcluir.addActionListener(usuarioController);
         jTable.addMouseListener(usuarioController);
+        habilitaCampos(false);
     }
 
     public void povoaJtable(TableModel tb) {
@@ -134,5 +135,12 @@ public class UsuarioView extends AbstractView {
 
     public String getNome() {
         return jtNome.getText();
+    }
+
+    public void preencheCampos() {
+        int linha = jTable.getSelectedRow();
+        jtCodigo.setText(jTable.getValueAt(linha, 0).toString());
+        jtLogin.setText(jTable.getValueAt(linha, 1).toString());
+        jtNome.setText(jTable.getValueAt(linha, 2).toString());
     }
 }

@@ -6,6 +6,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -17,11 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -31,7 +27,7 @@ public class AbstractView extends JInternalFrame {
 
     protected JPanel panel, panelCampos, panelBotoes, panelSul, panelInstPesq, panelPesquisa, panelScroll;
     protected JLabel jlTitulo;
-    protected JButton jbNovo, jbSalvar, jbEditar, jbExcluir, jbListar, jbPesquisar, jbInicio, jbUltimo, jbProximo, jbAnterior;
+    protected JButton jbNovo, jbSalvar, jbEditar, jbExcluir, jbPesquisar, jbInicio, jbUltimo, jbProximo, jbAnterior;
     protected JTextField jtPesquisar;
     protected JTable jTable;
 
@@ -48,7 +44,6 @@ public class AbstractView extends JInternalFrame {
         this.jbSalvar = new JButton("Salvar");
         this.jbEditar = new JButton("Editar");
         this.jbExcluir = new JButton("Excluir");
-        this.jbListar = new JButton("Listar");
         this.jbPesquisar = new JButton("Pesquisar");
         this.jlTitulo = new JLabel("Manutenção de...");
         this.jtPesquisar = new JTextField(15);
@@ -80,7 +75,6 @@ public class AbstractView extends JInternalFrame {
         this.panelBotoes.add(this.jbSalvar);
         this.panelBotoes.add(this.jbEditar);
         this.panelBotoes.add(this.jbExcluir);
-        this.panelBotoes.add(this.jbListar);
 
         this.panelSul.setLayout(new BorderLayout());
         this.panelSul.add(panelBotoes, BorderLayout.NORTH);
@@ -99,5 +93,64 @@ public class AbstractView extends JInternalFrame {
         this.panelInstPesq.add(jbAnterior);
         this.panelInstPesq.add(jbProximo);
         this.panelInstPesq.add(jbUltimo);
+        statusInicial();
+    }
+
+    public void limpaCampos() {
+        Component[] jComponent = panelCampos.getComponents();
+        for (int i = 0; i < jComponent.length; i++) {
+            if (jComponent[i] instanceof JTextField) {
+                ((JTextField) jComponent[i]).setText("");
+            }
+        }
+    }
+
+    public void habilitaCampos(boolean status) {
+        Component[] jComponent = panelCampos.getComponents();
+        for (int i = 0; i < jComponent.length; i++) {
+            if (jComponent[i] instanceof JTextField) {
+                ((JTextField) jComponent[i]).setEditable(status);
+            }
+        }
+    }
+
+    public void statusInicial() {
+        jbNovo.setEnabled(true);
+        jbSalvar.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        habilitaCampos(false);
+    }
+
+    public void statusNovo() {
+        jbNovo.setEnabled(false);
+        jbSalvar.setEnabled(true);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        habilitaCampos(true);
+    }
+
+    public void statusSalvar() {
+        jbNovo.setEnabled(true);
+        jbSalvar.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        habilitaCampos(false);
+    }
+
+    public void statusEditar() {
+        jbNovo.setEnabled(true);
+        jbSalvar.setEnabled(true);
+        jbEditar.setEnabled(true);
+        jbExcluir.setEnabled(false);
+        habilitaCampos(true);
+    }
+
+    public void statusLista() {
+        jbNovo.setEnabled(true);
+        jbSalvar.setEnabled(false);
+        jbEditar.setEnabled(true);
+        jbExcluir.setEnabled(true);
+        habilitaCampos(false);
     }
 }
