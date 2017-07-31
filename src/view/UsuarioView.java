@@ -106,15 +106,33 @@ public class UsuarioView extends AbstractView {
         jlTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 
         UsuarioController usuarioController = new UsuarioController(this);
-        jbNovo.addActionListener(usuarioController);
+        jbSalvar.addActionListener(usuarioController);
         jbEditar.addActionListener(usuarioController);
+        jbExcluir.addActionListener(usuarioController);
+        jTable.addMouseListener(usuarioController);
     }
 
     public void povoaJtable(TableModel tb) {
         jTable.setModel(tb);
         jTable.getTableHeader().getColumnModel().getColumn(0).setPreferredWidth(100);
         jTable.getTableHeader().getColumnModel().getColumn(1).setPreferredWidth(200);
-//        jTable.getTableHeader().getColumnModel().getColumn(2).setPreferredWidth(300);
+        jTable.getTableHeader().getColumnModel().getColumn(2).setPreferredWidth(300);
         jTable.setFillsViewportHeight(true);
+    }
+
+    public String getId() {
+        return jtCodigo.getText();
+    }
+
+    public String getLogin() {
+        return jtLogin.getText();
+    }
+
+    public String getSenha() {
+        return String.valueOf(jtSenha.getPassword());
+    }
+
+    public String getNome() {
+        return jtNome.getText();
     }
 }

@@ -31,7 +31,7 @@ public class AbstractView extends JInternalFrame {
 
     protected JPanel panel, panelCampos, panelBotoes, panelSul, panelInstPesq, panelPesquisa, panelScroll;
     protected JLabel jlTitulo;
-    public JButton jbNovo, jbSalvar, jbEditar, jbExcluir, jbListar, jbPesquisar, jbInicio, jbUltimo, jbProximo, jbAnterior;
+    protected JButton jbNovo, jbSalvar, jbEditar, jbExcluir, jbListar, jbPesquisar, jbInicio, jbUltimo, jbProximo, jbAnterior;
     protected JTextField jtPesquisar;
     protected JTable jTable;
 

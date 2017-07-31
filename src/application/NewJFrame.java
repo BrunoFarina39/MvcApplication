@@ -5,6 +5,8 @@
  */
 package application;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Bruno Farina
@@ -16,6 +18,18 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         initComponents();
+        String[] coluna = {"Código", "Nome", "Status"};
+        Object[][] dados = {
+            {"01", "Bruno Farina", Boolean.TRUE},
+            {"02", "Fulano", Boolean.FALSE}
+        };
+        DefaultTableModel d = new DefaultTableModel(dados, coluna) {
+            @Override
+            public Class getColumnClass(int i) {
+                return getValueAt(0, i).getClass();
+            }
+        };
+        jTable1.setModel(d);
     }
 
     /**
@@ -52,6 +66,11 @@ public class NewJFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -92,6 +111,10 @@ public class NewJFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
