@@ -24,13 +24,11 @@ public class UsuarioController extends AbstractController implements ActionListe
     private UsuarioView usuarioView;
     private Usuario usuario;
     private UsuarioDao usuarioDao;
-    private String status;
 
     public UsuarioController(UsuarioView usuarioView) {
         this.usuarioView = usuarioView;
         this.usuario = new Usuario();
         this.usuarioDao = new UsuarioDao();
-        status = new String("novo");
         usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
 
     }
@@ -57,7 +55,6 @@ public class UsuarioController extends AbstractController implements ActionListe
     }
 
     public void novo() {
-        status = "novo";
         usuarioView.limpaCampos();
         usuarioView.statusNovo();
     }
@@ -65,30 +62,24 @@ public class UsuarioController extends AbstractController implements ActionListe
     @Override
     public void salvar() {
         if (usuarioView.valida()) {
-            if (status.equals("novo")) {
-                usuario.setLogin(usuarioView.getLogin());
-                usuario.setSenha(usuarioView.getSenha());
-                usuario.setNome(usuarioView.getNome());
+            usuario.setLogin(usuarioView.getLogin());
+            usuario.setSenha(usuarioView.getSenha());
+            usuario.setNome(usuarioView.getNome());
+
+            if (usuarioView.getId().length() == 0) {
                 usuarioView.statusManutencao(usuarioDao.salvar(usuario));
-                usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
+                usuarioView.limpaCampos();
             } else {
                 usuario.setId(Integer.parseInt(usuarioView.getId()));
-                usuario.setLogin(usuarioView.getLogin());
-                usuario.setSenha(usuarioView.getSenha());
-                usuario.setNome(usuarioView.getNome());
                 usuarioView.statusManutencao(usuarioDao.editar(usuario));
-                usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
-                usuarioView.limpaCampos();
-                status = new String("novo");
             }
-            usuarioView.limpaCampos();
+            usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
             usuarioView.statusSalvar();
         }
     }
 
     @Override
-    public void editar() {
-        status = "editar";
+    public void editar() {;
         usuarioView.statusEditar();
     }
 
@@ -114,7 +105,13 @@ public class UsuarioController extends AbstractController implements ActionListe
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        usuarioView.preencheCampos();
+        usuario.setId(usuarioView.retornaIdTabela());
+        //usuario = usuarioDao.buscaPorId(usuario);
+        //usuarioView.setId(usuario.getId());
+        //usuarioView.setLogin(usuario.getLogin());
+        //usuarioView.setSenha(usuario.getSenha());
+        //usuarioView.setNome(usuario.getNome());
+        usuarioView.preencheCampos(usuarioDao.buscaPorId(usuario));
         usuarioView.statusLista();
     }
 

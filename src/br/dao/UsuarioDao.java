@@ -17,12 +17,10 @@ import model.Usuario;
  *
  * @author Bruno
  */
-public class UsuarioDao {
-
-    private Connection conexao;
+public class UsuarioDao extends AbstractDao {
 
     public UsuarioDao() {
-        this.conexao = Database.getConnection();
+        super();
     }
 
     public boolean salvar(Usuario usuario) {
@@ -68,7 +66,7 @@ public class UsuarioDao {
 
     public ArrayList<Usuario> listar() {
         try {
-            PreparedStatement ps = conexao.prepareStatement("select id,login,nome from usuario", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            PreparedStatement ps = conexao.prepareStatement("select id,login,nome from usuario limit 30", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = ps.executeQuery();
             ArrayList<Usuario> usuarios = new ArrayList();
             while (rs.next()) {
@@ -79,6 +77,22 @@ public class UsuarioDao {
                 usuarios.add(usuario);
             }
             return usuarios;
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+
+    public Usuario buscaPorId(Usuario usuario) {
+        String sql = "select * from usuario where id= " + usuario.getId();
+        try {
+            PreparedStatement ps = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                usuario.setLogin(rs.getString("login"));
+                usuario.setSenha(rs.getString("senha"));
+                usuario.setNome(rs.getString("nome"));
+            }
+            return usuario;
         } catch (SQLException ex) {
             return null;
         }

@@ -152,10 +152,10 @@ public class AbstractView extends JInternalFrame {
             }
         }
         if (obr.length() > 0) {
-            texto.append("Campo(s) obrigatório(s)\n").append(obr.toString());
+            texto.append("Campo(s) obrigatório(s):\n").append(obr.toString());
         } else if (valido.length() > 0) {
 
-            texto.append("Campo(s) inválido(s)\n").append(valido.toString());
+            texto.append("Campo(s) inválido(s):\n").append(valido.toString());
         }
 
         if (!retorno) {
@@ -228,5 +228,10 @@ public class AbstractView extends JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(panelCampos, "Não foi possivel gravar/alterar dados!");
         }
+    }
+
+    public int retornaIdTabela() {
+        int linha = jTable.getSelectedRow();
+        return Integer.parseInt(jTable.getValueAt(linha, 0).toString());
     }
 }

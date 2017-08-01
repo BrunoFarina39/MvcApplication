@@ -41,6 +41,7 @@ public class CustomJTextField extends JTextField implements CustomComponent {
     @Override
     public boolean getVazio() {
         return getText().trim().length() == 0;
+
     }
 
     @Override

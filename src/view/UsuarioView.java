@@ -13,6 +13,7 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import model.TableModel;
+import model.Usuario;
 
 /**
  *
@@ -39,9 +40,10 @@ public class UsuarioView extends AbstractView {
         this.jlTitulo.setText("Manutenção de Usuário");
         //inicio do posicionamento
         //int linha, int coluna, int largura, int altura, int espVert, int espaHor, JComponent componente
-        adicionaComponente(0, 0, 1, 1, 5, 5, jtCodigo);
-        adicionaComponente(0, 1, 2, 1, 5, 5, jtNome);
-        adicionaComponente(0, 2, 2, 1, 5, 5, jtLogin);
+        super.adicionaComponente(0, 0, 1, 1, 5, 5, jtCodigo);
+        super.adicionaComponente(0, 1, 2, 1, 5, 5, jtNome);
+        super.adicionaComponente(0, 2, 2, 1, 5, 5, jtLogin);
+        super.adicionaComponente(0, 3, 2, 1, 5, 5, jtSenha);
 //        GridBagConstraints gbc = new GridBagConstraints();
 //        gbc.insets = new Insets(5, 0, 10, 10);
 //        gbc.anchor = GridBagConstraints.EAST;
@@ -130,22 +132,39 @@ public class UsuarioView extends AbstractView {
         return jtCodigo.getValor();
     }
 
+    public void setId(int id) {
+        jtCodigo.setTexto(String.valueOf(id));
+    }
+
     public String getLogin() {
         return jtLogin.getValor();
+    }
+
+    public void setLogin(String login) {
+        jtLogin.setTexto(login);
     }
 
     public String getSenha() {
         return jtSenha.getValor();
     }
 
+    public void setSenha(String senha) {
+        jtSenha.setTexto(senha);
+    }
+
     public String getNome() {
         return jtNome.getValor();
     }
 
-    public void preencheCampos() {
-        int linha = jTable.getSelectedRow();
-        jtCodigo.setTexto(jTable.getValueAt(linha, 0).toString());
-        jtLogin.setTexto(jTable.getValueAt(linha, 1).toString());
-        jtNome.setTexto(jTable.getValueAt(linha, 2).toString());
+    public void setNome(String nome) {
+        jtNome.setTexto(nome);
+    }
+
+    public void preencheCampos(Usuario usuario) {
+        jtCodigo.setTexto(String.valueOf(usuario.getId()));
+        jtLogin.setTexto(usuario.getLogin());
+        jtSenha.setTexto(usuario.getSenha());
+        jtNome.setTexto(usuario.getNome());
+
     }
 }
