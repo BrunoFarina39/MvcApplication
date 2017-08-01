@@ -50,6 +50,9 @@ public class UsuarioController extends AbstractController implements ActionListe
             case "Excluir":
                 excluir();
                 break;
+            case "Cancelar":
+                cancelar();
+                break;
         }
     }
 
@@ -61,24 +64,26 @@ public class UsuarioController extends AbstractController implements ActionListe
 
     @Override
     public void salvar() {
-        if (status.equals("novo")) {
-            usuario.setLogin(usuarioView.getLogin());
-            usuario.setSenha(usuarioView.getSenha());
-            usuario.setNome(usuarioView.getNome());
-            JOptionPane.showMessageDialog(usuarioView, usuarioDao.salvar(usuario));
-            usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
-        } else {
-            usuario.setId(Integer.parseInt(usuarioView.getId()));
-            usuario.setLogin(usuarioView.getLogin());
-            usuario.setSenha(usuarioView.getSenha());
-            usuario.setNome(usuarioView.getNome());
-            JOptionPane.showMessageDialog(usuarioView, usuarioDao.editar(usuario));
-            usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
+        if (usuarioView.valida()) {
+            if (status.equals("novo")) {
+                usuario.setLogin(usuarioView.getLogin());
+                usuario.setSenha(usuarioView.getSenha());
+                usuario.setNome(usuarioView.getNome());
+                usuarioView.statusManutencao(usuarioDao.salvar(usuario));
+                usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
+            } else {
+                usuario.setId(Integer.parseInt(usuarioView.getId()));
+                usuario.setLogin(usuarioView.getLogin());
+                usuario.setSenha(usuarioView.getSenha());
+                usuario.setNome(usuarioView.getNome());
+                usuarioView.statusManutencao(usuarioDao.editar(usuario));
+                usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
+                usuarioView.limpaCampos();
+                status = new String("novo");
+            }
             usuarioView.limpaCampos();
-            status = new String("novo");
+            usuarioView.statusSalvar();
         }
-        usuarioView.limpaCampos();
-        usuarioView.statusSalvar();
     }
 
     @Override
@@ -100,6 +105,11 @@ public class UsuarioController extends AbstractController implements ActionListe
     @Override
     public void listar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void cancelar() {
+        usuarioView.limpaCampos();
+        usuarioView.statusInicial();
     }
 
     @Override
