@@ -6,6 +6,7 @@
 package model;
 
 import annotations.Coluna;
+import annotations.ColunaBD;
 import connection.Database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,6 +38,7 @@ public class Usuario extends AbstractModel {
         return login;
     }
 
+    @ColunaBD(nome = "login")
     public void setLogin(String login) {
         this.login = login;
     }
@@ -45,6 +47,7 @@ public class Usuario extends AbstractModel {
         return senha;
     }
 
+    @ColunaBD(nome = "senha")
     public void setSenha(String senha) {
         this.senha = senha;
     }
@@ -54,6 +57,7 @@ public class Usuario extends AbstractModel {
         return nome;
     }
 
+    @ColunaBD(nome = "nome")
     public void setNome(String Nome) {
         this.nome = Nome;
     }
