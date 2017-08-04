@@ -5,8 +5,6 @@
  */
 package br.dao;
 
-import connection.Database;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,10 +15,10 @@ import model.Usuario;
  *
  * @author Bruno
  */
-public class UsuarioDao extends AbstractDao {
+public class UsuarioDao extends AbstractDao<Usuario> {
 
     public UsuarioDao() {
-        super();
+        super(Usuario.class);
     }
 
     public boolean salvar(Usuario usuario) {
@@ -52,18 +50,6 @@ public class UsuarioDao extends AbstractDao {
         }
     }
 
-    public boolean excluir(Usuario usuario) {
-        String sql = "delete from usuario where id=?";
-        try {
-            PreparedStatement ps = conexao.prepareStatement(sql);
-            ps.setInt(1, usuario.getId());
-            ps.execute();
-            return true;
-        } catch (SQLException ex) {
-            return false;
-        }
-    }
-
     public ArrayList<Usuario> listar() {
         try {
             PreparedStatement ps = conexao.prepareStatement("select id,login,nome from usuario limit 30", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -77,22 +63,6 @@ public class UsuarioDao extends AbstractDao {
                 usuarios.add(usuario);
             }
             return usuarios;
-        } catch (SQLException ex) {
-            return null;
-        }
-    }
-
-    public Usuario buscaPorId(Usuario usuario) {
-        String sql = "select * from usuario where id= " + usuario.getId();
-        try {
-            PreparedStatement ps = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                usuario.setLogin(rs.getString("login"));
-                usuario.setSenha(rs.getString("senha"));
-                usuario.setNome(rs.getString("nome"));
-            }
-            return usuario;
         } catch (SQLException ex) {
             return null;
         }

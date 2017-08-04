@@ -5,9 +5,9 @@
  */
 package br.dao;
 
-import annotations.Coluna;
 import annotations.ColunaBD;
 import connection.Database;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,24 +16,24 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.AbstractModel;
-import model.Usuario;
 
 /**
  *
  * @author Bruno
  */
-public abstract class AbstractDao {
+public abstract class AbstractDao<T extends AbstractModel> {
 
     protected Connection conexao;
-    ResultSet rs;
+    private ResultSet rs;
+    private Class<T> entyClass;
 
-    public AbstractDao() {
+    public AbstractDao(Class<T> entityClass) {
         this.conexao = Database.getConnection();
+        this.entyClass = entityClass;
     }
 
-    public Object busca(AbstractModel obj) {
-
-        String sql = "select * from usuario where id=" + obj.getId();
+    public T buscaPorId(T absModel) {
+        String sql = "select * from " + entyClass.getSimpleName() + " where id=" + absModel.getId();
         PreparedStatement ps;
         try {
             ps = conexao.prepareStatement(sql);
@@ -42,22 +42,30 @@ public abstract class AbstractDao {
         } catch (SQLException ex) {
             Logger.getLogger(AbstractDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         try {
-            Class<?> classe = obj.getClass();
-            obj = (Usuario) obj;
-            System.out.println(classe.getClass());
-            for (Method method : classe.getDeclaredMethods()) {
+            for (Method method : entyClass.getDeclaredMethods()) {
 
                 if (method.isAnnotationPresent(ColunaBD.class)) {
                     ColunaBD anotacao = method.getAnnotation(ColunaBD.class);
-                    method.invoke(obj, rs.getString(anotacao.nome()));
+                    method.invoke(absModel, rs.getString(anotacao.nome()));
                 }
             }
-            return obj;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            return absModel;
+        } catch (IllegalAccessException | IllegalArgumentException | SecurityException | InvocationTargetException | SQLException e) {
+            return absModel;
+        }
+    }
+
+    public boolean excluir(T absModel) {
+        String sql = "delete from usuario where id=?";
+        try {
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setInt(1, absModel.getId());
+            ps.execute();
+            return true;
+        } catch (SQLException ex) {
+            System.err.println(ex);
+            return false;
         }
     }
 }

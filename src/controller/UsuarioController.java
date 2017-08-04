@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JOptionPane;
-import model.AbstractModel;
 import model.TableModel;
 import model.Usuario;
 import view.UsuarioView;
@@ -112,7 +111,7 @@ public class UsuarioController extends AbstractController implements ActionListe
         //usuarioView.setLogin(usuario.getLogin());
         //usuarioView.setSenha(usuario.getSenha());
         //usuarioView.setNome(usuario.getNome());
-        usuarioView.preencheCampos((Usuario) usuarioDao.busca((AbstractModel) usuario));
+        usuarioView.preencheCampos(usuarioDao.buscaPorId(usuario));
         usuarioView.statusLista();
     }
 

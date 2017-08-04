@@ -73,4 +73,8 @@ public class TableModel<T> extends AbstractTableModel {
         }
         return null;
     }
+
+    public T carregaItem(int row) {
+        return lista.get(row);
+    }
 }
