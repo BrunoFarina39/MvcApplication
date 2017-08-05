@@ -12,8 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
@@ -83,15 +81,19 @@ public class UsuarioController extends AbstractController implements ActionListe
     }
 
     @Override
-    public void editar() {;
+    public void editar() {
         usuarioView.statusEditar();
     }
 
     @Override
     public void excluir() {
         usuario.setId(Integer.parseInt(usuarioView.getId()));
+        int jOptionPane = JOptionPane.showConfirmDialog(usuarioView, "Deseja excluir este usuário", "Exclusão", JOptionPane.YES_NO_OPTION);
+        int opcaoSim = JOptionPane.YES_OPTION;
         try {
-            JOptionPane.showMessageDialog(usuarioView, usuarioDao.excluir(usuario));
+            if (jOptionPane == opcaoSim) {
+                usuarioDao.excluir(usuario);
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir usuário", "Erro", JOptionPane.ERROR_MESSAGE);
         }
