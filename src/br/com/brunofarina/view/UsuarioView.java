@@ -11,6 +11,8 @@ import br.com.brunofarina.controller.UsuarioController;
 import javax.swing.JLabel;
 import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
+import javax.swing.JRadioButton;
+import javax.swing.JRadioButtonMenuItem;
 
 /**
  *
@@ -21,6 +23,7 @@ public class UsuarioView extends AbstractView {
     private JLabel jlCodigo, jlNome, jlLogin, jlSenha;
     private CustomJTextField jtCodigo, jtNome, jtLogin;
     private CustomJPasswordField jtSenha;
+    private JRadioButton JRadioId, JRadioNome;
 
     public UsuarioView() {
         super("Cadastro de Usuário", true, true, true, true);
@@ -35,8 +38,15 @@ public class UsuarioView extends AbstractView {
         this.jtLogin = new CustomJTextField(20, true, false, "Login");
         this.jtSenha = new CustomJPasswordField(20, true, false, "Senha");
         this.jlTitulo.setText("Manutenção de Usuário");
+        this.JRadioId = new JRadioButton("Código");
+        this.JRadioNome = new JRadioButton("Nome");
+        this.JRadioNome.setSelected(true);
         //inicio do posicionamento
         //int linha, int coluna, int largura, int altura, int espVert, int espaHor, JComponent componente
+        this.panelChavePesq.add(JRadioId);
+        this.panelChavePesq.add(JRadioNome);
+        this.btGroup.add(JRadioId);
+        this.btGroup.add(JRadioNome);
         super.adicionaComponente(0, 0, 1, 1, 5, 5, jtCodigo);
         super.adicionaComponente(0, 1, 2, 1, 5, 5, jtNome);
         super.adicionaComponente(0, 2, 2, 1, 5, 5, jtLogin);

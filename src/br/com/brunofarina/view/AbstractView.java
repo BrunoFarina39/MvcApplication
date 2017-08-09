@@ -26,6 +26,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import br.com.brunofarina.util.TestGridBagLayout;
+import javax.swing.ButtonGroup;
 
 /**
  *
@@ -33,13 +34,14 @@ import br.com.brunofarina.util.TestGridBagLayout;
  */
 public class AbstractView extends JInternalFrame {
 
-    protected JPanel panel, panelCampos, panelBotoes, panelSul, panelInstPesq, panelPesquisa, panelScroll;
+    protected JPanel panel, panelCampos, panelBotoes, panelSul, panelInstPesq, panelPesquisa, panelScroll, panelChavePesq;
     protected JLabel jlTitulo;
     protected JButton jbNovo, jbSalvar, jbEditar, jbExcluir, jbCancelar, jbPesquisar, jbInicio, jbUltimo, jbProximo, jbAnterior;
     protected JTextField jtPesquisar;
     protected JTable jTable;
     private StringBuffer rotulo;
     private ArrayList<CustomComponent> campos;
+    protected ButtonGroup btGroup;
 
     public AbstractView(String title, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(title, resizable, closable, maximizable, iconable);
@@ -49,6 +51,7 @@ public class AbstractView extends JInternalFrame {
         this.panelSul = new JPanel();
         this.panelInstPesq = new JPanel();
         this.panelPesquisa = new JPanel();
+        this.panelChavePesq = new JPanel();
         this.panelScroll = new JPanel();
         this.jbNovo = new JButton("Novo");
         this.jbSalvar = new JButton("Salvar");
@@ -62,6 +65,7 @@ public class AbstractView extends JInternalFrame {
         this.jbAnterior = new JButton("<");
         this.jbInicio = new JButton("<<");
         this.jbUltimo = new JButton(">>");
+        this.btGroup = new ButtonGroup();
 
         this.jbProximo.setSize(new Dimension(10, 10));
         this.jbAnterior.setSize(new Dimension(10, 10));
@@ -81,7 +85,7 @@ public class AbstractView extends JInternalFrame {
 
         GridBagLayout layoutCampos = new GridBagLayout();
         this.panelCampos.setLayout(layoutCampos);
-
+        this.panelChavePesq.setLayout(new FlowLayout());
         this.panelBotoes.setLayout(new FlowLayout());
         this.panelBotoes.add(this.jbNovo);
         this.panelBotoes.add(this.jbSalvar);
@@ -102,6 +106,7 @@ public class AbstractView extends JInternalFrame {
         this.panelInstPesq.setLayout(new FlowLayout());
         this.panelInstPesq.add(jtPesquisar);
         this.panelInstPesq.add(jbPesquisar);
+        this.panelInstPesq.add(panelChavePesq);
         this.panelInstPesq.add(jbInicio);
         this.panelInstPesq.add(jbAnterior);
         this.panelInstPesq.add(jbProximo);

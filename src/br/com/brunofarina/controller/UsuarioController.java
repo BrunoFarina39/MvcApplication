@@ -53,6 +53,9 @@ public class UsuarioController extends AbstractController implements ActionListe
             case "Cancelar":
                 cancelar();
                 break;
+            case "Pesquisar":
+                listar();
+                break;
         }
     }
 
