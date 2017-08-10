@@ -17,10 +17,11 @@ import javax.swing.table.AbstractTableModel;
 public class TableModel<T> extends AbstractTableModel {
 
     private ArrayList<T> lista;
-    private Class<?> classe;
+    private Class<T> classe;
 
-    public TableModel(ArrayList<T> lista) {
+    public TableModel(ArrayList<T> lista, Class<T> classe) {
         this.lista = lista;
+        this.classe = classe;
     }
 
     @Override
@@ -30,7 +31,6 @@ public class TableModel<T> extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        classe = lista.get(0).getClass();
         int colunas = 0;
         for (Method metodo : classe.getDeclaredMethods()) {
             if (metodo.isAnnotationPresent(Coluna.class)) {
@@ -42,7 +42,6 @@ public class TableModel<T> extends AbstractTableModel {
 
     @Override
     public String getColumnName(int column) {
-        classe = lista.get(0).getClass();
         for (Method metodo : classe.getDeclaredMethods()) {
             if (metodo.isAnnotationPresent(Coluna.class)) {
                 Coluna anotacao = metodo.getAnnotation(Coluna.class);
@@ -57,7 +56,6 @@ public class TableModel<T> extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         try {
-            classe = lista.get(0).getClass();
             Object object = lista.get(rowIndex);
             for (Method method : classe.getDeclaredMethods()) {
                 if (method.isAnnotationPresent(Coluna.class)) {

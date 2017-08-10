@@ -31,8 +31,7 @@ public class UsuarioController extends AbstractController implements ActionListe
         this.usuarioView = usuarioView;
         this.usuario = new Usuario();
         this.usuarioDao = new UsuarioDao();
-        usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
-
+        usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
     }
 
     @Override
@@ -54,7 +53,19 @@ public class UsuarioController extends AbstractController implements ActionListe
                 cancelar();
                 break;
             case "Pesquisar":
-                listar();
+                definePesquisa();
+                break;
+            case ">":
+                usuarioView.avancarItem();
+                break;
+            case "<":
+                usuarioView.voltarItem();
+                break;
+            case ">>":
+                usuarioView.ultimoItem();
+                break;
+            case "<<":
+                usuarioView.primeiroItem();
                 break;
         }
     }
@@ -78,7 +89,7 @@ public class UsuarioController extends AbstractController implements ActionListe
                 usuario.setId(Integer.parseInt(usuarioView.getId()));
                 usuarioView.statusManutencao(usuarioDao.editar(usuario));
             }
-            usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
+            usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
             usuarioView.statusSalvar();
         }
     }
@@ -100,15 +111,32 @@ public class UsuarioController extends AbstractController implements ActionListe
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir usuário", "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        usuarioView.povoaJtable(new TableModel(usuarioDao.listar()));
+        usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
         usuarioView.limpaCampos();
         usuarioView.statusInicial();
 
     }
 
+    private void definePesquisa() {
+        if (usuarioView.getSelectedRbId()) {
+            try {
+                listar(Integer.parseInt(usuarioView.getPesquisa()));
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(usuarioView, "Por favor digite apenas números");
+            }
+        } else {
+            listar((usuarioView.getPesquisa()));
+        }
+    }
+
     @Override
-    public void listar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void listar(String chave) {
+        usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(chave), Usuario.class));
+    }
+
+    @Override
+    public void listar(int id) {
+        usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(id), Usuario.class));
     }
 
     public void cancelar() {

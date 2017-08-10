@@ -50,7 +50,7 @@ public class UsuarioDao extends AbstractDao<Usuario> {
         }
     }
 
-    public ArrayList<Usuario> listar() {
+    public ArrayList<Usuario> listarUsuario() {
         try {
             ResultSet rs = super.listar("select id,login,nome from usuario limit 30");
             ArrayList<Usuario> usuarios = new ArrayList();
@@ -63,6 +63,46 @@ public class UsuarioDao extends AbstractDao<Usuario> {
             }
             return usuarios;
         } catch (SQLException ex) {
+            return null;
+        }
+    }
+
+    public ArrayList<Usuario> listarUsuario(String chave) {
+        String sql = "select id,login,nome from usuario where nome ilike ? limit 30";
+        try {
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setString(1, "%".concat(chave).concat("%"));
+            ArrayList<Usuario> usuarios = new ArrayList();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setId(rs.getInt("id"));
+                usuario.setLogin(rs.getString("login"));
+                usuario.setNome(rs.getString("nome"));
+                usuarios.add(usuario);
+            }
+            return usuarios;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public ArrayList<Usuario> listarUsuario(int id) {
+        String sql = "select id,login,nome from usuario where id=?";
+        try {
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setInt(1, id);
+            ArrayList<Usuario> usuarios = new ArrayList();
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setId(rs.getInt("id"));
+                usuario.setLogin(rs.getString("login"));
+                usuario.setNome(rs.getString("nome"));
+                usuarios.add(usuario);
+            }
+            return usuarios;
+        } catch (SQLException e) {
             return null;
         }
     }

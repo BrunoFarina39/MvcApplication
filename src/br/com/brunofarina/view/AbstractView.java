@@ -42,6 +42,7 @@ public class AbstractView extends JInternalFrame {
     private StringBuffer rotulo;
     private ArrayList<CustomComponent> campos;
     protected ButtonGroup btGroup;
+    private int cont = 0;
 
     public AbstractView(String title, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(title, resizable, closable, maximizable, iconable);
@@ -238,5 +239,33 @@ public class AbstractView extends JInternalFrame {
     public int retornaIdTabela() {
         int linha = jTable.getSelectedRow();
         return Integer.parseInt(jTable.getValueAt(linha, 0).toString());
+    }
+
+    public String getPesquisa() {
+        return jtPesquisar.getText();
+    }
+
+    public void avancarItem() {
+        jTable.setRowSelectionInterval(cont, cont);
+        if (jTable.getRowCount() - 1 != cont) {
+            cont++;
+        }
+    }
+
+    public void voltarItem() {
+        if (cont != 0) {
+            cont--;
+        }
+        jTable.setRowSelectionInterval(cont, cont);
+    }
+
+    public void ultimoItem() {
+        cont = jTable.getRowCount() - 1;
+        jTable.setRowSelectionInterval(cont, cont);
+    }
+
+    public void primeiroItem() {
+        cont = 1;
+        jTable.setRowSelectionInterval(0, 0);
     }
 }

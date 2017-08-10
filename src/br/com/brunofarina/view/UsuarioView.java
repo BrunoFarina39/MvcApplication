@@ -123,6 +123,11 @@ public class UsuarioView extends AbstractView {
         jbEditar.addActionListener(usuarioController);
         jbExcluir.addActionListener(usuarioController);
         jbCancelar.addActionListener(usuarioController);
+        jbPesquisar.addActionListener(usuarioController);
+        jbProximo.addActionListener(usuarioController);
+        jbAnterior.addActionListener(usuarioController);
+        jbUltimo.addActionListener(usuarioController);
+        jbInicio.addActionListener(usuarioController);
         jTable.addMouseListener(usuarioController);
         habilitaCampos(false);
     }
@@ -165,6 +170,14 @@ public class UsuarioView extends AbstractView {
 
     public void setNome(String nome) {
         jtNome.setTexto(nome);
+    }
+
+    public boolean getSelectedRbId() {
+        return JRadioId.isSelected();
+    }
+
+    public boolean getSelectedRbNome() {
+        return JRadioNome.isSelected();
     }
 
     public void preencheCampos(Usuario usuario) {

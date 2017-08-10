@@ -21,5 +21,7 @@ public abstract class AbstractController {
 
     public abstract void excluir();
 
-    public abstract void listar();
+    public abstract void listar(String chave);
+
+    public abstract void listar(int id);
 }
