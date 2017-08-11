@@ -6,6 +6,7 @@
 package br.com.brunofarina.view;
 
 import br.com.brunofarina.component.CustomComponent;
+import br.com.brunofarina.model.TableModel;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -188,6 +189,16 @@ public class AbstractView extends JInternalFrame {
         }
     }
 
+    public void povoaJtable(TableModel tb) {
+        jTable.setModel(tb);
+        jTable.setFillsViewportHeight(true);
+        if (jTable.getRowCount() == 0) {
+            statusBotoesPesq(false);
+        } else {
+            statusBotoesPesq(true);
+        }
+    }
+
     public void statusInicial() {
         jbNovo.setEnabled(true);
         jbSalvar.setEnabled(false);
@@ -228,6 +239,13 @@ public class AbstractView extends JInternalFrame {
         habilitaCampos(false);
     }
 
+    private void statusBotoesPesq(boolean status) {
+        jbProximo.setEnabled(status);
+        jbAnterior.setEnabled(status);
+        jbUltimo.setEnabled(status);
+        jbInicio.setEnabled(status);
+    }
+
     public void statusManutencao(boolean status) {
         if (status) {
             JOptionPane.showMessageDialog(panelCampos, "Dados gravado/alterado com sucesso!");
@@ -236,14 +254,12 @@ public class AbstractView extends JInternalFrame {
         }
     }
 
-    public int retornaIdTabela() {
+    public int retornaIdObjeto() {
         int linha = jTable.getSelectedRow();
-        System.out.println(jTable.getRowCount());
-        if (jTable.getRowCount() != -1) {
-            return Integer.parseInt(jTable.getValueAt(linha, 0).toString());
-        } else {
-            return Integer.parseInt(jTable.getValueAt(jTable.getRowCount() - 1, 0).toString());
+        if (linha == -1) {
+            return 0;
         }
+        return Integer.parseInt(jTable.getValueAt(linha, 0).toString());
     }
 
     public Object getPesquisa() {
@@ -263,11 +279,18 @@ public class AbstractView extends JInternalFrame {
     }
 
     public void voltarItem() {
-        if (cont == -1) {
-            jTable.setRowSelectionInterval(0, 0);
-        } else {
-            cont--;
-            jTable.setRowSelectionInterval(cont, cont);
+        switch (cont) {
+            case -1:
+                cont = 0;
+                jTable.setRowSelectionInterval(0, 0);
+                break;
+            case 0:
+                jTable.setRowSelectionInterval(cont, cont);
+                break;
+            default:
+                cont--;
+                jTable.setRowSelectionInterval(cont, cont);
+                break;
         }
         statusLista();
     }

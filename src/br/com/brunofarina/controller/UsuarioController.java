@@ -56,6 +56,7 @@ public class UsuarioController extends AbstractController implements ActionListe
                 break;
             case "Pesquisar":
                 listar(usuarioView.getPesquisa());
+                usuarioView.setCont();
                 break;
             case ">":
                 usuarioView.avancarItem();
@@ -124,7 +125,7 @@ public class UsuarioController extends AbstractController implements ActionListe
     }
 
     private void setaCampos() {
-        usuario.setId(usuarioView.retornaIdTabela());
+        usuario.setId(usuarioView.retornaIdObjeto());
         {
             try {
                 usuarioView.preencheCampos(usuarioDao.buscaPorId(usuario));

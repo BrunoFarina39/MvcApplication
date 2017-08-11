@@ -133,12 +133,13 @@ public class UsuarioView extends AbstractView {
         habilitaCampos(false);
     }
 
+    @Override
     public void povoaJtable(TableModel tb) {
-        jTable.setModel(tb);
+        super.povoaJtable(tb);
         jTable.getTableHeader().getColumnModel().getColumn(0).setPreferredWidth(100);
         jTable.getTableHeader().getColumnModel().getColumn(1).setPreferredWidth(200);
         jTable.getTableHeader().getColumnModel().getColumn(2).setPreferredWidth(300);
-        jTable.setFillsViewportHeight(true);
+
     }
 
     public String getId() {
