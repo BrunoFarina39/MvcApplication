@@ -11,6 +11,7 @@ import br.com.brunofarina.controller.UsuarioController;
 import javax.swing.JLabel;
 import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 
@@ -178,6 +179,20 @@ public class UsuarioView extends AbstractView {
 
     public boolean getSelectedRbNome() {
         return JRadioNome.isSelected();
+    }
+
+    @Override
+    public Object getPesquisa() {
+        if (JRadioId.isSelected()) {
+            try {
+                return Integer.parseInt(jtPesquisar.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Por favor digite apenas números");
+                return null;
+            }
+        } else {
+            return jtPesquisar.getText();
+        }
     }
 
     public void preencheCampos(Usuario usuario) {

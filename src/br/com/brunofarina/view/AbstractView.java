@@ -42,7 +42,7 @@ public class AbstractView extends JInternalFrame {
     private StringBuffer rotulo;
     private ArrayList<CustomComponent> campos;
     protected ButtonGroup btGroup;
-    private int cont = 0;
+    private int cont = -1;
 
     public AbstractView(String title, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(title, resizable, closable, maximizable, iconable);
@@ -140,7 +140,7 @@ public class AbstractView extends JInternalFrame {
         gbc.gridwidth = largura;
         gbc.gridheight = altura;
         panelCampos.add(componente, gbc);
-        TestGridBagLayout.insereComponente(3, 3, panelCampos);
+        //TestGridBagLayout.insereComponente(3, 3, panelCampos);
     }
 
     public boolean valida() {
@@ -238,34 +238,49 @@ public class AbstractView extends JInternalFrame {
 
     public int retornaIdTabela() {
         int linha = jTable.getSelectedRow();
-        return Integer.parseInt(jTable.getValueAt(linha, 0).toString());
+        System.out.println(jTable.getRowCount());
+        if (jTable.getRowCount() != -1) {
+            return Integer.parseInt(jTable.getValueAt(linha, 0).toString());
+        } else {
+            return Integer.parseInt(jTable.getValueAt(jTable.getRowCount() - 1, 0).toString());
+        }
     }
 
-    public String getPesquisa() {
+    public Object getPesquisa() {
         return jtPesquisar.getText();
     }
 
+    public void setCont() {
+        cont = jTable.getSelectedRow();
+    }
+
     public void avancarItem() {
-        jTable.setRowSelectionInterval(cont, cont);
         if (jTable.getRowCount() - 1 != cont) {
             cont++;
         }
+        jTable.setRowSelectionInterval(cont, cont);
+        statusLista();
     }
 
     public void voltarItem() {
-        if (cont != 0) {
+        if (cont == -1) {
+            jTable.setRowSelectionInterval(0, 0);
+        } else {
             cont--;
+            jTable.setRowSelectionInterval(cont, cont);
         }
-        jTable.setRowSelectionInterval(cont, cont);
+        statusLista();
     }
 
     public void ultimoItem() {
         cont = jTable.getRowCount() - 1;
         jTable.setRowSelectionInterval(cont, cont);
+        statusLista();
     }
 
     public void primeiroItem() {
-        cont = 1;
-        jTable.setRowSelectionInterval(0, 0);
+        cont = 0;
+        jTable.setRowSelectionInterval(cont, cont);
+        statusLista();
     }
 }

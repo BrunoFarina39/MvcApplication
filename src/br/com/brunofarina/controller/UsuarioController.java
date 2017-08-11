@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
 import br.com.brunofarina.view.UsuarioView;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -53,19 +55,23 @@ public class UsuarioController extends AbstractController implements ActionListe
                 cancelar();
                 break;
             case "Pesquisar":
-                definePesquisa();
+                listar(usuarioView.getPesquisa());
                 break;
             case ">":
                 usuarioView.avancarItem();
+                setaCampos();
                 break;
             case "<":
                 usuarioView.voltarItem();
+                setaCampos();
                 break;
             case ">>":
                 usuarioView.ultimoItem();
+                setaCampos();
                 break;
             case "<<":
                 usuarioView.primeiroItem();
+                setaCampos();
                 break;
         }
     }
@@ -117,26 +123,24 @@ public class UsuarioController extends AbstractController implements ActionListe
 
     }
 
-    private void definePesquisa() {
-        if (usuarioView.getSelectedRbId()) {
+    private void setaCampos() {
+        usuario.setId(usuarioView.retornaIdTabela());
+        {
             try {
-                listar(Integer.parseInt(usuarioView.getPesquisa()));
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(usuarioView, "Por favor digite apenas números");
+                usuarioView.preencheCampos(usuarioDao.buscaPorId(usuario));
+            } catch (SQLException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                JOptionPane.showMessageDialog(usuarioView, "Não foi possivel preencher dados", "Erro", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            listar((usuarioView.getPesquisa()));
         }
     }
 
     @Override
-    public void listar(String chave) {
-        usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(chave), Usuario.class));
-    }
-
-    @Override
-    public void listar(int id) {
-        usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(id), Usuario.class));
+    public void listar(Object chave) {
+        if (chave instanceof Integer) {
+            usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario((int) chave), Usuario.class));
+        } else if (chave instanceof String) {
+            usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(chave.toString()), Usuario.class));
+        }
     }
 
     public void cancelar() {
@@ -146,12 +150,8 @@ public class UsuarioController extends AbstractController implements ActionListe
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        usuario.setId(usuarioView.retornaIdTabela());
-        try {
-            usuarioView.preencheCampos(usuarioDao.buscaPorId(usuario));
-        } catch (SQLException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            JOptionPane.showMessageDialog(usuarioView, "Não foi possivel preencher dados", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+        setaCampos();
+        usuarioView.setCont();
         usuarioView.statusLista();
     }
 
