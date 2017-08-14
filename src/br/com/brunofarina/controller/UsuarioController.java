@@ -56,7 +56,6 @@ public class UsuarioController extends AbstractController implements ActionListe
                 break;
             case "Pesquisar":
                 listar(usuarioView.getPesquisa());
-                usuarioView.setCont();
                 break;
             case ">":
                 usuarioView.avancarItem();

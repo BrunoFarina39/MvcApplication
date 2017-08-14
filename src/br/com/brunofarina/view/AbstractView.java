@@ -43,7 +43,7 @@ public class AbstractView extends JInternalFrame {
     private StringBuffer rotulo;
     private ArrayList<CustomComponent> campos;
     protected ButtonGroup btGroup;
-    private int cont = -1;
+    private int cont;
 
     public AbstractView(String title, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(title, resizable, closable, maximizable, iconable);
@@ -197,6 +197,7 @@ public class AbstractView extends JInternalFrame {
         } else {
             statusBotoesPesq(true);
         }
+        setCont();
     }
 
     public void statusInicial() {
