@@ -27,7 +27,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import br.com.brunofarina.util.TestGridBagLayout;
+import java.awt.GridLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JTabbedPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -72,12 +75,13 @@ public class AbstractView extends JInternalFrame {
         this.jbProximo.setSize(new Dimension(10, 10));
         this.jbAnterior.setSize(new Dimension(10, 10));
         this.jTable = new JTable();
+        this.jTable.setAutoCreateRowSorter(true);
         rotulo = new StringBuffer();
         campos = new ArrayList<CustomComponent>();
         Container container = getContentPane();
         jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         JScrollPane scroll = new JScrollPane(jTable);
-        scroll.setViewportView(jTable);
+        //scroll.setViewportView(jTable);
         container.add(panel);
 
         this.panel.setLayout(new BorderLayout());
@@ -102,9 +106,16 @@ public class AbstractView extends JInternalFrame {
         this.panelPesquisa.setLayout(new BorderLayout());
         this.panelPesquisa.add(panelInstPesq, BorderLayout.NORTH);
         this.panelPesquisa.add(panelScroll, BorderLayout.SOUTH);
-
-        scroll.setPreferredSize(new Dimension(600, 200));
+        // this.panelScroll.setLayout(new GridLayout());
+        //this.panelScroll.setPreferredSize(new Dimension(600, 200));
+        //JTabbedPane jt = new JTabbedPane();
+        //jt.addTab("Tabela", scroll);
+        // jt.setPreferredSize(new Dimension(600, 200));
         this.panelScroll.add(scroll);
+        scroll.setPreferredSize(new Dimension(600, 200));
+        //jTable.setPreferredSize(new Dimension(600, 200));
+        //jTable.setPreferredScrollableViewportSize(jTable.getPreferredSize());
+
         this.panelInstPesq.setLayout(new FlowLayout());
         this.panelInstPesq.add(jtPesquisar);
         this.panelInstPesq.add(jbPesquisar);
