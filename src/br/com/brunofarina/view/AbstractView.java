@@ -27,10 +27,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import br.com.brunofarina.util.TestGridBagLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -74,14 +76,26 @@ public class AbstractView extends JInternalFrame {
 
         this.jbProximo.setSize(new Dimension(10, 10));
         this.jbAnterior.setSize(new Dimension(10, 10));
-        this.jTable = new JTable();
+        this.jTable = new JTable() {
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component component = super.prepareRenderer(renderer, row, column);
+                if (!isRowSelected(row)) {
+                    component.setBackground(row % 2 == 0 ? Color.lightGray : Color.WHITE);
+                    //System.out.println(row);
+                    System.out.println(getModel().getValueAt(convertRowIndexToView(row), 1));
+                }
+                return component;
+            }
+
+        };
         this.jTable.setAutoCreateRowSorter(true);
         rotulo = new StringBuffer();
         campos = new ArrayList<CustomComponent>();
         Container container = getContentPane();
         jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         JScrollPane scroll = new JScrollPane(jTable);
-        //scroll.setViewportView(jTable);
+        scroll.setViewportView(jTable);
         container.add(panel);
 
         this.panel.setLayout(new BorderLayout());
