@@ -5,6 +5,8 @@
  */
 package br.com.brunofarina.controller;
 
+import br.com.brunofarina.application.TelaLogin;
+import br.com.brunofarina.application.TelaPrincipal;
 import br.com.brunofarina.dao.UsuarioDao;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

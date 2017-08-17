@@ -17,9 +17,7 @@ public class MvcApplication {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Database.getConnection();
-        //LoginController loginController = new LoginController();
-        TelaPrincipal telaPrincipal = new TelaPrincipal();
+        TelaLogin telaLogin = new TelaLogin();
     }
 
 }

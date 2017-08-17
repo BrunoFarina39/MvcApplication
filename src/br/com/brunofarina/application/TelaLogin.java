@@ -5,11 +5,13 @@
  */
 package br.com.brunofarina.application;
 
+import br.com.brunofarina.model.Usuario;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,7 +24,7 @@ import javax.swing.JTextField;
  *
  * @author Bruno Farina
  */
-public class TelaLogin {
+public class TelaLogin implements ActionListener {
 
     JFrame jFrame;
     JLabel jlLogin, jlSenha;
@@ -105,10 +107,22 @@ public class TelaLogin {
         jFrame.setSize(400, 200);
         jFrame.setVisible(true);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jbLogin.addActionListener(this);
     }
 
-    public void adicionaOuvinte(ActionListener actionListener) {
-        this.jbLogin.addActionListener(actionListener);
-        this.jbCancelar.addActionListener(actionListener);
+    @Override
+    public void actionPerformed(ActionEvent e) {;
+        if (e.getActionCommand().equals("Login")) {
+            Usuario usuario = new Usuario();
+            usuario.setLogin(jtLogin.getText());
+            usuario.setSenha(String.valueOf(jtSenha.getPassword()));
+            if (usuario.autentica()) {
+                jFrame.dispose();
+                new TelaPrincipal().setVisible(true);
+            } else {
+                System.err.println("Não Logado");
+            }
+        }
     }
+
 }
