@@ -36,6 +36,8 @@ public class UsuarioController extends AbstractController implements ActionListe
         this.usuario = new Usuario();
         this.usuarioDao = new UsuarioDao();
         usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
+        usuarioDao.primeiroItem();
+        usuarioView.preencheCampos(usuarioDao.retornaUsuario());
     }
 
     @Override
@@ -60,8 +62,10 @@ public class UsuarioController extends AbstractController implements ActionListe
                 listar(usuarioView.getPesquisa());
                 break;
             case ">":
-                usuarioView.avancarItem();
+                usuarioDao.avancaItem();
                 setaCampos();
+                usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
+                //usuarioView.setStatusBtNav(usuarioDao.testaRs());
                 break;
             case "<":
                 usuarioView.voltarItem();
@@ -126,14 +130,9 @@ public class UsuarioController extends AbstractController implements ActionListe
     }
 
     private void setaCampos() {
-        usuario.setId(usuarioView.retornaIdObjeto());
-        {
-            try {
-                usuarioView.preencheCampos(usuarioDao.buscaPorId(usuario));
-            } catch (SQLException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                JOptionPane.showMessageDialog(usuarioView, "Não foi possivel preencher dados", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+
+        usuarioView.preencheCampos(usuarioDao.retornaUsuario());
+
     }
 
     @Override
@@ -148,6 +147,19 @@ public class UsuarioController extends AbstractController implements ActionListe
     public void cancelar() {
         usuarioView.limpaCampos();
         usuarioView.statusInicial();
+    }
+
+    public TableModel preencherTabela() {
+        usuarioView.preencheCampos(usuarioDao.listarUsuario().get(0));
+        return new TableModel(usuarioDao.listarUsuario(), Usuario.class);
+    }
+
+    public void avancaItem() {
+        usuarioDao.avancaItem();
+    }
+
+    public void voltaItem() {
+        usuarioDao.voltaItem();
     }
 
     @Override

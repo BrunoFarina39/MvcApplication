@@ -17,7 +17,8 @@ public class MvcApplication {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        TelaLogin telaLogin = new TelaLogin();
+        //TelaLogin telaLogin = new TelaLogin();
+        TelaPrincipal telaLogin = new TelaPrincipal();
     }
 
 }

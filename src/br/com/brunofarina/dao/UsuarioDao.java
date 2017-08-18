@@ -6,10 +6,11 @@
 package br.com.brunofarina.dao;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import br.com.brunofarina.model.Usuario;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -52,7 +53,7 @@ public class UsuarioDao extends AbstractDao<Usuario> {
 
     public ArrayList<Usuario> listarUsuario() {
         try {
-            ResultSet rs = super.listar("select id,login,nome from usuario limit 30");
+            rs = super.listar("select id,login,nome from usuario limit 30");
             ArrayList<Usuario> usuarios = new ArrayList();
             while (rs.next()) {
                 Usuario usuario = new Usuario();
@@ -73,7 +74,7 @@ public class UsuarioDao extends AbstractDao<Usuario> {
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, "%".concat(chave).concat("%"));
             ArrayList<Usuario> usuarios = new ArrayList();
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while (rs.next()) {
                 Usuario usuario = new Usuario();
                 usuario.setId(rs.getInt("id"));
@@ -93,7 +94,7 @@ public class UsuarioDao extends AbstractDao<Usuario> {
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
             ArrayList<Usuario> usuarios = new ArrayList();
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             if (rs.next()) {
                 Usuario usuario = new Usuario();
                 usuario.setId(rs.getInt("id"));
@@ -105,5 +106,18 @@ public class UsuarioDao extends AbstractDao<Usuario> {
         } catch (SQLException e) {
             return null;
         }
+    }
+
+    public Usuario retornaUsuario() {
+        Usuario usuario = new Usuario();
+
+        try {
+            usuario.setId(rs.getInt("id"));
+            usuario.setLogin(rs.getString("login"));
+            usuario.setNome(rs.getString("nome"));
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usuario;
     }
 }

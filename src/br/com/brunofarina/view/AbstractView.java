@@ -82,8 +82,6 @@ public class AbstractView extends JInternalFrame {
                 Component component = super.prepareRenderer(renderer, row, column);
                 if (!isRowSelected(row)) {
                     component.setBackground(row % 2 == 0 ? Color.lightGray : Color.WHITE);
-                    //System.out.println(row);
-                    System.out.println(getModel().getValueAt(convertRowIndexToView(row), 1));
                 }
                 return component;
             }
@@ -222,6 +220,7 @@ public class AbstractView extends JInternalFrame {
         } else {
             statusBotoesPesq(true);
         }
+        jTable.setRowSelectionInterval(0, 0);
         setCont();
     }
 
@@ -280,12 +279,8 @@ public class AbstractView extends JInternalFrame {
         }
     }
 
-    public int retornaIdObjeto() {
-        int linha = jTable.getSelectedRow();
-        if (linha == -1) {
-            return 0;
-        }
-        return Integer.parseInt(jTable.getValueAt(linha, 0).toString());
+    public void setLinhaSelecionada(int linha) {
+        jTable.setRowSelectionInterval(linha, linha);
     }
 
     public Object getPesquisa() {
@@ -294,42 +289,49 @@ public class AbstractView extends JInternalFrame {
 
     public void setCont() {
         cont = jTable.getSelectedRow();
+        //setStatusBtNav(cont);
     }
 
     public void avancarItem() {
-        if (jTable.getRowCount() - 1 != cont) {
-            cont++;
-        }
+        cont++;
         jTable.setRowSelectionInterval(cont, cont);
         statusLista();
+        //setStatusBtNav(cont);
     }
 
     public void voltarItem() {
-        switch (cont) {
-            case -1:
-                cont = 0;
-                jTable.setRowSelectionInterval(0, 0);
-                break;
-            case 0:
-                jTable.setRowSelectionInterval(cont, cont);
-                break;
-            default:
-                cont--;
-                jTable.setRowSelectionInterval(cont, cont);
-                break;
-        }
+        cont--;
+        jTable.setRowSelectionInterval(cont, cont);
         statusLista();
+        //setStatusBtNav(cont);
     }
 
     public void ultimoItem() {
         cont = jTable.getRowCount() - 1;
         jTable.setRowSelectionInterval(cont, cont);
         statusLista();
+        // setStatusBtNav(cont);
     }
 
     public void primeiroItem() {
         cont = 0;
         jTable.setRowSelectionInterval(cont, cont);
         statusLista();
+        // setStatusBtNav(cont);
+    }
+
+    public void setStatusBtNav(boolean status) {
+
+        if (status) {
+            jbInicio.setEnabled(!status);
+            jbAnterior.setEnabled(!status);
+            jbProximo.setEnabled(status);
+            jbUltimo.setEnabled(status);
+        } else {
+            jbInicio.setEnabled(!status);
+            jbAnterior.setEnabled(!status);
+            jbProximo.setEnabled(!status);
+            jbUltimo.setEnabled(!status);
+        }
     }
 }

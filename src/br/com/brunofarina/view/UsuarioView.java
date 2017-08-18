@@ -119,6 +119,7 @@ public class UsuarioView extends AbstractView {
 //        jlTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 
         UsuarioController usuarioController = new UsuarioController(this);
+        //jTable.setModel(usuarioController.preencherTabela());
         jbNovo.addActionListener(usuarioController);
         jbSalvar.addActionListener(usuarioController);
         jbEditar.addActionListener(usuarioController);
@@ -139,7 +140,6 @@ public class UsuarioView extends AbstractView {
         jTable.getTableHeader().getColumnModel().getColumn(0).setPreferredWidth(100);
         jTable.getTableHeader().getColumnModel().getColumn(1).setPreferredWidth(200);
         jTable.getTableHeader().getColumnModel().getColumn(2).setPreferredWidth(300);
-
     }
 
     public String getId() {
