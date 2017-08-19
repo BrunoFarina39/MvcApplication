@@ -38,6 +38,27 @@ public class UsuarioController extends AbstractController implements ActionListe
         usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
         usuarioDao.primeiroItem();
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
+
+    }
+
+    public void povoaPrimeiroItem() {
+        usuarioDao.primeiroItem();
+        setaCampos();
+    }
+
+    public void povoaUltimoItem() {
+        usuarioDao.ultimoItem();
+        setaCampos();
+    }
+
+    public void povoaProximoItem() {
+        usuarioDao.avancaItem();
+        setaCampos();
+    }
+
+    public void povoaItemAnterior() {
+        usuarioDao.voltaItem();
+        setaCampos();
     }
 
     @Override
@@ -62,22 +83,17 @@ public class UsuarioController extends AbstractController implements ActionListe
                 listar(usuarioView.getPesquisa());
                 break;
             case ">":
-                usuarioDao.avancaItem();
-                setaCampos();
-                usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
-                //usuarioView.setStatusBtNav(usuarioDao.testaRs());
+                povoaProximoItem();
                 break;
             case "<":
-                usuarioView.voltarItem();
+                povoaItemAnterior();
                 setaCampos();
                 break;
             case ">>":
-                usuarioView.ultimoItem();
-                setaCampos();
+                povoaUltimoItem();
                 break;
             case "<<":
-                usuarioView.primeiroItem();
-                setaCampos();
+                povoaPrimeiroItem();
                 break;
         }
     }
@@ -89,6 +105,7 @@ public class UsuarioController extends AbstractController implements ActionListe
 
     @Override
     public void salvar() {
+        int id=0;
         if (usuarioView.valida()) {
             usuario.setLogin(usuarioView.getLogin());
             usuario.setSenha(usuarioView.getSenha());
@@ -100,8 +117,10 @@ public class UsuarioController extends AbstractController implements ActionListe
             } else {
                 usuario.setId(Integer.parseInt(usuarioView.getId()));
                 usuarioView.statusManutencao(usuarioDao.editar(usuario));
+                id=usuario.getId();
             }
             usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
+            //usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs()-1);
             usuarioView.statusSalvar();
         }
     }
@@ -130,9 +149,10 @@ public class UsuarioController extends AbstractController implements ActionListe
     }
 
     private void setaCampos() {
-
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-
+        usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
+        testarNavegacao();
+        usuarioView.statusLista();
     }
 
     @Override
@@ -162,11 +182,21 @@ public class UsuarioController extends AbstractController implements ActionListe
         usuarioDao.voltaItem();
     }
 
+    public void testarNavegacao() {
+        if (usuarioDao.isFirst()) {
+            usuarioView.setIsFirst(true);
+        } else if (usuarioDao.isLast()) {
+            usuarioView.setIsFirst(false);
+        } else {
+            usuarioView.setStatusBtPesq(true);
+        }
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        setaCampos();
-        usuarioView.setCont();
-        usuarioView.statusLista();
+        usuarioDao.setItemRs(usuarioView.getLinhaSelecionada() + 1);
+        usuarioView.preencheCampos(usuarioDao.retornaUsuario());
+        testarNavegacao();
     }
 
     @Override

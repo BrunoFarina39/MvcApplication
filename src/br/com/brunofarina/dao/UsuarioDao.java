@@ -53,13 +53,14 @@ public class UsuarioDao extends AbstractDao<Usuario> {
 
     public ArrayList<Usuario> listarUsuario() {
         try {
-            rs = super.listar("select id,login,nome from usuario limit 30");
+            rs = super.listar("select id,login,nome,senha from usuario limit 30");
             ArrayList<Usuario> usuarios = new ArrayList();
             while (rs.next()) {
                 Usuario usuario = new Usuario();
                 usuario.setId(rs.getInt("id"));
                 usuario.setLogin(rs.getString("login"));
                 usuario.setNome(rs.getString("nome"));
+                usuario.setSenha(rs.getString("senha"));
                 usuarios.add(usuario);
             }
             return usuarios;
@@ -69,7 +70,7 @@ public class UsuarioDao extends AbstractDao<Usuario> {
     }
 
     public ArrayList<Usuario> listarUsuario(String chave) {
-        String sql = "select id,login,nome from usuario where nome ilike ? limit 30";
+        String sql = "select id,login,nome,senha from usuario where nome ilike ? limit 30";
         try {
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, "%".concat(chave).concat("%"));
@@ -80,6 +81,7 @@ public class UsuarioDao extends AbstractDao<Usuario> {
                 usuario.setId(rs.getInt("id"));
                 usuario.setLogin(rs.getString("login"));
                 usuario.setNome(rs.getString("nome"));
+                usuario.setSenha(rs.getString("senha"));
                 usuarios.add(usuario);
             }
             return usuarios;
@@ -89,7 +91,7 @@ public class UsuarioDao extends AbstractDao<Usuario> {
     }
 
     public ArrayList<Usuario> listarUsuario(int id) {
-        String sql = "select id,login,nome from usuario where id=?";
+        String sql = "select id,login,nome,senha from usuario where id=?";
         try {
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
@@ -100,6 +102,7 @@ public class UsuarioDao extends AbstractDao<Usuario> {
                 usuario.setId(rs.getInt("id"));
                 usuario.setLogin(rs.getString("login"));
                 usuario.setNome(rs.getString("nome"));
+                usuario.setSenha(rs.getString("senha"));
                 usuarios.add(usuario);
             }
             return usuarios;
@@ -115,6 +118,7 @@ public class UsuarioDao extends AbstractDao<Usuario> {
             usuario.setId(rs.getInt("id"));
             usuario.setLogin(rs.getString("login"));
             usuario.setNome(rs.getString("nome"));
+            usuario.setSenha(rs.getString("senha"));
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
         }

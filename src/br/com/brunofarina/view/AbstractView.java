@@ -216,9 +216,9 @@ public class AbstractView extends JInternalFrame {
         jTable.setModel(tb);
         jTable.setFillsViewportHeight(true);
         if (jTable.getRowCount() == 0) {
-            statusBotoesPesq(false);
+            setStatusBtPesq(false);
         } else {
-            statusBotoesPesq(true);
+            setStatusBtPesq(true);
         }
         jTable.setRowSelectionInterval(0, 0);
         setCont();
@@ -263,13 +263,30 @@ public class AbstractView extends JInternalFrame {
         jbExcluir.setEnabled(true);
         habilitaCampos(false);
     }
+    
+    public void setIsFirst(boolean status) {
 
-    private void statusBotoesPesq(boolean status) {
+        if (status) {
+            jbInicio.setEnabled(!status);
+            jbAnterior.setEnabled(!status);
+            jbProximo.setEnabled(status);
+            jbUltimo.setEnabled(status);
+        } else {
+            jbInicio.setEnabled(!status);
+            jbAnterior.setEnabled(!status);
+            jbProximo.setEnabled(status);
+            jbUltimo.setEnabled(status);
+        }
+    }
+    
+    public void setStatusBtPesq(boolean status) {
         jbProximo.setEnabled(status);
         jbAnterior.setEnabled(status);
         jbUltimo.setEnabled(status);
         jbInicio.setEnabled(status);
     }
+
+   
 
     public void statusManutencao(boolean status) {
         if (status) {
@@ -281,6 +298,10 @@ public class AbstractView extends JInternalFrame {
 
     public void setLinhaSelecionada(int linha) {
         jTable.setRowSelectionInterval(linha, linha);
+    }
+    
+    public int getLinhaSelecionada() {
+        return jTable.getSelectedRow();
     }
 
     public Object getPesquisa() {
@@ -318,20 +339,5 @@ public class AbstractView extends JInternalFrame {
         jTable.setRowSelectionInterval(cont, cont);
         statusLista();
         // setStatusBtNav(cont);
-    }
-
-    public void setStatusBtNav(boolean status) {
-
-        if (status) {
-            jbInicio.setEnabled(!status);
-            jbAnterior.setEnabled(!status);
-            jbProximo.setEnabled(status);
-            jbUltimo.setEnabled(status);
-        } else {
-            jbInicio.setEnabled(!status);
-            jbAnterior.setEnabled(!status);
-            jbProximo.setEnabled(!status);
-            jbUltimo.setEnabled(!status);
-        }
     }
 }

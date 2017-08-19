@@ -74,7 +74,7 @@ public abstract class AbstractDao<T extends AbstractModel> {
 
     public void voltaItem() {
         try {
-            rs.last();
+            rs.previous();
         } catch (SQLException ex) {
             Logger.getLogger(AbstractDao.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -103,6 +103,14 @@ public abstract class AbstractDao<T extends AbstractModel> {
             Logger.getLogger(AbstractDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+    
+    public void setItemRs(int indice){
+        try {
+            rs.absolute(indice);
+        } catch (SQLException ex) {
+            Logger.getLogger(AbstractDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public boolean isFirst() {
