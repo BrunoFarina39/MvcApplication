@@ -5,8 +5,6 @@
  */
 package br.com.brunofarina.application;
 
-import br.com.brunofarina.connection.Database;
-
 /**
  *
  * @author Bruno Farina
