@@ -48,7 +48,6 @@ public class AbstractView extends JInternalFrame {
     private StringBuffer rotulo;
     private ArrayList<CustomComponent> campos;
     protected ButtonGroup btGroup;
-    private int cont;
 
     public AbstractView(String title, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(title, resizable, closable, maximizable, iconable);
@@ -136,10 +135,9 @@ public class AbstractView extends JInternalFrame {
         this.panelInstPesq.add(jbAnterior);
         this.panelInstPesq.add(jbProximo);
         this.panelInstPesq.add(jbUltimo);
-        statusInicial();
     }
 
-    public void adicionaComponente(int linha, int coluna, int largura, int altura, int espVert, int espaHor, JComponent componente) {
+    protected void adicionaComponente(int linha, int coluna, int largura, int altura, int espVert, int espaHor, JComponent componente) {
         this.rotulo.delete(0, rotulo.length());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = linha;
@@ -203,7 +201,7 @@ public class AbstractView extends JInternalFrame {
         }
     }
 
-    public void habilitaCampos(boolean status) {
+    private void habilitaCampos(boolean status) {
         Component[] jComponent = panelCampos.getComponents();
         for (int i = 0; i < jComponent.length; i++) {
             if (jComponent[i] instanceof JTextField) {
@@ -220,8 +218,7 @@ public class AbstractView extends JInternalFrame {
         } else {
             setStatusBtPesq(true);
         }
-        jTable.setRowSelectionInterval(0, 0);
-        setCont();
+        //jTable.setRowSelectionInterval(0, 0);
     }
 
     public void statusInicial() {
@@ -249,9 +246,9 @@ public class AbstractView extends JInternalFrame {
     }
 
     public void statusEditar() {
-        jbNovo.setEnabled(true);
+        jbNovo.setEnabled(false);
         jbSalvar.setEnabled(true);
-        jbEditar.setEnabled(true);
+        jbEditar.setEnabled(false);
         jbExcluir.setEnabled(false);
         habilitaCampos(true);
     }
@@ -306,38 +303,5 @@ public class AbstractView extends JInternalFrame {
 
     public Object getPesquisa() {
         return jtPesquisar.getText();
-    }
-
-    public void setCont() {
-        cont = jTable.getSelectedRow();
-        //setStatusBtNav(cont);
-    }
-
-    public void avancarItem() {
-        cont++;
-        jTable.setRowSelectionInterval(cont, cont);
-        statusLista();
-        //setStatusBtNav(cont);
-    }
-
-    public void voltarItem() {
-        cont--;
-        jTable.setRowSelectionInterval(cont, cont);
-        statusLista();
-        //setStatusBtNav(cont);
-    }
-
-    public void ultimoItem() {
-        cont = jTable.getRowCount() - 1;
-        jTable.setRowSelectionInterval(cont, cont);
-        statusLista();
-        // setStatusBtNav(cont);
-    }
-
-    public void primeiroItem() {
-        cont = 0;
-        jTable.setRowSelectionInterval(cont, cont);
-        statusLista();
-        // setStatusBtNav(cont);
     }
 }

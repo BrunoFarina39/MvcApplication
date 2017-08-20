@@ -26,7 +26,8 @@ public abstract class AbstractDao<T extends AbstractModel> {
     protected Connection conexao;
     protected ResultSet rs;
     private Class<T> entyClass;
-
+    protected int tamanhoRs=0;
+    
     public AbstractDao(Class<T> entityClass) {
         this.conexao = Database.getConnection();
         this.entyClass = entityClass;

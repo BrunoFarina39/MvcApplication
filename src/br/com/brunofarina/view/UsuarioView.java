@@ -131,7 +131,6 @@ public class UsuarioView extends AbstractView {
         jbUltimo.addActionListener(usuarioController);
         jbInicio.addActionListener(usuarioController);
         jTable.addMouseListener(usuarioController);
-        habilitaCampos(false);
     }
 
     @Override
