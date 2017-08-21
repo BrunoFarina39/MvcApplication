@@ -6,6 +6,7 @@
 package br.com.brunofarina.view;
 
 import br.com.brunofarina.component.CustomComponent;
+import br.com.brunofarina.model.AbstractModel;
 import br.com.brunofarina.model.TableModel;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -84,7 +85,6 @@ public class AbstractView extends JInternalFrame {
                 }
                 return component;
             }
-
         };
         this.jTable.setAutoCreateRowSorter(true);
         rotulo = new StringBuffer();
@@ -221,28 +221,15 @@ public class AbstractView extends JInternalFrame {
         //jTable.setRowSelectionInterval(0, 0);
     }
 
-    public void statusInicial() {
-        jbNovo.setEnabled(true);
-        jbSalvar.setEnabled(false);
-        jbEditar.setEnabled(false);
-        jbExcluir.setEnabled(false);
-        habilitaCampos(false);
-    }
-
     public void statusNovo() {
         jbNovo.setEnabled(false);
         jbSalvar.setEnabled(true);
         jbEditar.setEnabled(false);
         jbExcluir.setEnabled(false);
+        jbCancelar.setEnabled(true);
         habilitaCampos(true);
-    }
-
-    public void statusSalvar() {
-        jbNovo.setEnabled(true);
-        jbSalvar.setEnabled(false);
-        jbEditar.setEnabled(false);
-        jbExcluir.setEnabled(false);
-        habilitaCampos(false);
+        setStatusBtPesq(false);
+        jTable.setEnabled(false);
     }
 
     public void statusEditar() {
@@ -250,7 +237,11 @@ public class AbstractView extends JInternalFrame {
         jbSalvar.setEnabled(true);
         jbEditar.setEnabled(false);
         jbExcluir.setEnabled(false);
+        jbCancelar.setEnabled(true);
         habilitaCampos(true);
+        setStatusBtPesq(false);
+        //jTable.setS(false);
+
     }
 
     public void statusLista() {
@@ -258,9 +249,12 @@ public class AbstractView extends JInternalFrame {
         jbSalvar.setEnabled(false);
         jbEditar.setEnabled(true);
         jbExcluir.setEnabled(true);
+        jbCancelar.setEnabled(false);
         habilitaCampos(false);
+        setStatusBtPesq(true);
+        jTable.setEnabled(true);
     }
-    
+
     public void setIsFirst(boolean status) {
 
         if (status) {
@@ -275,15 +269,13 @@ public class AbstractView extends JInternalFrame {
             jbUltimo.setEnabled(status);
         }
     }
-    
+
     public void setStatusBtPesq(boolean status) {
         jbProximo.setEnabled(status);
         jbAnterior.setEnabled(status);
         jbUltimo.setEnabled(status);
         jbInicio.setEnabled(status);
     }
-
-   
 
     public void statusManutencao(boolean status) {
         if (status) {
@@ -296,12 +288,16 @@ public class AbstractView extends JInternalFrame {
     public void setLinhaSelecionada(int linha) {
         jTable.setRowSelectionInterval(linha, linha);
     }
-    
+
     public int getLinhaSelecionada() {
         return jTable.getSelectedRow();
     }
 
     public Object getPesquisa() {
         return jtPesquisar.getText();
+    }
+
+    public void preencheCampos(AbstractModel usuario) {
+
     }
 }

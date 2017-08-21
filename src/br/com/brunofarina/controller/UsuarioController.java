@@ -107,7 +107,6 @@ public class UsuarioController extends AbstractController implements ActionListe
 
     @Override
     public void salvar() {
-        int id = 0;
         if (usuarioView.valida()) {
             usuario.setLogin(usuarioView.getLogin());
             usuario.setSenha(usuarioView.getSenha());
@@ -119,11 +118,6 @@ public class UsuarioController extends AbstractController implements ActionListe
             } else {
                 usuario.setId(Integer.parseInt(usuarioView.getId()));
                 usuarioView.statusManutencao(usuarioDao.editar(usuario));
-//                id=usuarioView.getLinhaSelecionada()+1;
-//                usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
-//                usuarioDao.setItemRs(id);
-//                usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs()-1);
-//                usuarioView.statusSalvar();
             }
             usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
             povoaPrimeiroItem();
@@ -146,7 +140,7 @@ public class UsuarioController extends AbstractController implements ActionListe
                 usuarioDao.excluir(usuario);
                 usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
                 povoaPrimeiroItem();
-                usuarioView.statusInicial();
+                usuarioView.statusLista();
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir usuário", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -169,7 +163,7 @@ public class UsuarioController extends AbstractController implements ActionListe
         }
         usuarioDao.primeiroItem();
         //usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-       //usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
+        //usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
         //testarNavegacao();
         setaCampos();
     }
@@ -177,19 +171,6 @@ public class UsuarioController extends AbstractController implements ActionListe
     public void cancelar() {
         usuarioView.statusLista();
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-    }
-
-    public TableModel preencherTabela() {
-        usuarioView.preencheCampos(usuarioDao.listarUsuario().get(0));
-        return new TableModel(usuarioDao.listarUsuario(), Usuario.class);
-    }
-
-    public void avancaItem() {
-        usuarioDao.avancaItem();
-    }
-
-    public void voltaItem() {
-        usuarioDao.voltaItem();
     }
 
     public void testarNavegacao() {
