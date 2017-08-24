@@ -26,8 +26,8 @@ public abstract class AbstractDao<T extends AbstractModel> {
     protected Connection conexao;
     protected ResultSet rs;
     private Class<T> entyClass;
-    protected int tamanhoRs=0;
-    
+    protected int tamanhoRs = 0;
+
     public AbstractDao(Class<T> entityClass) {
         this.conexao = Database.getConnection();
         this.entyClass = entityClass;
@@ -105,8 +105,8 @@ public abstract class AbstractDao<T extends AbstractModel> {
         }
         return 0;
     }
-    
-    public void setItemRs(int indice){
+
+    public void setItemRs(int indice) {
         try {
             rs.absolute(indice);
         } catch (SQLException ex) {

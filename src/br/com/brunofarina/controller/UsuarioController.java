@@ -137,10 +137,13 @@ public class UsuarioController extends AbstractController implements ActionListe
         int opcaoSim = JOptionPane.YES_OPTION;
         try {
             if (jOptionPane == opcaoSim) {
-                usuarioDao.excluir(usuario);
-                usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
-                povoaPrimeiroItem();
-                usuarioView.statusLista();
+                if (usuarioDao.excluir(usuario)) {
+                    usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
+                    povoaPrimeiroItem();
+                    usuarioView.statusLista();
+                } else {
+                    JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir Usuário", "Exclusão", JOptionPane.ERROR_MESSAGE);
+                }
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir usuário", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -162,14 +165,12 @@ public class UsuarioController extends AbstractController implements ActionListe
             usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(chave.toString()), Usuario.class));
         }
         usuarioDao.primeiroItem();
-        //usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-        //usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
-        //testarNavegacao();
         setaCampos();
     }
 
     public void cancelar() {
         usuarioView.statusLista();
+        testarNavegacao();
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
     }
 
@@ -187,10 +188,16 @@ public class UsuarioController extends AbstractController implements ActionListe
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        usuarioDao.setItemRs(usuarioView.getLinhaSelecionada() + 1);
-        usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-        usuarioView.statusLista();
-        testarNavegacao();
+        // if()
+
+        if (e.getClickCount() == 1) {
+            usuarioDao.setItemRs(usuarioView.getLinhaSelecionada() + 1);
+            usuarioView.preencheCampos(usuarioDao.retornaUsuario());
+            usuarioView.statusLista();
+            testarNavegacao();
+        } else if (e.getClickCount() == 2) {
+            editar();
+        }
     }
 
     @Override

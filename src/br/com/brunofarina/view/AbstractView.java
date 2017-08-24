@@ -85,6 +85,11 @@ public class AbstractView extends JInternalFrame {
                 }
                 return component;
             }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
         };
         this.jTable.setAutoCreateRowSorter(true);
         rotulo = new StringBuffer();
@@ -251,7 +256,6 @@ public class AbstractView extends JInternalFrame {
         jbExcluir.setEnabled(true);
         jbCancelar.setEnabled(false);
         habilitaCampos(false);
-        setStatusBtPesq(true);
         jTable.setEnabled(true);
     }
 
