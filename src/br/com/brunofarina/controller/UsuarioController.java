@@ -41,7 +41,6 @@ public class UsuarioController extends AbstractController implements ActionListe
         usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
         usuarioView.statusLista();
         usuarioView.setIsFirst(true);
-
     }
 
     public void povoaPrimeiroItem() {

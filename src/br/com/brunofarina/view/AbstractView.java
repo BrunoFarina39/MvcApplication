@@ -30,10 +30,14 @@ import javax.swing.JTextField;
 import br.com.brunofarina.util.TestGridBagLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -92,10 +96,19 @@ public class AbstractView extends JInternalFrame {
             }
         };
         this.jTable.setAutoCreateRowSorter(true);
+        jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//        JTableHeader jTableHeader = jTable.getTableHeader();
+//        jTableHeader.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent evt) {
+//                JTable jTable = ((JTableHeader) evt.getSource()).getTable();
+//                jTable.setRowSelectionInterval(0, 0);
+//
+//            }
+//        });
         rotulo = new StringBuffer();
         campos = new ArrayList<CustomComponent>();
         Container container = getContentPane();
-        jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         JScrollPane scroll = new JScrollPane(jTable);
         scroll.setViewportView(jTable);
         container.add(panel);
