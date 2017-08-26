@@ -53,6 +53,7 @@ public class AbstractView extends JInternalFrame {
     private StringBuffer rotulo;
     private ArrayList<CustomComponent> campos;
     protected ButtonGroup btGroup;
+    private AdaptadorMouseTabela adaptadorMouseTabela;
 
     public AbstractView(String title, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(title, resizable, closable, maximizable, iconable);
@@ -80,6 +81,7 @@ public class AbstractView extends JInternalFrame {
 
         this.jbProximo.setSize(new Dimension(10, 10));
         this.jbAnterior.setSize(new Dimension(10, 10));
+        //adaptadorMouseTabela = new AdaptadorMouseTabela();
         this.jTable = new JTable() {
             @Override
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
@@ -106,6 +108,8 @@ public class AbstractView extends JInternalFrame {
 //
 //            }
 //        });
+        JTableHeader jTableHeader = jTable.getTableHeader();
+        jTableHeader.addMouseListener(adaptadorMouseTabela);
         rotulo = new StringBuffer();
         campos = new ArrayList<CustomComponent>();
         Container container = getContentPane();
@@ -317,4 +321,13 @@ public class AbstractView extends JInternalFrame {
     public void preencheCampos(AbstractModel usuario) {
 
     }
+
+    public JTable getJTable() {
+        return jTable;
+    }
+
+    public AdaptadorMouseTabela getAdaptadorMouseTabela() {
+        return adaptadorMouseTabela;
+    }
+
 }

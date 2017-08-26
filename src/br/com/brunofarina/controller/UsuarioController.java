@@ -5,21 +5,19 @@
  */
 package br.com.brunofarina.controller;
 
-import br.com.brunofarina.application.TelaLogin;
-import br.com.brunofarina.application.TelaPrincipal;
 import br.com.brunofarina.dao.UsuarioDao;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
 import br.com.brunofarina.view.UsuarioView;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.event.MouseAdapter;
+import javax.swing.JTable;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -41,6 +39,17 @@ public class UsuarioController extends AbstractController implements ActionListe
         usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
         usuarioView.statusLista();
         usuarioView.setIsFirst(true);
+        //usuarioView.getAdaptadorMouseTabela().setDao(usuarioDao);
+        JTableHeader jTableHeader = usuarioView.getJTable().getTableHeader();
+        jTableHeader.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                JTable jTable = ((JTableHeader) evt.getSource()).getTable();
+                jTable.setRowSelectionInterval(0, 0);
+                usuarioDao.primeiroItem();
+
+            }
+        });
     }
 
     public void povoaPrimeiroItem() {

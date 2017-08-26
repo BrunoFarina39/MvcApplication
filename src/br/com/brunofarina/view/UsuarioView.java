@@ -14,6 +14,7 @@ import br.com.brunofarina.model.Usuario;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.table.JTableHeader;
 
 /**
  *
