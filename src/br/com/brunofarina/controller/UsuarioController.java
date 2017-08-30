@@ -47,6 +47,7 @@ public class UsuarioController extends AbstractController implements ActionListe
                 JTable jTable = ((JTableHeader) evt.getSource()).getTable();
                 jTable.setRowSelectionInterval(0, 0);
                 usuarioDao.primeiroItem();
+                testarNavegacao();
 
             }
         });
