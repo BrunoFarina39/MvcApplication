@@ -234,7 +234,7 @@ public class AbstractView extends JInternalFrame {
 
     public void povoaJtable(TableModel tb) {
         jTable.setModel(tb);
-        jTable.setFillsViewportHeight(true);
+        //jTable.setFillsViewportHeight(true);
         if (jTable.getRowCount() == 0) {
             setStatusBtPesq(false);
         } else {

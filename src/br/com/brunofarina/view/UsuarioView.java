@@ -142,44 +142,52 @@ public class UsuarioView extends AbstractView {
         jTable.getTableHeader().getColumnModel().getColumn(2).setPreferredWidth(300);
     }
 
-    public String getId() {
-        return jtCodigo.getValor();
+    public CustomJTextField getJtCodigo() {
+        return jtCodigo;
     }
 
-    public void setId(int id) {
-        jtCodigo.setTexto(String.valueOf(id));
+    public void setJtCodigo(CustomJTextField jtCodigo) {
+        this.jtCodigo = jtCodigo;
     }
 
-    public String getLogin() {
-        return jtLogin.getValor();
+    public CustomJTextField getJtNome() {
+        return jtNome;
     }
 
-    public void setLogin(String login) {
-        jtLogin.setTexto(login);
+    public void setJtNome(CustomJTextField jtNome) {
+        this.jtNome = jtNome;
     }
 
-    public String getSenha() {
-        return jtSenha.getValor();
+    public CustomJTextField getJtLogin() {
+        return jtLogin;
     }
 
-    public void setSenha(String senha) {
-        jtSenha.setTexto(senha);
+    public void setJtLogin(CustomJTextField jtLogin) {
+        this.jtLogin = jtLogin;
     }
 
-    public String getNome() {
-        return jtNome.getValor();
+    public CustomJPasswordField getJtSenha() {
+        return jtSenha;
     }
 
-    public void setNome(String nome) {
-        jtNome.setTexto(nome);
+    public void setJtSenha(CustomJPasswordField jtSenha) {
+        this.jtSenha = jtSenha;
     }
 
-    public boolean getSelectedRbId() {
-        return JRadioId.isSelected();
+    public JRadioButton getJRadioId() {
+        return JRadioId;
     }
 
-    public boolean getSelectedRbNome() {
-        return JRadioNome.isSelected();
+    public void setJRadioId(JRadioButton JRadioId) {
+        this.JRadioId = JRadioId;
+    }
+
+    public JRadioButton getJRadioNome() {
+        return JRadioNome;
+    }
+
+    public void setJRadioNome(JRadioButton JRadioNome) {
+        this.JRadioNome = JRadioNome;
     }
 
     @Override

@@ -117,18 +117,18 @@ public class UsuarioController extends AbstractController implements ActionListe
     @Override
     public void salvar() {
         if (usuarioView.valida()) {
-            usuario.setLogin(usuarioView.getLogin());
-            usuario.setSenha(usuarioView.getSenha());
-            usuario.setNome(usuarioView.getNome());
+            usuario.setLogin(usuarioView.getJtLogin().getValor());
+            usuario.setSenha(usuarioView.getJtSenha().getValor());
+            usuario.setNome(usuarioView.getJtNome().getValor());
 
-            if (usuarioView.getId().length() == 0) {
+            if (usuarioView.getJtCodigo().getVazio()) {
                 usuarioView.statusManutencao(usuarioDao.salvar(usuario));
                 usuarioView.limpaCampos();
             } else {
-                usuario.setId(Integer.parseInt(usuarioView.getId()));
+                usuario.setId(Integer.parseInt(usuarioView.getJtCodigo().getValor()));
                 usuarioView.statusManutencao(usuarioDao.editar(usuario));
             }
-            usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
+            usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(usuarioView.getPesquisa().toString()), Usuario.class));
             povoaPrimeiroItem();
             usuarioView.statusLista();
         }
@@ -141,7 +141,7 @@ public class UsuarioController extends AbstractController implements ActionListe
 
     @Override
     public void excluir() {
-        usuario.setId(Integer.parseInt(usuarioView.getId()));
+        usuario.setId(Integer.parseInt(usuarioView.getJtCodigo().getValor()));
         int jOptionPane = JOptionPane.showConfirmDialog(usuarioView, "Deseja excluir este usuário", "Exclusão", JOptionPane.YES_NO_OPTION);
         int opcaoSim = JOptionPane.YES_OPTION;
         try {

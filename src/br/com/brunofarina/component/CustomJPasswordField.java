@@ -41,7 +41,7 @@ public class CustomJPasswordField extends JPasswordField implements CustomCompon
 
     @Override
     public boolean getVazio() {
-        return getText().trim().length() == 0;
+        return String.valueOf(super.getPassword()).trim().length() == 0;
     }
 
     @Override
