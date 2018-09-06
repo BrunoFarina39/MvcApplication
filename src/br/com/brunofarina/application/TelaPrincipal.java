@@ -31,7 +31,8 @@ public class TelaPrincipal extends JFrame implements ActionListener {
     public TelaPrincipal() {
         jMenu = new JMenu();
         jMenuBar = new JMenuBar();
-        jInternalFrame = new UsuarioView();
+        UsuarioController usuarioController = new UsuarioController();
+        jInternalFrame = usuarioController.getView();
         jDesktopPane = new JDesktopPane();
         //jDesktopPane.add(jInternalFrame);
         jMenuItemUsuario = new JMenuItem();
@@ -76,8 +77,9 @@ public class TelaPrincipal extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jMenuItemUsuario) {
-            UsuarioView usuarioView = new UsuarioView();
-            jDesktopPane.add(usuarioView);
+            //UsuarioView usuarioView = new UsuarioView();
+            UsuarioController usuarioController = new UsuarioController();
+            jDesktopPane.add(usuarioController.getView());
         }
     }
 

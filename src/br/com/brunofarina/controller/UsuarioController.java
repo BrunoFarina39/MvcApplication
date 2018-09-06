@@ -23,16 +23,87 @@ import javax.swing.table.JTableHeader;
  *
  * @author Bruno
  */
-public class UsuarioController extends AbstractController implements ActionListener, MouseListener {
+public class UsuarioController extends AbstractController implements MouseListener {
 
     private UsuarioView usuarioView;
     private Usuario usuario;
     private UsuarioDao usuarioDao;
 
-    public UsuarioController(UsuarioView usuarioView) {
-        this.usuarioView = usuarioView;
+    public UsuarioController() {
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switch (e.getActionCommand()) {
+                    case "Novo":
+                        novo();
+                        break;
+                    case "Salvar":
+                        salvar();
+                        break;
+                    case "Editar":
+                        editar();
+                        break;
+                    case "Excluir":
+                        excluir();
+                        break;
+                    case "Cancelar":
+                        cancelar();
+                        break;
+                    case "Pesquisar":
+                        listar(usuarioView.getPesquisa());
+                        break;
+                    case ">":
+                        povoaProximoItem();
+                        break;
+                    case "<":
+                        povoaItemAnterior();
+                        break;
+                    case ">>":
+                        povoaUltimoItem();
+                        break;
+                    case "<<":
+                        povoaPrimeiroItem();
+                        break;
+                }
+            }
+        };
+        MouseListener mouseListener = new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    usuarioDao.setItemRs(usuarioView.getLinhaSelecionada() + 1);
+                    usuarioView.preencheCampos(usuarioDao.retornaUsuario());
+                    usuarioView.statusLista();
+                    testarNavegacao();
+                } else if (e.getClickCount() == 2) {
+                    editar();
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        };
+        this.usuarioView = new UsuarioView(actionListener, mouseListener);
         this.usuario = new Usuario();
         this.usuarioDao = new UsuarioDao();
+
         usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
         usuarioDao.primeiroItem();
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
@@ -53,6 +124,10 @@ public class UsuarioController extends AbstractController implements ActionListe
         });
     }
 
+    public UsuarioView getView() {
+        return this.usuarioView;
+    }
+
     public void povoaPrimeiroItem() {
         usuarioDao.primeiroItem();
         setaCampos();
@@ -71,42 +146,6 @@ public class UsuarioController extends AbstractController implements ActionListe
     public void povoaItemAnterior() {
         usuarioDao.voltaItem();
         setaCampos();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "Novo":
-                novo();
-                break;
-            case "Salvar":
-                salvar();
-                break;
-            case "Editar":
-                editar();
-                break;
-            case "Excluir":
-                excluir();
-                break;
-            case "Cancelar":
-                cancelar();
-                break;
-            case "Pesquisar":
-                listar(usuarioView.getPesquisa());
-                break;
-            case ">":
-                povoaProximoItem();
-                break;
-            case "<":
-                povoaItemAnterior();
-                break;
-            case ">>":
-                povoaUltimoItem();
-                break;
-            case "<<":
-                povoaPrimeiroItem();
-                break;
-        }
     }
 
     public void novo() {
@@ -199,14 +238,6 @@ public class UsuarioController extends AbstractController implements ActionListe
     public void mouseClicked(MouseEvent e) {
         // if()
 
-        if (e.getClickCount() == 1) {
-            usuarioDao.setItemRs(usuarioView.getLinhaSelecionada() + 1);
-            usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-            usuarioView.statusLista();
-            testarNavegacao();
-        } else if (e.getClickCount() == 2) {
-            editar();
-        }
     }
 
     @Override
