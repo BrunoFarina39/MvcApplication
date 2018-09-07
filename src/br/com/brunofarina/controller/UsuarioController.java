@@ -23,7 +23,7 @@ import javax.swing.table.JTableHeader;
  *
  * @author Bruno
  */
-public class UsuarioController extends AbstractController implements MouseListener {
+public class UsuarioController extends AbstractController {
 
     private UsuarioView usuarioView;
     private Usuario usuario;
@@ -73,7 +73,7 @@ public class UsuarioController extends AbstractController implements MouseListen
                 if (e.getClickCount() == 1) {
                     usuarioDao.setItemRs(usuarioView.getLinhaSelecionada() + 1);
                     usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-                    usuarioView.statusLista();
+                    usuarioView.statusInicial();
                     testarNavegacao();
                 } else if (e.getClickCount() == 2) {
                     editar();
@@ -108,7 +108,7 @@ public class UsuarioController extends AbstractController implements MouseListen
         usuarioDao.primeiroItem();
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
         usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
-        usuarioView.statusLista();
+        usuarioView.statusInicial();
         usuarioView.setIsFirst(true);
         //usuarioView.getAdaptadorMouseTabela().setDao(usuarioDao);
         JTableHeader jTableHeader = usuarioView.getJTable().getTableHeader();
@@ -169,7 +169,7 @@ public class UsuarioController extends AbstractController implements MouseListen
             }
             usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(usuarioView.getPesquisa().toString()), Usuario.class));
             povoaPrimeiroItem();
-            usuarioView.statusLista();
+            usuarioView.statusInicial();
         }
     }
 
@@ -188,7 +188,7 @@ public class UsuarioController extends AbstractController implements MouseListen
                 if (usuarioDao.excluir(usuario)) {
                     usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
                     povoaPrimeiroItem();
-                    usuarioView.statusLista();
+                    usuarioView.statusInicial();
                 } else {
                     JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir Usuário", "Exclusão", JOptionPane.ERROR_MESSAGE);
                 }
@@ -202,7 +202,7 @@ public class UsuarioController extends AbstractController implements MouseListen
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
         usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
         testarNavegacao();
-        usuarioView.statusLista();
+        usuarioView.statusInicial();
     }
 
     @Override
@@ -217,7 +217,7 @@ public class UsuarioController extends AbstractController implements MouseListen
     }
 
     public void cancelar() {
-        usuarioView.statusLista();
+        usuarioView.statusInicial();
         testarNavegacao();
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
     }
@@ -232,31 +232,5 @@ public class UsuarioController extends AbstractController implements MouseListen
         } else {
             usuarioView.setStatusBtPesq(true);
         }
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        // if()
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
     }
 }

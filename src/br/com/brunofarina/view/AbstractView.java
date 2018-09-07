@@ -124,15 +124,9 @@ public class AbstractView extends JInternalFrame {
         this.panelPesquisa.setLayout(new BorderLayout());
         this.panelPesquisa.add(panelInstPesq, BorderLayout.NORTH);
         this.panelPesquisa.add(panelScroll, BorderLayout.SOUTH);
-        // this.panelScroll.setLayout(new GridLayout());
-        //this.panelScroll.setPreferredSize(new Dimension(600, 200));
-        //JTabbedPane jt = new JTabbedPane();
-        //jt.addTab("Tabela", scroll);
-        // jt.setPreferredSize(new Dimension(600, 200));
+
         this.panelScroll.add(scroll);
         scroll.setPreferredSize(new Dimension(600, 200));
-        //jTable.setPreferredSize(new Dimension(600, 200));
-        //jTable.setPreferredScrollableViewportSize(jTable.getPreferredSize());
 
         this.panelInstPesq.setLayout(new FlowLayout());
         this.panelInstPesq.add(jtPesquisar);
@@ -247,11 +241,10 @@ public class AbstractView extends JInternalFrame {
         jbCancelar.setEnabled(true);
         habilitaCampos(true);
         setStatusBtPesq(false);
-        //jTable.setS(false);
 
     }
 
-    public void statusLista() {
+    public void statusInicial() {
         jbNovo.setEnabled(true);
         jbSalvar.setEnabled(false);
         jbEditar.setEnabled(true);
