@@ -39,9 +39,11 @@ public abstract class AbstractDao<T extends AbstractModel> {
     }
 
     public T buscaPorId(T absModel) throws SQLException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        String sql = "select * from ".concat(entyClass.getSimpleName()).concat(" where id=?");
+        StringBuilder sql = new StringBuilder("select * from ");
+        sql.append(entyClass.getSimpleName());
+        sql.append(" where id=?");
         PreparedStatement ps;
-        ps = conexao.prepareStatement(sql);
+        ps = conexao.prepareStatement(sql.toString());
         ps.setInt(1, absModel.getId());
         this.rs = ps.executeQuery();
         this.rs.next();
@@ -57,15 +59,17 @@ public abstract class AbstractDao<T extends AbstractModel> {
     }
 
     public boolean excluir(T absModel) throws SQLException {
-        String sql = "delete from ".concat(absModel.getClass().getSimpleName()).concat(" where id=?");
+        StringBuilder sql = new StringBuilder("delete from ");
+        sql.append(absModel.getClass().getSimpleName());
+        sql.append(" where id=?");
 
-        PreparedStatement ps = conexao.prepareStatement(sql);
+        PreparedStatement ps = conexao.prepareStatement(sql.toString());
         ps.setInt(1, absModel.getId());
         ps.execute();
         return true;
     }
 
-    public void avancaItem() {
+    public void avancaItemRs() {
         try {
             rs.next();
         } catch (SQLException ex) {
@@ -73,7 +77,7 @@ public abstract class AbstractDao<T extends AbstractModel> {
         }
     }
 
-    public void voltaItem() {
+    public void voltaItemRs() {
         try {
             rs.previous();
         } catch (SQLException ex) {
@@ -81,7 +85,7 @@ public abstract class AbstractDao<T extends AbstractModel> {
         }
     }
 
-    public void primeiroItem() {
+    public void primeiroItemRs() {
         try {
             rs.first();
         } catch (SQLException ex) {
@@ -89,7 +93,7 @@ public abstract class AbstractDao<T extends AbstractModel> {
         }
     }
 
-    public void ultimoItem() {
+    public void ultimoItemRs() {
         try {
             rs.last();
         } catch (SQLException ex) {

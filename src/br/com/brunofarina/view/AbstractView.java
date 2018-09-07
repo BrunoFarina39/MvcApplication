@@ -215,9 +215,9 @@ public class AbstractView extends JInternalFrame {
         jTable.setModel(tb);
         //jTable.setFillsViewportHeight(true);
         if (jTable.getRowCount() == 0) {
-            setStatusBtPesq(false);
+            setStatusBtNavPesq(false);
         } else {
-            setStatusBtPesq(true);
+            setStatusBtNavPesq(true);
         }
         //jTable.setRowSelectionInterval(0, 0);
     }
@@ -229,7 +229,7 @@ public class AbstractView extends JInternalFrame {
         jbExcluir.setEnabled(false);
         jbCancelar.setEnabled(true);
         habilitaCampos(true);
-        setStatusBtPesq(false);
+        setStatusBtNavPesq(false);
         jTable.setEnabled(false);
     }
 
@@ -240,8 +240,7 @@ public class AbstractView extends JInternalFrame {
         jbExcluir.setEnabled(false);
         jbCancelar.setEnabled(true);
         habilitaCampos(true);
-        setStatusBtPesq(false);
-
+        setStatusBtNavPesq(false);
     }
 
     public void statusInicial() {
@@ -269,7 +268,7 @@ public class AbstractView extends JInternalFrame {
         }
     }
 
-    public void setStatusBtPesq(boolean status) {
+    public void setStatusBtNavPesq(boolean status) {
         jbProximo.setEnabled(status);
         jbAnterior.setEnabled(status);
         jbUltimo.setEnabled(status);

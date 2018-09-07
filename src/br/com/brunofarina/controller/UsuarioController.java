@@ -53,16 +53,20 @@ public class UsuarioController extends AbstractController {
                         listar(usuarioView.getPesquisa());
                         break;
                     case ">":
-                        povoaProximoItem();
+                         usuarioDao.avancaItemRs();
+                         setJTextAndJTable();
                         break;
                     case "<":
-                        povoaItemAnterior();
+                         usuarioDao.voltaItemRs();
+                         setJTextAndJTable();
                         break;
                     case ">>":
-                        povoaUltimoItem();
+                        usuarioDao.ultimoItemRs();
+                        setJTextAndJTable();
                         break;
                     case "<<":
-                        povoaPrimeiroItem();
+                        usuarioDao.primeiroItemRs();
+                        setJTextAndJTable();
                         break;
                 }
             }
@@ -105,47 +109,22 @@ public class UsuarioController extends AbstractController {
         this.usuarioDao = new UsuarioDao();
 
         usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
-        usuarioDao.primeiroItem();
+        usuarioDao.primeiroItemRs();
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
         usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
         usuarioView.statusInicial();
         usuarioView.setIsFirst(true);
-        //usuarioView.getAdaptadorMouseTabela().setDao(usuarioDao);
         JTableHeader jTableHeader = usuarioView.getJTable().getTableHeader();
         jTableHeader.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
                 JTable jTable = ((JTableHeader) evt.getSource()).getTable();
                 jTable.setRowSelectionInterval(0, 0);
-                usuarioDao.primeiroItem();
+                usuarioDao.primeiroItemRs();
                 testarNavegacao();
 
             }
         });
-    }
-
-    public UsuarioView getView() {
-        return this.usuarioView;
-    }
-
-    public void povoaPrimeiroItem() {
-        usuarioDao.primeiroItem();
-        setaCampos();
-    }
-
-    public void povoaUltimoItem() {
-        usuarioDao.ultimoItem();
-        setaCampos();
-    }
-
-    public void povoaProximoItem() {
-        usuarioDao.avancaItem();
-        setaCampos();
-    }
-
-    public void povoaItemAnterior() {
-        usuarioDao.voltaItem();
-        setaCampos();
     }
 
     public void novo() {
@@ -168,8 +147,8 @@ public class UsuarioController extends AbstractController {
                 usuarioView.statusManutencao(usuarioDao.editar(usuario));
             }
             usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(usuarioView.getPesquisa().toString()), Usuario.class));
-            povoaPrimeiroItem();
-            usuarioView.statusInicial();
+            usuarioDao.primeiroItemRs();
+            setJTextAndJTable();
         }
     }
 
@@ -187,10 +166,11 @@ public class UsuarioController extends AbstractController {
             if (jOptionPane == opcaoSim) {
                 if (usuarioDao.excluir(usuario)) {
                     usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
-                    povoaPrimeiroItem();
+                      usuarioDao.primeiroItemRs();
+                      setJTextAndJTable();
                     usuarioView.statusInicial();
                 } else {
-                    JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir Usuário", "Exclusão", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir usuário", "Exclusão", JOptionPane.ERROR_MESSAGE);
                 }
             }
         } catch (SQLException ex) {
@@ -198,12 +178,6 @@ public class UsuarioController extends AbstractController {
         }
     }
 
-    private void setaCampos() {
-        usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-        usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
-        testarNavegacao();
-        usuarioView.statusInicial();
-    }
 
     @Override
     public void listar(Object chave) {
@@ -212,8 +186,8 @@ public class UsuarioController extends AbstractController {
         } else if (chave instanceof String) {
             usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(chave.toString()), Usuario.class));
         }
-        usuarioDao.primeiroItem();
-        setaCampos();
+        usuarioDao.primeiroItemRs();
+        setJTextAndJTable();
     }
 
     public void cancelar() {
@@ -224,13 +198,24 @@ public class UsuarioController extends AbstractController {
 
     public void testarNavegacao() {
         if (usuarioDao.retornaTamanhoRs() == 1) {
-            usuarioView.setStatusBtPesq(false);
+            usuarioView.setStatusBtNavPesq(false);
         } else if (usuarioDao.isFirst()) {
             usuarioView.setIsFirst(true);
         } else if (usuarioDao.isLast()) {
             usuarioView.setIsFirst(false);
         } else {
-            usuarioView.setStatusBtPesq(true);
+            usuarioView.setStatusBtNavPesq(true);
         }
+    }
+    
+     public UsuarioView getView() {
+        return this.usuarioView;
+    }
+    
+     private void setJTextAndJTable() {
+        usuarioView.preencheCampos(usuarioDao.retornaUsuario());
+        usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs()-1);
+        testarNavegacao();
+        usuarioView.statusInicial();
     }
 }

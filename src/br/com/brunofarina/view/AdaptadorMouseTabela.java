@@ -29,7 +29,7 @@ public class AdaptadorMouseTabela extends MouseAdapter {
     public void mouseClicked(MouseEvent evt) {
         JTable jTable = ((JTableHeader) evt.getSource()).getTable();
         jTable.setRowSelectionInterval(0, 0);
-        abs.primeiroItem();
+        abs.primeiroItemRs();
     }
 
     public void setDao(AbstractDao abs) {
