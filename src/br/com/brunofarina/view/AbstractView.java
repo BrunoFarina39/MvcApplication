@@ -94,7 +94,7 @@ public class AbstractView extends JInternalFrame {
         jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         JTableHeader jTableHeader = jTable.getTableHeader();
-        jTableHeader.addMouseListener(adaptadorMouseTabela);
+        //jTableHeader.addMouseListener(adaptadorMouseTabela);
         rotulo = new StringBuffer();
         campos = new ArrayList<CustomComponent>();
         Container container = getContentPane();
@@ -213,13 +213,11 @@ public class AbstractView extends JInternalFrame {
 
     public void povoaJtable(TableModel tb) {
         jTable.setModel(tb);
-        //jTable.setFillsViewportHeight(true);
         if (jTable.getRowCount() == 0) {
-            setStatusBtNavPesq(false);
+            setNavStatus(false);
         } else {
-            setStatusBtNavPesq(true);
+            setNavStatus(true);
         }
-        //jTable.setRowSelectionInterval(0, 0);
     }
 
     public void statusNovo() {
@@ -229,7 +227,7 @@ public class AbstractView extends JInternalFrame {
         jbExcluir.setEnabled(false);
         jbCancelar.setEnabled(true);
         habilitaCampos(true);
-        setStatusBtNavPesq(false);
+        setNavStatus(false);
         jTable.setEnabled(false);
     }
 
@@ -240,7 +238,7 @@ public class AbstractView extends JInternalFrame {
         jbExcluir.setEnabled(false);
         jbCancelar.setEnabled(true);
         habilitaCampos(true);
-        setStatusBtNavPesq(false);
+        setNavStatus(false);
     }
 
     public void statusInicial() {
@@ -253,7 +251,7 @@ public class AbstractView extends JInternalFrame {
         jTable.setEnabled(true);
     }
 
-    public void setIsFirst(boolean status) {
+    public void setNavIsFirstOrLast(boolean status) {
 
         if (status) {
             jbInicio.setEnabled(!status);
@@ -268,7 +266,7 @@ public class AbstractView extends JInternalFrame {
         }
     }
 
-    public void setStatusBtNavPesq(boolean status) {
+    public void setNavStatus(boolean status) {
         jbProximo.setEnabled(status);
         jbAnterior.setEnabled(status);
         jbUltimo.setEnabled(status);
@@ -293,10 +291,6 @@ public class AbstractView extends JInternalFrame {
 
     public Object getPesquisa() {
         return jtPesquisar.getText();
-    }
-
-    public void preencheCampos(AbstractModel usuario) {
-
     }
 
     public JTable getJTable() {

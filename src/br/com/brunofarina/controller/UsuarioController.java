@@ -113,7 +113,7 @@ public class UsuarioController extends AbstractController {
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
         usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
         usuarioView.statusInicial();
-        usuarioView.setIsFirst(true);
+        usuarioView.setNavIsFirstOrLast(true);
         JTableHeader jTableHeader = usuarioView.getJTable().getTableHeader();
         jTableHeader.addMouseListener(new MouseAdapter() {
             @Override
@@ -198,13 +198,13 @@ public class UsuarioController extends AbstractController {
 
     public void testarNavegacao() {
         if (usuarioDao.retornaTamanhoRs() == 1) {
-            usuarioView.setStatusBtNavPesq(false);
+            usuarioView.setNavStatus(false);
         } else if (usuarioDao.isFirst()) {
-            usuarioView.setIsFirst(true);
+            usuarioView.setNavIsFirstOrLast(true);
         } else if (usuarioDao.isLast()) {
-            usuarioView.setIsFirst(false);
+            usuarioView.setNavIsFirstOrLast(false);
         } else {
-            usuarioView.setStatusBtNavPesq(true);
+            usuarioView.setNavStatus(true);
         }
     }
     

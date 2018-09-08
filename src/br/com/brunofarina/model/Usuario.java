@@ -29,6 +29,7 @@ public class Usuario extends AbstractModel {
     }
 
     @Coluna(posicao = 0, nome = "Código")
+    @Override
     public int getId() {
         return super.getId();
     }

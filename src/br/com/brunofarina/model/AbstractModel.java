@@ -19,7 +19,6 @@ public abstract class AbstractModel {
 
     }
 
-    @Coluna(posicao = 0, nome = "Código")
     public int getId() {
         return id;
     }
