@@ -16,7 +16,7 @@ public class CustomJTextField extends JTextField implements CustomComponent {
     private boolean obrigatorio, filtro;
     private String nome;
 
-    public CustomJTextField(int colunas, boolean obrigatorio, boolean filtro, String nome) {
+    public CustomJTextField(int colunas, boolean filtro, String nome) {
         super(colunas);
         this.obrigatorio = obrigatorio;
         this.filtro = filtro;
@@ -67,5 +67,10 @@ public class CustomJTextField extends JTextField implements CustomComponent {
     @Override
     public String getValor() {
         return super.getText();
+    }
+
+    @Override
+    public void setObrigatorio(boolean obrigatorio) {
+        this.obrigatorio = obrigatorio;
     }
 }

@@ -53,12 +53,12 @@ public class UsuarioController extends AbstractController {
                         listar(usuarioView.getPesquisa());
                         break;
                     case ">":
-                         usuarioDao.avancaItemRs();
-                         setJTextAndJTable();
+                        usuarioDao.avancaItemRs();
+                        setJTextAndJTable();
                         break;
                     case "<":
-                         usuarioDao.voltaItemRs();
-                         setJTextAndJTable();
+                        usuarioDao.voltaItemRs();
+                        setJTextAndJTable();
                         break;
                     case ">>":
                         usuarioDao.ultimoItemRs();
@@ -104,10 +104,9 @@ public class UsuarioController extends AbstractController {
 
             }
         };
-        this.usuarioView = new UsuarioView(actionListener, mouseListener);
         this.usuario = new Usuario();
         this.usuarioDao = new UsuarioDao();
-
+        this.usuarioView = new UsuarioView(actionListener, mouseListener);
         usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
         usuarioDao.primeiroItemRs();
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
@@ -166,8 +165,8 @@ public class UsuarioController extends AbstractController {
             if (jOptionPane == opcaoSim) {
                 if (usuarioDao.excluir(usuario)) {
                     usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
-                      usuarioDao.primeiroItemRs();
-                      setJTextAndJTable();
+                    usuarioDao.primeiroItemRs();
+                    setJTextAndJTable();
                     usuarioView.statusInicial();
                 } else {
                     JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir usuário", "Exclusão", JOptionPane.ERROR_MESSAGE);
@@ -177,7 +176,6 @@ public class UsuarioController extends AbstractController {
             JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir usuário", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 
     @Override
     public void listar(Object chave) {
@@ -207,14 +205,14 @@ public class UsuarioController extends AbstractController {
             usuarioView.setNavStatus(true);
         }
     }
-    
-     public UsuarioView getView() {
+
+    public UsuarioView getView() {
         return this.usuarioView;
     }
-    
-     private void setJTextAndJTable() {
+
+    private void setJTextAndJTable() {
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-        usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs()-1);
+        usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
         testarNavegacao();
         usuarioView.statusInicial();
     }

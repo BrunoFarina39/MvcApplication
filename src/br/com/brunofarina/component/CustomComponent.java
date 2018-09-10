@@ -13,6 +13,8 @@ public interface CustomComponent {
 
     public String getNome();
 
+    public void setObrigatorio(boolean obrigatorio);
+
     public boolean getObrigatorio();
 
     public boolean getValido();

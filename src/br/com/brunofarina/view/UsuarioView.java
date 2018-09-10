@@ -5,6 +5,7 @@
  */
 package br.com.brunofarina.view;
 
+import br.com.brunofarina.component.CustomComponent;
 import br.com.brunofarina.component.CustomJPasswordField;
 import br.com.brunofarina.component.CustomJTextField;
 import javax.swing.JLabel;
@@ -12,6 +13,7 @@ import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
@@ -34,9 +36,9 @@ public class UsuarioView extends AbstractView {
         this.jlNome = new JLabel("Nome:");
         this.jlLogin = new JLabel("Login:");
         this.jlSenha = new JLabel("Senha:");
-        this.jtCodigo = new CustomJTextField(10, false, true, "Código");
-        this.jtNome = new CustomJTextField(20, true, true, "Nome");
-        this.jtLogin = new CustomJTextField(20, true, false, "Login");
+        this.jtCodigo = new CustomJTextField(10, true, "Código");
+        this.jtNome = new CustomJTextField(20, true, "Nome");
+        this.jtLogin = new CustomJTextField(20, false, "Login");
         this.jtSenha = new CustomJPasswordField(20, true, false, "Senha");
         this.jlTitulo.setText("Manutenção de Usuário");
         this.JRadioId = new JRadioButton("Código");
@@ -143,4 +145,5 @@ public class UsuarioView extends AbstractView {
         jtNome.setTexto(usuario.getNome());
 
     }
+
 }

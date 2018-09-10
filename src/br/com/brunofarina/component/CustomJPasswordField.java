@@ -68,4 +68,9 @@ public class CustomJPasswordField extends JPasswordField implements CustomCompon
     public String getValor() {
         return String.valueOf(super.getPassword());
     }
+
+    @Override
+    public void setObrigatorio(boolean obrigatorio) {
+
+    }
 }

@@ -44,7 +44,7 @@ public class AbstractView extends JInternalFrame {
     protected JTextField jtPesquisar;
     protected JTable jTable;
     private StringBuffer rotulo;
-    private ArrayList<CustomComponent> campos;
+    public ArrayList<CustomComponent> campos;
     protected ButtonGroup btGroup;
     private AdaptadorMouseTabela adaptadorMouseTabela;
 
@@ -145,6 +145,7 @@ public class AbstractView extends JInternalFrame {
         gbc.gridy = coluna;
 
         if (componente instanceof CustomComponent) {
+
             this.rotulo.append(((CustomComponent) componente).getNome());
             if (((CustomComponent) componente).getObrigatorio()) {
                 this.rotulo.append(":*");
