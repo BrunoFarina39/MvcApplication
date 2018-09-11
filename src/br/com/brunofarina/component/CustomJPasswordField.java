@@ -17,9 +17,8 @@ public class CustomJPasswordField extends JPasswordField implements CustomCompon
     private boolean obrigatorio, filtro;
     private String nome;
 
-    public CustomJPasswordField(int colunas, boolean obrigatorio, boolean filtro, String nome) {
+    public CustomJPasswordField(int colunas, boolean filtro, String nome) {
         super(colunas);
-        this.obrigatorio = obrigatorio;
         this.filtro = filtro;
         this.nome = nome;
     }
@@ -71,6 +70,6 @@ public class CustomJPasswordField extends JPasswordField implements CustomCompon
 
     @Override
     public void setObrigatorio(boolean obrigatorio) {
-
+        this.obrigatorio = obrigatorio;
     }
 }

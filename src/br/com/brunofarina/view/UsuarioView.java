@@ -41,7 +41,7 @@ public class UsuarioView extends AbstractView {
         this.jtCodigo = new CustomJTextField(10, true, "Código");
         this.jtNome = new CustomJTextField(20, true, "Nome");
         this.jtLogin = new CustomJTextField(20, false, "Login");
-        this.jtSenha = new CustomJPasswordField(20, true, false, "Senha");
+        this.jtSenha = new CustomJPasswordField(20, false, "Senha");
         this.jlTitulo.setText("Manutenção de Usuário");
         this.JRadioId = new JRadioButton("Código");
         this.JRadioNome = new JRadioButton("Nome");
@@ -76,7 +76,6 @@ public class UsuarioView extends AbstractView {
         super.adicionaComponente(0, 1, 2, 1, 5, 5, jtNome);
         super.adicionaComponente(0, 2, 2, 1, 5, 5, jtLogin);
         super.adicionaComponente(0, 3, 2, 1, 5, 5, jtSenha);
-        JOptionPane.showMessageDialog(null, jtCodigo.hashCode());
     }
 
     @Override

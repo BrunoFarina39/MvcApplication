@@ -39,30 +39,30 @@ public class Usuario extends AbstractModel {
     }
 
     @Coluna(posicao = 1, nome = "Login")
+    @CampoObr(nome = "login")
     public String getLogin() {
         return login;
     }
 
-    @CampoObr(nome = "login")
     public void setLogin(String login) {
         this.login = login;
     }
 
+    @CampoObr(nome = "senha")
     public String getSenha() {
         return senha;
     }
 
-    // @ColunaBD(nome = "senha")
     public void setSenha(String senha) {
         this.senha = senha;
     }
 
-    @Coluna(posicao = 2, nome = "nome")
+    @Coluna(posicao = 2, nome = "Nome")
+    @CampoObr(nome = "nome")
     public String getNome() {
         return nome;
     }
 
-    @CampoObr(nome = "nome")
     public void setNome(String Nome) {
         this.nome = Nome;
     }
@@ -94,18 +94,17 @@ public class Usuario extends AbstractModel {
         }
     }
 
-    public void inputFilter(ArrayList<Filter> c) {
+    public void setInputFilter(ArrayList<Filter> c) {
         for (Method method : Usuario.class.getDeclaredMethods()) {
             if (method.isAnnotationPresent(CampoObr.class)) {
-                CampoObr cBD = method.getAnnotation(CampoObr.class);
+                CampoObr campoObr = method.getAnnotation(CampoObr.class);
                 for (int i = 0; i < c.size(); i++) {
-                    if (c.get(i).getNome().equalsIgnoreCase(cBD.nome())) {
+                    if (c.get(i).getNome().equalsIgnoreCase(campoObr.nome())) {
                         c.get(i).setObrigatorio(true);
                     }
                 }
             }
         }
-        JOptionPane.showMessageDialog(null, c.get(0).hashCode());
     }
 
     @Override

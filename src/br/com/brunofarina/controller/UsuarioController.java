@@ -110,7 +110,7 @@ public class UsuarioController extends AbstractController {
         this.usuario = new Usuario();
         this.usuarioDao = new UsuarioDao();
         this.usuarioView = new UsuarioView(actionListener, mouseListener);
-        usuario.inputFilter((usuarioView.getFilter()));
+        usuario.setInputFilter((usuarioView.getCamposFilter()));
         this.usuarioView.render();
         usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
         usuarioDao.primeiroItemRs();

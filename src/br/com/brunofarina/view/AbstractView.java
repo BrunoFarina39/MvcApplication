@@ -172,7 +172,7 @@ public class AbstractView extends JInternalFrame {
         campos.add((CustomComponent) componente);
     }
 
-    public ArrayList<Filter> getFilter() {
+    public ArrayList<Filter> getCamposFilter() {
         ArrayList<Filter> filter = new ArrayList<Filter>();
         for (int i = 0; i < this.campos.size(); i++) {
             filter.add(this.campos.get(i));

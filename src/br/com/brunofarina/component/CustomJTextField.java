@@ -18,7 +18,6 @@ public class CustomJTextField extends JTextField implements CustomComponent {
 
     public CustomJTextField(int colunas, boolean filtro, String nome) {
         super(colunas);
-        this.obrigatorio = obrigatorio;
         this.filtro = filtro;
         this.nome = nome;
     }
