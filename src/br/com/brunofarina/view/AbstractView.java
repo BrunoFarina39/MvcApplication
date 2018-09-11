@@ -6,6 +6,7 @@
 package br.com.brunofarina.view;
 
 import br.com.brunofarina.component.CustomComponent;
+import br.com.brunofarina.component.Filter;
 import br.com.brunofarina.model.AbstractModel;
 import br.com.brunofarina.model.TableModel;
 import java.awt.BorderLayout;
@@ -44,7 +45,7 @@ public class AbstractView extends JInternalFrame {
     protected JTextField jtPesquisar;
     protected JTable jTable;
     private StringBuffer rotulo;
-    public ArrayList<CustomComponent> campos;
+    protected ArrayList<CustomComponent> campos;
     protected ButtonGroup btGroup;
     private AdaptadorMouseTabela adaptadorMouseTabela;
 
@@ -153,7 +154,7 @@ public class AbstractView extends JInternalFrame {
                 this.rotulo.append(":");
             }
             JLabel jlRotulo = new JLabel(this.rotulo.toString());
-            campos.add((CustomComponent) componente);
+            //campos.add((CustomComponent) componente);
             jlRotulo.setFont(new Font("Arial", Font.BOLD, 12));
             gbc.insets = new Insets(espVert, espVert, espaHor, espaHor);
             gbc.anchor = GridBagConstraints.EAST;
@@ -165,6 +166,18 @@ public class AbstractView extends JInternalFrame {
         gbc.gridheight = altura;
         panelCampos.add(componente, gbc);
         //TestGridBagLayout.insereComponente(3, 3, panelCampos);
+    }
+
+    public void adicionaArray(CustomComponent componente) {
+        campos.add((CustomComponent) componente);
+    }
+
+    public ArrayList<Filter> getFilter() {
+        ArrayList<Filter> filter = new ArrayList<Filter>();
+        for (int i = 0; i < this.campos.size(); i++) {
+            filter.add(this.campos.get(i));
+        }
+        return filter;
     }
 
     public boolean valida() {

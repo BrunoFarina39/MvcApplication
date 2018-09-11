@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ColunaBD {
+public @interface CampoObr {
 
     String nome();
 }

@@ -5,7 +5,6 @@
  */
 package br.com.brunofarina.dao;
 
-import br.com.brunofarina.annotations.ColunaBD;
 import br.com.brunofarina.connection.Database;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -16,6 +15,7 @@ import java.sql.SQLException;
 import br.com.brunofarina.model.AbstractModel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import br.com.brunofarina.annotations.CampoObr;
 
 /**
  *
@@ -50,8 +50,8 @@ public abstract class AbstractDao<T extends AbstractModel> {
 
         for (Method method : entyClass.getDeclaredMethods()) {
 
-            if (method.isAnnotationPresent(ColunaBD.class)) {
-                ColunaBD anotacao = method.getAnnotation(ColunaBD.class);
+            if (method.isAnnotationPresent(CampoObr.class)) {
+                CampoObr anotacao = method.getAnnotation(CampoObr.class);
                 method.invoke(absModel, rs.getString(anotacao.nome()));
             }
         }

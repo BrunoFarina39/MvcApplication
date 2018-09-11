@@ -6,13 +6,17 @@
 package br.com.brunofarina.model;
 
 import br.com.brunofarina.annotations.Coluna;
-import br.com.brunofarina.annotations.ColunaBD;
+import br.com.brunofarina.component.CustomComponent;
+import br.com.brunofarina.component.Filter;
 import br.com.brunofarina.connection.Database;
+import java.lang.reflect.Method;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import br.com.brunofarina.annotations.CampoObr;
 
 /**
  *
@@ -39,7 +43,7 @@ public class Usuario extends AbstractModel {
         return login;
     }
 
-    //@ColunaBD(nome = "login")
+    @CampoObr(nome = "login")
     public void setLogin(String login) {
         this.login = login;
     }
@@ -48,17 +52,17 @@ public class Usuario extends AbstractModel {
         return senha;
     }
 
-    //@ColunaBD(nome = "senha")
+    // @ColunaBD(nome = "senha")
     public void setSenha(String senha) {
         this.senha = senha;
     }
 
-    @Coluna(posicao = 2, nome = "Nome")
+    @Coluna(posicao = 2, nome = "nome")
     public String getNome() {
         return nome;
     }
 
-    // @ColunaBD(nome = "nome")
+    @CampoObr(nome = "nome")
     public void setNome(String Nome) {
         this.nome = Nome;
     }
@@ -88,6 +92,20 @@ public class Usuario extends AbstractModel {
             JOptionPane.showMessageDialog(null, ex.getMessage());
             return false;
         }
+    }
+
+    public void inputFilter(ArrayList<Filter> c) {
+        for (Method method : Usuario.class.getDeclaredMethods()) {
+            if (method.isAnnotationPresent(CampoObr.class)) {
+                CampoObr cBD = method.getAnnotation(CampoObr.class);
+                for (int i = 0; i < c.size(); i++) {
+                    if (c.get(i).getNome().equalsIgnoreCase(cBD.nome())) {
+                        c.get(i).setObrigatorio(true);
+                    }
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(null, c.get(0).hashCode());
     }
 
     @Override

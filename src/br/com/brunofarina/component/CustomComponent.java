@@ -9,13 +9,7 @@ package br.com.brunofarina.component;
  *
  * @author Bruno
  */
-public interface CustomComponent {
-
-    public String getNome();
-
-    public void setObrigatorio(boolean obrigatorio);
-
-    public boolean getObrigatorio();
+public interface CustomComponent extends Filter {
 
     public boolean getValido();
 

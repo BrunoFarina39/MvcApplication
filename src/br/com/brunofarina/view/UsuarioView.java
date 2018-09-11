@@ -8,12 +8,14 @@ package br.com.brunofarina.view;
 import br.com.brunofarina.component.CustomComponent;
 import br.com.brunofarina.component.CustomJPasswordField;
 import br.com.brunofarina.component.CustomJTextField;
+import br.com.brunofarina.component.Filter;
 import javax.swing.JLabel;
 import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
@@ -50,10 +52,11 @@ public class UsuarioView extends AbstractView {
         this.panelChavePesq.add(JRadioNome);
         this.btGroup.add(JRadioId);
         this.btGroup.add(JRadioNome);
-        super.adicionaComponente(0, 0, 1, 1, 5, 5, jtCodigo);
-        super.adicionaComponente(0, 1, 2, 1, 5, 5, jtNome);
-        super.adicionaComponente(0, 2, 2, 1, 5, 5, jtLogin);
-        super.adicionaComponente(0, 3, 2, 1, 5, 5, jtSenha);
+
+        super.adicionaArray((CustomComponent) jtCodigo);
+        super.adicionaArray((CustomComponent) jtNome);
+        super.adicionaArray((CustomComponent) jtLogin);
+        super.adicionaArray((CustomComponent) jtSenha);
 
         jbNovo.addActionListener(actionListener);
         jbSalvar.addActionListener(actionListener);
@@ -66,6 +69,14 @@ public class UsuarioView extends AbstractView {
         jbUltimo.addActionListener(actionListener);
         jbInicio.addActionListener(actionListener);
         jTable.addMouseListener(mouseListener);
+    }
+
+    public void render() {
+        super.adicionaComponente(0, 0, 1, 1, 5, 5, jtCodigo);
+        super.adicionaComponente(0, 1, 2, 1, 5, 5, jtNome);
+        super.adicionaComponente(0, 2, 2, 1, 5, 5, jtLogin);
+        super.adicionaComponente(0, 3, 2, 1, 5, 5, jtSenha);
+        JOptionPane.showMessageDialog(null, jtCodigo.hashCode());
     }
 
     @Override

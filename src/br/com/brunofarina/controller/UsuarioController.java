@@ -5,6 +5,8 @@
  */
 package br.com.brunofarina.controller;
 
+import br.com.brunofarina.component.CustomComponent;
+import br.com.brunofarina.component.Filter;
 import br.com.brunofarina.dao.UsuarioDao;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +18,7 @@ import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
 import br.com.brunofarina.view.UsuarioView;
 import java.awt.event.MouseAdapter;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 
@@ -107,6 +110,8 @@ public class UsuarioController extends AbstractController {
         this.usuario = new Usuario();
         this.usuarioDao = new UsuarioDao();
         this.usuarioView = new UsuarioView(actionListener, mouseListener);
+        usuario.inputFilter((usuarioView.getFilter()));
+        this.usuarioView.render();
         usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
         usuarioDao.primeiroItemRs();
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
