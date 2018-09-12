@@ -7,7 +7,6 @@ package br.com.brunofarina.view;
 
 import br.com.brunofarina.component.CustomComponent;
 import br.com.brunofarina.component.Filter;
-import br.com.brunofarina.model.AbstractModel;
 import br.com.brunofarina.model.TableModel;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -30,7 +29,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.ButtonGroup;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 
 /**
@@ -47,7 +45,6 @@ public class AbstractView extends JInternalFrame {
     private StringBuffer rotulo;
     protected ArrayList<CustomComponent> campos;
     protected ButtonGroup btGroup;
-    private AdaptadorMouseTabela adaptadorMouseTabela;
 
     public AbstractView(String title, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(title, resizable, closable, maximizable, iconable);
@@ -75,7 +72,6 @@ public class AbstractView extends JInternalFrame {
 
         this.jbProximo.setSize(new Dimension(10, 10));
         this.jbAnterior.setSize(new Dimension(10, 10));
-        //adaptadorMouseTabela = new AdaptadorMouseTabela();
         this.jTable = new JTable() {
             @Override
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
@@ -94,10 +90,8 @@ public class AbstractView extends JInternalFrame {
         this.jTable.setAutoCreateRowSorter(true);
         jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        JTableHeader jTableHeader = jTable.getTableHeader();
-        //jTableHeader.addMouseListener(adaptadorMouseTabela);
         rotulo = new StringBuffer();
-        campos = new ArrayList<CustomComponent>();
+        campos = new ArrayList<>();
         Container container = getContentPane();
         JScrollPane scroll = new JScrollPane(jTable);
         scroll.setViewportView(jTable);
@@ -168,12 +162,12 @@ public class AbstractView extends JInternalFrame {
         //TestGridBagLayout.insereComponente(3, 3, panelCampos);
     }
 
-    public void adicionaArray(CustomComponent componente) {
+    public void adicionaArrayComponente(CustomComponent componente) {
         campos.add((CustomComponent) componente);
     }
 
     public ArrayList<Filter> getCamposFilter() {
-        ArrayList<Filter> filter = new ArrayList<Filter>();
+        ArrayList<Filter> filter = new ArrayList<>();
         for (int i = 0; i < this.campos.size(); i++) {
             filter.add(this.campos.get(i));
         }
@@ -208,19 +202,19 @@ public class AbstractView extends JInternalFrame {
     }
 
     public void limpaCampos() {
-        Component[] jComponent = panelCampos.getComponents();
-        for (int i = 0; i < jComponent.length; i++) {
-            if (jComponent[i] instanceof JTextField) {
-                ((JTextField) jComponent[i]).setText("");
+        Component[] component = panelCampos.getComponents();
+        for (Component component1 : component) {
+            if (component1 instanceof JTextField) {
+                ((JTextField) component1).setText("");
             }
         }
     }
 
     private void habilitaCampos(boolean status) {
-        Component[] jComponent = panelCampos.getComponents();
-        for (int i = 0; i < jComponent.length; i++) {
-            if (jComponent[i] instanceof JTextField) {
-                ((JTextField) jComponent[i]).setEditable(status);
+        Component[] component = panelCampos.getComponents();
+        for (Component component1 : component) {
+            if (component1 instanceof JTextField) {
+                ((JTextField) component1).setEditable(status);
             }
         }
     }
@@ -296,7 +290,9 @@ public class AbstractView extends JInternalFrame {
     }
 
     public void setLinhaSelecionada(int linha) {
-        jTable.setRowSelectionInterval(linha, linha);
+        if (linha != 0) {
+            jTable.setRowSelectionInterval(linha, linha);
+        }
     }
 
     public int getLinhaSelecionada() {

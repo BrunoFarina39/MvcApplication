@@ -32,8 +32,8 @@ public class UsuarioView extends AbstractView {
 
     public UsuarioView(ActionListener actionListener, MouseListener mouseListener) {
         super("Cadastro de Usuário", true, true, true, true);
-        setVisible(true);
-        setSize(650, 500);
+        super.setVisible(true);
+        super.setSize(650, 500);
         this.jlCodigo = new JLabel("Código:");
         this.jlNome = new JLabel("Nome:");
         this.jlLogin = new JLabel("Login:");
@@ -46,17 +46,15 @@ public class UsuarioView extends AbstractView {
         this.JRadioId = new JRadioButton("Código");
         this.JRadioNome = new JRadioButton("Nome");
         this.JRadioNome.setSelected(true);
-        //inicio do posicionamento
-        //int linha, int coluna, int largura, int altura, int espVert, int espaHor, JComponent componente
         this.panelChavePesq.add(JRadioId);
         this.panelChavePesq.add(JRadioNome);
         this.btGroup.add(JRadioId);
         this.btGroup.add(JRadioNome);
 
-        super.adicionaArray((CustomComponent) jtCodigo);
-        super.adicionaArray((CustomComponent) jtNome);
-        super.adicionaArray((CustomComponent) jtLogin);
-        super.adicionaArray((CustomComponent) jtSenha);
+        super.adicionaArrayComponente((CustomComponent) jtCodigo);
+        super.adicionaArrayComponente((CustomComponent) jtNome);
+        super.adicionaArrayComponente((CustomComponent) jtLogin);
+        super.adicionaArrayComponente((CustomComponent) jtSenha);
 
         jbNovo.addActionListener(actionListener);
         jbSalvar.addActionListener(actionListener);
@@ -71,6 +69,8 @@ public class UsuarioView extends AbstractView {
         jTable.addMouseListener(mouseListener);
     }
 
+    //inicio do posicionamento
+    //int linha, int coluna, int largura, int altura, int espVert, int espaHor, JComponent componente
     public void render() {
         super.adicionaComponente(0, 0, 1, 1, 5, 5, jtCodigo);
         super.adicionaComponente(0, 1, 2, 1, 5, 5, jtNome);
@@ -90,48 +90,24 @@ public class UsuarioView extends AbstractView {
         return jtCodigo;
     }
 
-    public void setJtCodigo(CustomJTextField jtCodigo) {
-        this.jtCodigo = jtCodigo;
-    }
-
     public CustomJTextField getJtNome() {
         return jtNome;
-    }
-
-    public void setJtNome(CustomJTextField jtNome) {
-        this.jtNome = jtNome;
     }
 
     public CustomJTextField getJtLogin() {
         return jtLogin;
     }
 
-    public void setJtLogin(CustomJTextField jtLogin) {
-        this.jtLogin = jtLogin;
-    }
-
     public CustomJPasswordField getJtSenha() {
         return jtSenha;
-    }
-
-    public void setJtSenha(CustomJPasswordField jtSenha) {
-        this.jtSenha = jtSenha;
     }
 
     public JRadioButton getJRadioId() {
         return JRadioId;
     }
 
-    public void setJRadioId(JRadioButton JRadioId) {
-        this.JRadioId = JRadioId;
-    }
-
     public JRadioButton getJRadioNome() {
         return JRadioNome;
-    }
-
-    public void setJRadioNome(JRadioButton JRadioNome) {
-        this.JRadioNome = JRadioNome;
     }
 
     @Override

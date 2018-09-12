@@ -16,6 +16,7 @@ import br.com.brunofarina.model.AbstractModel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import br.com.brunofarina.annotations.CampoObr;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -48,13 +49,13 @@ public abstract class AbstractDao<T extends AbstractModel> {
         this.rs = ps.executeQuery();
         this.rs.next();
 
-        for (Method method : entyClass.getDeclaredMethods()) {
+        /*for (Method method : entyClass.getDeclaredMethods()) {
 
             if (method.isAnnotationPresent(CampoObr.class)) {
                 CampoObr anotacao = method.getAnnotation(CampoObr.class);
                 method.invoke(absModel, rs.getString(anotacao.nome()));
             }
-        }
+        }*/
         return absModel;
     }
 
@@ -106,8 +107,8 @@ public abstract class AbstractDao<T extends AbstractModel> {
             return rs.getRow();
         } catch (SQLException ex) {
             Logger.getLogger(AbstractDao.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
         }
-        return 0;
     }
 
     public void setItemRs(int indice) {

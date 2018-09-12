@@ -150,9 +150,7 @@ public class UsuarioController extends AbstractController {
                 usuario.setId(Integer.parseInt(usuarioView.getJtCodigo().getValor()));
                 usuarioView.statusManutencao(usuarioDao.editar(usuario));
             }
-            usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(usuarioView.getPesquisa().toString()), Usuario.class));
-            usuarioDao.primeiroItemRs();
-            setJTextAndJTable();
+            listar(usuarioView.getPesquisa());
         }
     }
 
