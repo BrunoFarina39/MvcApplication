@@ -31,10 +31,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
     public TelaPrincipal() {
         jMenu = new JMenu();
         jMenuBar = new JMenuBar();
-        this.usuarioController = new UsuarioController();
-        jInternalFrame = usuarioController.getView();
         jDesktopPane = new JDesktopPane();
-        //jDesktopPane.add(jInternalFrame);
         jMenuItemUsuario = new JMenuItem();
         jMenuItemCliente = new JMenuItem();
         jMenuItemFornecedor = new JMenuItem();
@@ -66,20 +63,29 @@ public class TelaPrincipal extends JFrame implements ActionListener {
         jMenuItemProduto.addActionListener(this);
         jMenuItemServico.addActionListener(this);
 
-        setContentPane(jDesktopPane);
-        this.setJMenuBar(jMenuBar);
-        this.setSize(800, 600);
-        this.setVisible(true);
-        this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        super.setContentPane(jDesktopPane);
+        super.setJMenuBar(jMenuBar);
+        super.setSize(800, 600);
+        super.setVisible(true);
+        super.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jMenuItemUsuario) {
-            //UsuarioView usuarioView = new UsuarioView();
-            //UsuarioController usuarioController = new UsuarioController();
-            jDesktopPane.add(this.usuarioController.getView());
+
+            if (this.usuarioController == null) {
+                this.usuarioController = new UsuarioController();
+                this.jInternalFrame = usuarioController.getView();
+                usuarioController.getView().setVisible(true);
+                jDesktopPane.add(usuarioController.getView());
+            } else {
+                if (!usuarioController.getView().isVisible()) {
+                    usuarioController.getView().setVisible(true);
+                    jDesktopPane.add(usuarioController.getView());
+                }
+            }
         }
     }
 

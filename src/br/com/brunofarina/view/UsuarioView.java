@@ -8,7 +8,6 @@ package br.com.brunofarina.view;
 import br.com.brunofarina.component.CustomComponent;
 import br.com.brunofarina.component.CustomJPasswordField;
 import br.com.brunofarina.component.CustomJTextField;
-import javax.swing.JLabel;
 import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
 import java.awt.event.ActionListener;
@@ -28,9 +27,7 @@ public class UsuarioView extends AbstractView {
 
     public UsuarioView(ActionListener actionListener, MouseListener mouseListener) {
         super("Cadastro de Usuário", true, true, true, true);
-        super.setVisible(true);
         super.setSize(650, 500);
-
         this.jtCodigo = new CustomJTextField(10, true, "ID", "Código");
         this.jtNome = new CustomJTextField(20, true, "Nome", "Nome");
         this.jtLogin = new CustomJTextField(20, false, "Login", "Login");
