@@ -11,6 +11,8 @@ package br.com.brunofarina.component;
  */
 public interface CustomComponent extends Filter {
 
+    public String getRotulo();
+
     public boolean getValido();
 
     public boolean getVazio();

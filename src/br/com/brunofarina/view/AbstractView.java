@@ -69,9 +69,10 @@ public class AbstractView extends JInternalFrame {
         this.jbInicio = new JButton("<<");
         this.jbUltimo = new JButton(">>");
         this.btGroup = new ButtonGroup();
-
         this.jbProximo.setSize(new Dimension(10, 10));
         this.jbAnterior.setSize(new Dimension(10, 10));
+        rotulo = new StringBuffer();
+        campos = new ArrayList<>();
         this.jTable = new JTable() {
             @Override
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
@@ -90,8 +91,6 @@ public class AbstractView extends JInternalFrame {
         this.jTable.setAutoCreateRowSorter(true);
         jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        rotulo = new StringBuffer();
-        campos = new ArrayList<>();
         Container container = getContentPane();
         JScrollPane scroll = new JScrollPane(jTable);
         scroll.setViewportView(jTable);
@@ -141,14 +140,13 @@ public class AbstractView extends JInternalFrame {
 
         if (componente instanceof CustomComponent) {
 
-            this.rotulo.append(((CustomComponent) componente).getNome());
+            this.rotulo.append(((CustomComponent) componente).getRotulo());
             if (((CustomComponent) componente).getObrigatorio()) {
                 this.rotulo.append(":*");
             } else {
                 this.rotulo.append(":");
             }
             JLabel jlRotulo = new JLabel(this.rotulo.toString());
-            //campos.add((CustomComponent) componente);
             jlRotulo.setFont(new Font("Arial", Font.BOLD, 12));
             gbc.insets = new Insets(espVert, espVert, espaHor, espaHor);
             gbc.anchor = GridBagConstraints.EAST;
@@ -289,9 +287,9 @@ public class AbstractView extends JInternalFrame {
         }
     }
 
-    public void setLinhaSelecionada(int linha) {
-        if (linha != 0) {
-            jTable.setRowSelectionInterval(linha, linha);
+    public void setSelecaoLinha(int linha) {
+        if (linha > 0) {
+            jTable.setRowSelectionInterval(linha - 1, linha - 1);
         }
     }
 

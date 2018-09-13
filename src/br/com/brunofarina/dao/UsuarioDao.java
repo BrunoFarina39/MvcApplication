@@ -121,14 +121,12 @@ public class UsuarioDao extends AbstractDao<Usuario> {
     public Usuario retornaUsuario() {
         Usuario usuario = new Usuario();
         try {
-            if (rs.first()) {
-                usuario.setId(rs.getInt("id"));
-                usuario.setLogin(rs.getString("login"));
-                usuario.setNome(rs.getString("nome"));
-                usuario.setSenha(rs.getString("senha"));
-            }
+            usuario.setId(rs.getInt("id"));
+            usuario.setLogin(rs.getString("login"));
+            usuario.setNome(rs.getString("nome"));
+            usuario.setSenha(rs.getString("senha"));
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return usuario;
         }
         return usuario;
     }

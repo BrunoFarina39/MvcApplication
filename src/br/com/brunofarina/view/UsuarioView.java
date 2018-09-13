@@ -8,14 +8,11 @@ package br.com.brunofarina.view;
 import br.com.brunofarina.component.CustomComponent;
 import br.com.brunofarina.component.CustomJPasswordField;
 import br.com.brunofarina.component.CustomJTextField;
-import br.com.brunofarina.component.Filter;
 import javax.swing.JLabel;
 import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
@@ -25,7 +22,6 @@ import javax.swing.JRadioButton;
  */
 public class UsuarioView extends AbstractView {
 
-    private JLabel jlCodigo, jlNome, jlLogin, jlSenha;
     private CustomJTextField jtCodigo, jtNome, jtLogin;
     private CustomJPasswordField jtSenha;
     private JRadioButton JRadioId, JRadioNome;
@@ -34,14 +30,11 @@ public class UsuarioView extends AbstractView {
         super("Cadastro de Usuário", true, true, true, true);
         super.setVisible(true);
         super.setSize(650, 500);
-        this.jlCodigo = new JLabel("Código:");
-        this.jlNome = new JLabel("Nome:");
-        this.jlLogin = new JLabel("Login:");
-        this.jlSenha = new JLabel("Senha:");
-        this.jtCodigo = new CustomJTextField(10, true, "Código");
-        this.jtNome = new CustomJTextField(20, true, "Nome");
-        this.jtLogin = new CustomJTextField(20, false, "Login");
-        this.jtSenha = new CustomJPasswordField(20, false, "Senha");
+
+        this.jtCodigo = new CustomJTextField(10, true, "ID", "Código");
+        this.jtNome = new CustomJTextField(20, true, "Nome", "Nome");
+        this.jtLogin = new CustomJTextField(20, false, "Login", "Login");
+        this.jtSenha = new CustomJPasswordField(20, false, "Senha", "Senha");
         this.jlTitulo.setText("Manutenção de Usuário");
         this.JRadioId = new JRadioButton("Código");
         this.JRadioNome = new JRadioButton("Nome");
@@ -129,7 +122,5 @@ public class UsuarioView extends AbstractView {
         jtLogin.setTexto(usuario.getLogin());
         jtSenha.setTexto(usuario.getSenha());
         jtNome.setTexto(usuario.getNome());
-
     }
-
 }

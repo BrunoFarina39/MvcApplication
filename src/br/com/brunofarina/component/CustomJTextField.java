@@ -14,12 +14,13 @@ import javax.swing.JTextField;
 public class CustomJTextField extends JTextField implements CustomComponent {
 
     private boolean obrigatorio, filtro;
-    private String nome;
+    private String nome, rotulo;
 
-    public CustomJTextField(int colunas, boolean filtro, String nome) {
+    public CustomJTextField(int colunas, boolean filtro, String nome, String rotulo) {
         super(colunas);
         this.filtro = filtro;
         this.nome = nome;
+        this.rotulo = rotulo;
     }
 
     @Override
@@ -71,5 +72,10 @@ public class CustomJTextField extends JTextField implements CustomComponent {
     @Override
     public void setObrigatorio(boolean obrigatorio) {
         this.obrigatorio = obrigatorio;
+    }
+
+    @Override
+    public String getRotulo() {
+        return rotulo;
     }
 }

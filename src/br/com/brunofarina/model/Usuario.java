@@ -6,7 +6,6 @@
 package br.com.brunofarina.model;
 
 import br.com.brunofarina.annotations.Coluna;
-import br.com.brunofarina.component.CustomComponent;
 import br.com.brunofarina.component.Filter;
 import br.com.brunofarina.connection.Database;
 import java.lang.reflect.Method;

@@ -15,12 +15,13 @@ import javax.swing.JPasswordField;
 public class CustomJPasswordField extends JPasswordField implements CustomComponent {
 
     private boolean obrigatorio, filtro;
-    private String nome;
+    private String nome, rotulo;
 
-    public CustomJPasswordField(int colunas, boolean filtro, String nome) {
+    public CustomJPasswordField(int colunas, boolean filtro, String nome, String rotulo) {
         super(colunas);
         this.filtro = filtro;
         this.nome = nome;
+        this.rotulo = rotulo;
     }
 
     @Override
@@ -71,5 +72,10 @@ public class CustomJPasswordField extends JPasswordField implements CustomCompon
     @Override
     public void setObrigatorio(boolean obrigatorio) {
         this.obrigatorio = obrigatorio;
+    }
+
+    @Override
+    public String getRotulo() {
+        return rotulo;
     }
 }

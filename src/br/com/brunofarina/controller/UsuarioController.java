@@ -5,8 +5,6 @@
  */
 package br.com.brunofarina.controller;
 
-import br.com.brunofarina.component.CustomComponent;
-import br.com.brunofarina.component.Filter;
 import br.com.brunofarina.dao.UsuarioDao;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +16,6 @@ import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
 import br.com.brunofarina.view.UsuarioView;
 import java.awt.event.MouseAdapter;
-import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 
@@ -115,7 +112,7 @@ public class UsuarioController extends AbstractController {
         usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
         usuarioDao.primeiroItemRs();
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-        usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
+        usuarioView.setSelecaoLinha(usuarioDao.retornaIndiceRs());
         usuarioView.statusInicial();
         usuarioView.setNavIsFirstOrLast(true);
         JTableHeader jTableHeader = usuarioView.getJTable().getTableHeader();
@@ -198,7 +195,7 @@ public class UsuarioController extends AbstractController {
     }
 
     public void testarNavegacao() {
-        if (usuarioDao.retornaTamanhoRs() == 1) {
+        if (usuarioDao.retornaTamanhoRs() == 1 || usuarioDao.retornaTamanhoRs() == 0) {
             usuarioView.setNavStatus(false);
         } else if (usuarioDao.isFirst()) {
             usuarioView.setNavIsFirstOrLast(true);
@@ -215,7 +212,7 @@ public class UsuarioController extends AbstractController {
 
     private void setJTextAndJTable() {
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-        usuarioView.setLinhaSelecionada(usuarioDao.retornaIndiceRs() - 1);
+        usuarioView.setSelecaoLinha(usuarioDao.retornaIndiceRs());
         testarNavegacao();
         usuarioView.statusInicial();
     }
