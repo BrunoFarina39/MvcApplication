@@ -1,6 +1,5 @@
 package br.com.brunofarina.component;
 
-import br.com.brunofarina.component.CustomComponent;
 import javax.swing.JPasswordField;
 
 /*

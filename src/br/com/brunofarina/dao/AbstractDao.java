@@ -7,7 +7,6 @@ package br.com.brunofarina.dao;
 
 import br.com.brunofarina.connection.Database;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,8 +14,6 @@ import java.sql.SQLException;
 import br.com.brunofarina.model.AbstractModel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import br.com.brunofarina.annotations.CampoObr;
-import javax.swing.JOptionPane;
 
 /**
  *

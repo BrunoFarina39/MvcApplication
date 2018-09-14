@@ -121,9 +121,15 @@ public class UsuarioController extends AbstractController {
             public void mouseClicked(MouseEvent evt) {
                 JTable jTable = ((JTableHeader) evt.getSource()).getTable();
                 jTable.setRowSelectionInterval(0, 0);
-                usuarioDao.primeiroItemRs();
-                testarNavegacao();
+                //usuarioDao.primeiroItemRs();
+                //testarNavegacao();
+                //usuarioDao.setItemRs(usuarioView.getLinhaSelecionada() + 1);
+                //usuarioView.preencheCampos(usuarioDao.retornaUsuario());
+                // usuarioView.statusInicial();
+                // testarNavegacao();
+                //if (jTable.columnAtPoint(evt.getPoint()) >= 0) {
 
+                //}
             }
         });
     }

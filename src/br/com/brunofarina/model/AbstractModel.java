@@ -5,8 +5,6 @@
  */
 package br.com.brunofarina.model;
 
-import br.com.brunofarina.annotations.Coluna;
-
 /**
  *
  * @author Bruno
