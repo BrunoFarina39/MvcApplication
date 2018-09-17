@@ -5,6 +5,7 @@
  */
 package br.com.brunofarina.view;
 
+import br.com.brunofarina.application.TelaPrincipal;
 import br.com.brunofarina.component.CustomComponent;
 import br.com.brunofarina.component.Filter;
 import br.com.brunofarina.model.TableModel;
@@ -29,6 +30,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.ButtonGroup;
+import javax.swing.JDesktopPane;
 import javax.swing.table.TableCellRenderer;
 
 /**

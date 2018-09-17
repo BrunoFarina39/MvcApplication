@@ -41,6 +41,8 @@ public class UsuarioView extends AbstractView {
         this.btGroup.add(JRadioId);
         this.btGroup.add(JRadioNome);
 
+        this.setVisible(true);
+
         super.adicionaArrayComponente((CustomComponent) jtCodigo);
         super.adicionaArrayComponente((CustomComponent) jtNome);
         super.adicionaArrayComponente((CustomComponent) jtLogin);

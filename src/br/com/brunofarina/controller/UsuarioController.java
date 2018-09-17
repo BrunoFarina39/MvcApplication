@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
+import br.com.brunofarina.view.UsuarioPesquisa;
 import br.com.brunofarina.view.UsuarioView;
 import java.awt.event.MouseAdapter;
 import javax.swing.JTable;
@@ -50,7 +51,9 @@ public class UsuarioController extends AbstractController {
                         cancelar();
                         break;
                     case "Pesquisar":
-                        listar(usuarioView.getPesquisa());
+                        //listar(usuarioView.getPesquisa());
+                        UsuarioPesquisa usuarioPesquia = new UsuarioPesquisa();
+                        usuarioPesquia.setEnabled(true);
                         break;
                     case ">":
                         usuarioDao.avancaItemRs();
@@ -107,11 +110,12 @@ public class UsuarioController extends AbstractController {
         this.usuario = new Usuario();
         this.usuarioDao = new UsuarioDao();
         this.usuarioView = new UsuarioView(actionListener, mouseListener);
+
         usuario.setInputFilter((usuarioView.getCamposFilter()));
         this.usuarioView.render();
         usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
         usuarioDao.primeiroItemRs();
-        usuarioView.preencheCampos(usuarioDao.retornaUsuario());
+        //usuarioView.preencheCampos(usuarioDao.retornaUsuario());
         usuarioView.setSelecaoLinha(usuarioDao.retornaIndiceRs());
         usuarioView.statusInicial();
         usuarioView.setNavIsFirstOrLast(true);
@@ -159,6 +163,7 @@ public class UsuarioController extends AbstractController {
 
     @Override
     public void editar() {
+        usuarioView.preencheCampos(usuarioDao.retornaUsuario());
         usuarioView.statusEditar();
     }
 
@@ -217,7 +222,6 @@ public class UsuarioController extends AbstractController {
     }
 
     private void setJTextAndJTable() {
-        usuarioView.preencheCampos(usuarioDao.retornaUsuario());
         usuarioView.setSelecaoLinha(usuarioDao.retornaIndiceRs());
         testarNavegacao();
         usuarioView.statusInicial();

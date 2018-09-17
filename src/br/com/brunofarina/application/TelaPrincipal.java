@@ -6,6 +6,7 @@
 package br.com.brunofarina.application;
 
 import br.com.brunofarina.controller.UsuarioController;
+import br.com.brunofarina.view.AbstractView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JDesktopPane;
@@ -25,13 +26,13 @@ public class TelaPrincipal extends JFrame implements ActionListener {
     private JMenuBar jMenuBar;
     private JMenuItem jMenuItemUsuario, jMenuItemCliente, jMenuItemFornecedor, jMenuItemMarca, jMenuItemProduto, jMenuItemServico;
     private UsuarioView jInternalFrame;
-    public JDesktopPane jDesktopPane;
+    public static JDesktopPane jDesktopPane;
     private UsuarioController usuarioController;
 
     public TelaPrincipal() {
+        jDesktopPane = new JDesktopPane();
         jMenu = new JMenu();
         jMenuBar = new JMenuBar();
-        jDesktopPane = new JDesktopPane();
         jMenuItemUsuario = new JMenuItem();
         jMenuItemCliente = new JMenuItem();
         jMenuItemFornecedor = new JMenuItem();
@@ -77,13 +78,15 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 
             if (this.usuarioController == null) {
                 this.usuarioController = new UsuarioController();
-                this.jInternalFrame = usuarioController.getView();
-                usuarioController.getView().setVisible(true);
-                jDesktopPane.add(usuarioController.getView());
+                // this.jInternalFrame = usuarioController.getView();
+                //usuarioController.getView().setVisible(true);
+                // usuarioController.getView().jDesktopPane.add(usuarioController.getView());
+                super.setContentPane(jDesktopPane);
             } else {
                 if (!usuarioController.getView().isVisible()) {
-                    usuarioController.getView().setVisible(true);
-                    jDesktopPane.add(usuarioController.getView());
+                    //usuarioController.getView().setVisible(true);
+                    //this.jDesktopPane.add(usuarioController.getView());
+                    // super.setContentPane(jDesktopPane);
                 }
             }
         }
