@@ -25,12 +25,10 @@ public class TelaPrincipal extends JFrame implements ActionListener {
     private JMenu jMenu;
     private JMenuBar jMenuBar;
     private JMenuItem jMenuItemUsuario, jMenuItemCliente, jMenuItemFornecedor, jMenuItemMarca, jMenuItemProduto, jMenuItemServico;
-    private UsuarioView jInternalFrame;
-    public static JDesktopPane jDesktopPane;
+    public static JDesktopPane jDesktopPane = new JDesktopPane();
     private UsuarioController usuarioController;
 
     public TelaPrincipal() {
-        jDesktopPane = new JDesktopPane();
         jMenu = new JMenu();
         jMenuBar = new JMenuBar();
         jMenuItemUsuario = new JMenuItem();
@@ -48,7 +46,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
         jMenuItemServico.setText("Serviço");
 
         jMenu.setText("Cadastros");
-
         jMenuBar.add(jMenu);
         jMenu.add(jMenuItemUsuario);
         jMenu.add(jMenuItemCliente);
@@ -81,14 +78,15 @@ public class TelaPrincipal extends JFrame implements ActionListener {
                 // this.jInternalFrame = usuarioController.getView();
                 //usuarioController.getView().setVisible(true);
                 // usuarioController.getView().jDesktopPane.add(usuarioController.getView());
-                super.setContentPane(jDesktopPane);
+                //super.setContentPane(jDesktopPane);
             } else {
-                if (!usuarioController.getView().isVisible()) {
-                    //usuarioController.getView().setVisible(true);
-                    //this.jDesktopPane.add(usuarioController.getView());
-                    // super.setContentPane(jDesktopPane);
-                }
+                //  if (!usuarioController.getView().isVisible()) {
+                // usuarioController.getView().setVisible(true);
+                //this.jDesktopPane.add(usuarioController.getView());
+                //super.setContentPane(jDesktopPane);
+                this.usuarioController.getTela();
             }
+
         }
     }
 }

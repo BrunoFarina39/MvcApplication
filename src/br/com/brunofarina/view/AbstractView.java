@@ -97,7 +97,8 @@ public class AbstractView extends JInternalFrame {
         JScrollPane scroll = new JScrollPane(jTable);
         scroll.setViewportView(jTable);
         container.add(panel);
-
+        setVisible(true);
+        pack();
         this.panel.setLayout(new BorderLayout());
         panel.add(jlTitulo, BorderLayout.NORTH);
         panel.add(panelCampos, BorderLayout.CENTER);

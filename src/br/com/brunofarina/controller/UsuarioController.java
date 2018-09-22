@@ -29,93 +29,94 @@ public class UsuarioController extends AbstractController {
     private UsuarioView usuarioView;
     private Usuario usuario;
     private UsuarioDao usuarioDao;
+    ActionListener actionListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            switch (e.getActionCommand()) {
+                case "Novo":
+                    novo();
+                    break;
+                case "Salvar":
+                    salvar();
+                    break;
+                case "Editar":
+                    editar();
+                    break;
+                case "Excluir":
+                    excluir();
+                    break;
+                case "Cancelar":
+                    cancelar();
+                    break;
+                case "Pesquisar":
+                    //listar(usuarioView.getPesquisa());
+                    UsuarioPesquisa usuarioPesquia = new UsuarioPesquisa();
+                    usuarioPesquia.setEnabled(true);
+                    break;
+                case ">":
+                    usuarioDao.avancaItemRs();
+                    setJTextAndJTable();
+                    break;
+                case "<":
+                    usuarioDao.voltaItemRs();
+                    setJTextAndJTable();
+                    break;
+                case ">>":
+                    usuarioDao.ultimoItemRs();
+                    setJTextAndJTable();
+                    break;
+                case "<<":
+                    usuarioDao.primeiroItemRs();
+                    setJTextAndJTable();
+                    break;
+            }
+        }
+    };
+
+    MouseListener mouseListener = new MouseListener() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (e.getClickCount() == 1) {
+                usuarioDao.setItemRs(usuarioView.getLinhaSelecionada() + 1);
+                usuarioView.preencheCampos(usuarioDao.retornaUsuario());
+                usuarioView.statusInicial();
+                testarNavegacao();
+            } else if (e.getClickCount() == 2) {
+                editar();
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
+    };
 
     public UsuarioController() {
-        ActionListener actionListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                switch (e.getActionCommand()) {
-                    case "Novo":
-                        novo();
-                        break;
-                    case "Salvar":
-                        salvar();
-                        break;
-                    case "Editar":
-                        editar();
-                        break;
-                    case "Excluir":
-                        excluir();
-                        break;
-                    case "Cancelar":
-                        cancelar();
-                        break;
-                    case "Pesquisar":
-                        //listar(usuarioView.getPesquisa());
-                        UsuarioPesquisa usuarioPesquia = new UsuarioPesquisa();
-                        usuarioPesquia.setEnabled(true);
-                        break;
-                    case ">":
-                        usuarioDao.avancaItemRs();
-                        setJTextAndJTable();
-                        break;
-                    case "<":
-                        usuarioDao.voltaItemRs();
-                        setJTextAndJTable();
-                        break;
-                    case ">>":
-                        usuarioDao.ultimoItemRs();
-                        setJTextAndJTable();
-                        break;
-                    case "<<":
-                        usuarioDao.primeiroItemRs();
-                        setJTextAndJTable();
-                        break;
-                }
-            }
-        };
-        MouseListener mouseListener = new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 1) {
-                    usuarioDao.setItemRs(usuarioView.getLinhaSelecionada() + 1);
-                    usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-                    usuarioView.statusInicial();
-                    testarNavegacao();
-                } else if (e.getClickCount() == 2) {
-                    editar();
-                }
-            }
 
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        };
         this.usuario = new Usuario();
         this.usuarioDao = new UsuarioDao();
-        this.usuarioView = new UsuarioView(actionListener, mouseListener);
-
+        usuarioView = UsuarioView.getTela();
+        usuarioView.AddAction(actionListener, mouseListener);
         usuario.setInputFilter((usuarioView.getCamposFilter()));
         this.usuarioView.render();
         usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
         usuarioDao.primeiroItemRs();
-        //usuarioView.preencheCampos(usuarioDao.retornaUsuario());
         usuarioView.setSelecaoLinha(usuarioDao.retornaIndiceRs());
         usuarioView.statusInicial();
         usuarioView.setNavIsFirstOrLast(true);
@@ -217,13 +218,22 @@ public class UsuarioController extends AbstractController {
         }
     }
 
-    public UsuarioView getView() {
-        return this.usuarioView;
-    }
-
     private void setJTextAndJTable() {
         usuarioView.setSelecaoLinha(usuarioDao.retornaIndiceRs());
         testarNavegacao();
         usuarioView.statusInicial();
+    }
+
+    public void getTela() {
+        usuarioView = UsuarioView.getTela();
+
+        usuarioView.AddAction(actionListener, mouseListener);
+        usuario.setInputFilter((usuarioView.getCamposFilter()));
+        usuarioView.render();
+        usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
+        usuarioDao.primeiroItemRs();
+        usuarioView.setSelecaoLinha(usuarioDao.retornaIndiceRs());
+        usuarioView.statusInicial();
+        usuarioView.setNavIsFirstOrLast(true);
     }
 }

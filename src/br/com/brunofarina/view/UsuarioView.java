@@ -5,6 +5,7 @@
  */
 package br.com.brunofarina.view;
 
+import br.com.brunofarina.application.TelaPrincipal;
 import br.com.brunofarina.component.CustomComponent;
 import br.com.brunofarina.component.CustomJPasswordField;
 import br.com.brunofarina.component.CustomJTextField;
@@ -21,11 +22,26 @@ import javax.swing.JRadioButton;
  */
 public class UsuarioView extends AbstractView {
 
+    public static UsuarioView tela;
     private CustomJTextField jtCodigo, jtNome, jtLogin;
     private CustomJPasswordField jtSenha;
     private JRadioButton JRadioId, JRadioNome;
 
-    public UsuarioView(ActionListener actionListener, MouseListener mouseListener) {
+    public static UsuarioView getTela() {
+        if (tela != null && tela.isClosed()) {
+            TelaPrincipal.jDesktopPane.remove(tela);
+            tela = null;
+        }
+        if (tela == null) {
+            tela = new UsuarioView();
+            TelaPrincipal.jDesktopPane.add(tela);
+        }
+        TelaPrincipal.jDesktopPane.moveToFront(tela);
+        TelaPrincipal.jDesktopPane.selectFrame(true);
+        return tela;
+    }
+
+    public UsuarioView() {
         super("Cadastro de Usuário", true, true, true, true);
         super.setSize(650, 500);
         this.jtCodigo = new CustomJTextField(10, true, "ID", "Código");
@@ -41,13 +57,14 @@ public class UsuarioView extends AbstractView {
         this.btGroup.add(JRadioId);
         this.btGroup.add(JRadioNome);
 
-        this.setVisible(true);
-
         super.adicionaArrayComponente((CustomComponent) jtCodigo);
         super.adicionaArrayComponente((CustomComponent) jtNome);
         super.adicionaArrayComponente((CustomComponent) jtLogin);
         super.adicionaArrayComponente((CustomComponent) jtSenha);
 
+    }
+
+    public void AddAction(ActionListener actionListener, MouseListener mouseListener) {
         jbNovo.addActionListener(actionListener);
         jbSalvar.addActionListener(actionListener);
         jbEditar.addActionListener(actionListener);
@@ -122,4 +139,5 @@ public class UsuarioView extends AbstractView {
         jtSenha.setTexto(usuario.getSenha());
         jtNome.setTexto(usuario.getNome());
     }
+
 }
