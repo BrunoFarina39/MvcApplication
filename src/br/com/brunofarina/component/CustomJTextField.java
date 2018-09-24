@@ -21,6 +21,7 @@ public class CustomJTextField extends JTextField implements CustomComponent {
         this.filtro = filtro;
         this.nome = nome;
         this.rotulo = rotulo;
+        this.obrigatorio = false;
     }
 
     @Override

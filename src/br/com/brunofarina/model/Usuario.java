@@ -38,7 +38,7 @@ public class Usuario extends AbstractModel {
     }
 
     @Coluna(posicao = 1, nome = "Login")
-    @CampoObr(nome = "login")
+    @CampoObr
     public String getLogin() {
         return login;
     }
@@ -47,7 +47,7 @@ public class Usuario extends AbstractModel {
         this.login = login;
     }
 
-    @CampoObr(nome = "senha")
+    @CampoObr
     public String getSenha() {
         return senha;
     }
@@ -57,7 +57,7 @@ public class Usuario extends AbstractModel {
     }
 
     @Coluna(posicao = 2, nome = "Nome")
-    @CampoObr(nome = "nome")
+    @CampoObr
     public String getNome() {
         return nome;
     }
@@ -86,7 +86,6 @@ public class Usuario extends AbstractModel {
             } else {
                 return false;
             }
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
             return false;
@@ -96,9 +95,8 @@ public class Usuario extends AbstractModel {
     public void setInputFilter(ArrayList<Filter> c) {
         for (Method method : Usuario.class.getDeclaredMethods()) {
             if (method.isAnnotationPresent(CampoObr.class)) {
-                CampoObr campoObr = method.getAnnotation(CampoObr.class);
                 for (int i = 0; i < c.size(); i++) {
-                    if (c.get(i).getNome().equalsIgnoreCase(campoObr.nome())) {
+                    if (c.get(i).getNome().equalsIgnoreCase(method.getName().replace("get", ""))) {
                         c.get(i).setObrigatorio(true);
                     }
                 }

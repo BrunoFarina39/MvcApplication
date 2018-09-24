@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
+import br.com.brunofarina.view.AbstractViewPesquisa;
 import br.com.brunofarina.view.UsuarioPesquisa;
 import br.com.brunofarina.view.UsuarioView;
 import java.awt.event.MouseAdapter;
@@ -50,8 +51,9 @@ public class UsuarioController extends AbstractController {
                     break;
                 case "Pesquisar":
                     //listar(usuarioView.getPesquisa());
-                    UsuarioPesquisa usuarioPesquia = new UsuarioPesquisa();
-                    usuarioPesquia.setEnabled(true);
+                    //UsuarioPesquisa usuarioPesquia = new UsuarioPesquisa();
+                    //usuarioPesquia.setEnabled(true);
+                    AbstractViewPesquisa p = new AbstractViewPesquisa();
                     break;
                 case ">":
                     usuarioDao.avancaItemRs();
@@ -226,7 +228,6 @@ public class UsuarioController extends AbstractController {
 
     public void getTela() {
         usuarioView = UsuarioView.getTela();
-
         usuarioView.AddAction(actionListener, mouseListener);
         usuario.setInputFilter((usuarioView.getCamposFilter()));
         usuarioView.render();
