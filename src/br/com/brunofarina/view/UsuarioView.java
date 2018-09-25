@@ -13,6 +13,7 @@ import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 

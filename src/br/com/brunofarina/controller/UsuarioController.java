@@ -5,6 +5,7 @@
  */
 package br.com.brunofarina.controller;
 
+import br.com.brunofarina.component.FiltroConsulta;
 import br.com.brunofarina.dao.UsuarioDao;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +15,6 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
-import br.com.brunofarina.view.AbstractViewPesquisa;
 import br.com.brunofarina.view.UsuarioPesquisa;
 import br.com.brunofarina.view.UsuarioView;
 import java.awt.event.MouseAdapter;
@@ -53,7 +53,10 @@ public class UsuarioController extends AbstractController {
                     //listar(usuarioView.getPesquisa());
                     //UsuarioPesquisa usuarioPesquia = new UsuarioPesquisa();
                     //usuarioPesquia.setEnabled(true);
-                    AbstractViewPesquisa p = new AbstractViewPesquisa();
+                    FiltroConsulta[] filtros = new FiltroConsulta[]{
+                        new FiltroConsulta("Código", "codigo", FiltroConsulta.INTEIRO),
+                        new FiltroConsulta("Nome", "nome", FiltroConsulta.STRING),};
+                    UsuarioPesquisa p = new UsuarioPesquisa("Pesquisa de Usuário", filtros, true, true, true, true);
                     break;
                 case ">":
                     usuarioDao.avancaItemRs();
