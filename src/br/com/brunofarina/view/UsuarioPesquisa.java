@@ -6,6 +6,8 @@
 package br.com.brunofarina.view;
 
 import br.com.brunofarina.component.FiltroConsulta;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import javax.swing.JInternalFrame;
 
 /**
@@ -14,7 +16,8 @@ import javax.swing.JInternalFrame;
  */
 public class UsuarioPesquisa extends AbstractViewPesquisa {
 
-    public UsuarioPesquisa(String titulo, FiltroConsulta[] filtroConsulta, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
-        super(titulo, filtroConsulta, resizable, closable, maximizable, iconable);
+    public UsuarioPesquisa(String titulo, FiltroConsulta[] filtroConsulta, ActionListener actionListener, MouseListener mouseListener, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
+        super(titulo, filtroConsulta, actionListener, mouseListener, resizable, closable, maximizable, iconable
+        );
     }
 }

@@ -8,12 +8,16 @@ package br.com.brunofarina.view;
 import br.com.brunofarina.application.TelaPrincipal;
 import br.com.brunofarina.component.CustomJTextField;
 import br.com.brunofarina.component.FiltroConsulta;
+import br.com.brunofarina.model.TableModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.ScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -39,7 +43,7 @@ public abstract class AbstractViewPesquisa extends JInternalFrame {
     private FiltroConsulta[] filtros;
     private ButtonGroup buttonGroup;
 
-    public AbstractViewPesquisa(String titulo, FiltroConsulta[] filtroConsulta, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
+    public AbstractViewPesquisa(String titulo, FiltroConsulta[] filtroConsulta, ActionListener actionListener, MouseListener mouseListener, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(titulo, resizable, closable, maximizable, iconable);
         this.setVisible(true);
         this.setSize(600, 400);
@@ -57,6 +61,7 @@ public abstract class AbstractViewPesquisa extends JInternalFrame {
         this.jtPesquisa = new CustomJTextField(20, true, "Pesquisa", "Pesquisa");
         this.jBPesquisar = new JButton("Pesquisar");
         this.buttonGroup = new ButtonGroup();
+        this.jBPesquisar.addActionListener(actionListener);
         this.panelCentral.setLayout(new FlowLayout());
         this.panelCentral.add(this.jlPesquisa);
         this.panelCentral.add(this.jtPesquisa);
@@ -78,7 +83,12 @@ public abstract class AbstractViewPesquisa extends JInternalFrame {
             }
         };
 
+        this.jTable.setAutoCreateRowSorter(true);
+        //jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        jTable.addMouseListener(mouseListener);
         this.jScrollPane = new JScrollPane(jTable);
+        this.jScrollPane.setViewportView(jTable);
         this.panelScroll = new JPanel();
         this.panelScroll.add(this.jScrollPane);
         this.jScrollPane.setPreferredSize(new Dimension(600, 200));
@@ -99,8 +109,17 @@ public abstract class AbstractViewPesquisa extends JInternalFrame {
 
         for (int i = 0; i < filtros.length; i++) {
             JRadioButton jr = new JRadioButton(filtros[i].getFiltro());
+            jr.setName(filtros[i].getCampo());
             buttonGroup.add(jr);
             panelCentral.add(jr);
         }
+    }
+
+    public void povoaJtable(TableModel tb) {
+        jTable.setModel(tb);
+    }
+
+    public Object getRegistro() {
+        return ((TableModel) jTable.getModel()).carregaItem(jTable.getSelectedRow());
     }
 }

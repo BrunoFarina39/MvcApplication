@@ -5,14 +5,11 @@
  */
 package br.com.brunofarina.view;
 
-import br.com.brunofarina.application.TelaPrincipal;
 import br.com.brunofarina.component.CustomComponent;
 import br.com.brunofarina.component.Filter;
-import br.com.brunofarina.model.TableModel;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -25,13 +22,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import java.awt.Color;
-import javax.swing.ButtonGroup;
-import javax.swing.JDesktopPane;
-import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -39,24 +30,18 @@ import javax.swing.table.TableCellRenderer;
  */
 public class AbstractView extends JInternalFrame {
 
-    protected JPanel panel, panelCampos, panelBotoes, panelSul, panelInstPesq, panelPesquisa, panelScroll, panelChavePesq;
+    protected JPanel panel, panelCampos, panelBotoes, panelScroll;
     protected JLabel jlTitulo;
-    protected JButton jbNovo, jbSalvar, jbEditar, jbExcluir, jbCancelar, jbPesquisar, jbInicio, jbUltimo, jbProximo, jbAnterior;
+    protected JButton jbNovo, jbSalvar, jbEditar, jbExcluir, jbCancelar, jbPesquisar;
     protected JTextField jtPesquisar;
-    protected JTable jTable;
     private StringBuffer rotulo;
     protected ArrayList<CustomComponent> campos;
-    protected ButtonGroup btGroup;
 
     public AbstractView(String title, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(title, resizable, closable, maximizable, iconable);
         this.panel = new JPanel();
         this.panelCampos = new JPanel();
         this.panelBotoes = new JPanel();
-        this.panelSul = new JPanel();
-        this.panelInstPesq = new JPanel();
-        this.panelPesquisa = new JPanel();
-        this.panelChavePesq = new JPanel();
         this.panelScroll = new JPanel();
         this.jbNovo = new JButton("Novo");
         this.jbSalvar = new JButton("Salvar");
@@ -66,73 +51,27 @@ public class AbstractView extends JInternalFrame {
         this.jbPesquisar = new JButton("Pesquisar");
         this.jlTitulo = new JLabel("Manutenção de...");
         this.jtPesquisar = new JTextField(15);
-        this.jbProximo = new JButton(">");
-        this.jbAnterior = new JButton("<");
-        this.jbInicio = new JButton("<<");
-        this.jbUltimo = new JButton(">>");
-        this.btGroup = new ButtonGroup();
-        this.jbProximo.setSize(new Dimension(10, 10));
-        this.jbAnterior.setSize(new Dimension(10, 10));
+
         rotulo = new StringBuffer();
         campos = new ArrayList<>();
-        this.jTable = new JTable() {
-            @Override
-            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-                Component component = super.prepareRenderer(renderer, row, column);
-                if (!isRowSelected(row)) {
-                    component.setBackground(row % 2 == 0 ? Color.lightGray : Color.WHITE);
-                }
-                return component;
-            }
-
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return false;
-            }
-        };
-        this.jTable.setAutoCreateRowSorter(true);
-        jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
         Container container = getContentPane();
-        JScrollPane scroll = new JScrollPane(jTable);
-        scroll.setViewportView(jTable);
         container.add(panel);
         setVisible(true);
         pack();
         this.panel.setLayout(new BorderLayout());
         panel.add(jlTitulo, BorderLayout.NORTH);
         panel.add(panelCampos, BorderLayout.CENTER);
-        panel.add(panelSul, BorderLayout.SOUTH);
+        panel.add(panelBotoes, BorderLayout.SOUTH);
 
         GridBagLayout layoutCampos = new GridBagLayout();
         this.panelCampos.setLayout(layoutCampos);
-        this.panelChavePesq.setLayout(new FlowLayout());
         this.panelBotoes.setLayout(new FlowLayout());
         this.panelBotoes.add(this.jbNovo);
         this.panelBotoes.add(this.jbSalvar);
         this.panelBotoes.add(this.jbEditar);
         this.panelBotoes.add(this.jbExcluir);
         this.panelBotoes.add(this.jbCancelar);
-
-        this.panelSul.setLayout(new BorderLayout());
-        this.panelSul.add(panelBotoes, BorderLayout.NORTH);
-        this.panelSul.add(panelPesquisa, BorderLayout.SOUTH);
-
-        this.panelPesquisa.setLayout(new BorderLayout());
-        this.panelPesquisa.add(panelInstPesq, BorderLayout.NORTH);
-        this.panelPesquisa.add(panelScroll, BorderLayout.SOUTH);
-
-        this.panelScroll.add(scroll);
-        scroll.setPreferredSize(new Dimension(600, 200));
-
-        this.panelInstPesq.setLayout(new FlowLayout());
-        this.panelInstPesq.add(jtPesquisar);
-        this.panelInstPesq.add(jbPesquisar);
-        this.panelInstPesq.add(panelChavePesq);
-        this.panelInstPesq.add(jbInicio);
-        this.panelInstPesq.add(jbAnterior);
-        this.panelInstPesq.add(jbProximo);
-        this.panelInstPesq.add(jbUltimo);
+        this.panelBotoes.add(this.jbPesquisar);
     }
 
     protected void adicionaComponente(int linha, int coluna, int largura, int altura, int espVert, int espaHor, JComponent componente) {
@@ -220,15 +159,6 @@ public class AbstractView extends JInternalFrame {
         }
     }
 
-    public void povoaJtable(TableModel tb) {
-        jTable.setModel(tb);
-        if (jTable.getRowCount() == 0) {
-            setNavStatus(false);
-        } else {
-            setNavStatus(true);
-        }
-    }
-
     public void statusNovo() {
         jbNovo.setEnabled(false);
         jbSalvar.setEnabled(true);
@@ -236,8 +166,6 @@ public class AbstractView extends JInternalFrame {
         jbExcluir.setEnabled(false);
         jbCancelar.setEnabled(true);
         habilitaCampos(true);
-        setNavStatus(false);
-        jTable.setEnabled(false);
     }
 
     public void statusEditar() {
@@ -247,7 +175,6 @@ public class AbstractView extends JInternalFrame {
         jbExcluir.setEnabled(false);
         jbCancelar.setEnabled(true);
         habilitaCampos(true);
-        setNavStatus(false);
     }
 
     public void statusInicial() {
@@ -257,29 +184,6 @@ public class AbstractView extends JInternalFrame {
         jbExcluir.setEnabled(true);
         jbCancelar.setEnabled(false);
         habilitaCampos(false);
-        jTable.setEnabled(true);
-    }
-
-    public void setNavIsFirstOrLast(boolean status) {
-
-        if (status) {
-            jbInicio.setEnabled(!status);
-            jbAnterior.setEnabled(!status);
-            jbProximo.setEnabled(status);
-            jbUltimo.setEnabled(status);
-        } else {
-            jbInicio.setEnabled(!status);
-            jbAnterior.setEnabled(!status);
-            jbProximo.setEnabled(status);
-            jbUltimo.setEnabled(status);
-        }
-    }
-
-    public void setNavStatus(boolean status) {
-        jbProximo.setEnabled(status);
-        jbAnterior.setEnabled(status);
-        jbUltimo.setEnabled(status);
-        jbInicio.setEnabled(status);
     }
 
     public void statusManutencao(boolean status) {
@@ -290,21 +194,7 @@ public class AbstractView extends JInternalFrame {
         }
     }
 
-    public void setSelecaoLinha(int linha) {
-        if (linha > 0) {
-            jTable.setRowSelectionInterval(linha - 1, linha - 1);
-        }
-    }
-
-    public int getLinhaSelecionada() {
-        return jTable.getSelectedRow();
-    }
-
     public Object getPesquisa() {
         return jtPesquisar.getText();
-    }
-
-    public JTable getJTable() {
-        return jTable;
     }
 }

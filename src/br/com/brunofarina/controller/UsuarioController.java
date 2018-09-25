@@ -5,6 +5,7 @@
  */
 package br.com.brunofarina.controller;
 
+import br.com.brunofarina.application.TelaPrincipal;
 import br.com.brunofarina.component.FiltroConsulta;
 import br.com.brunofarina.dao.UsuarioDao;
 import java.awt.event.ActionEvent;
@@ -30,64 +31,21 @@ public class UsuarioController extends AbstractController {
     private UsuarioView usuarioView;
     private Usuario usuario;
     private UsuarioDao usuarioDao;
-    ActionListener actionListener = new ActionListener() {
+    UsuarioPesquisa p;
+
+    ActionListener actionListenerPesq = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            switch (e.getActionCommand()) {
-                case "Novo":
-                    novo();
-                    break;
-                case "Salvar":
-                    salvar();
-                    break;
-                case "Editar":
-                    editar();
-                    break;
-                case "Excluir":
-                    excluir();
-                    break;
-                case "Cancelar":
-                    cancelar();
-                    break;
-                case "Pesquisar":
-                    //listar(usuarioView.getPesquisa());
-                    //UsuarioPesquisa usuarioPesquia = new UsuarioPesquisa();
-                    //usuarioPesquia.setEnabled(true);
-                    FiltroConsulta[] filtros = new FiltroConsulta[]{
-                        new FiltroConsulta("Código", "codigo", FiltroConsulta.INTEIRO),
-                        new FiltroConsulta("Nome", "nome", FiltroConsulta.STRING),};
-                    UsuarioPesquisa p = new UsuarioPesquisa("Pesquisa de Usuário", filtros, true, true, true, true);
-                    break;
-                case ">":
-                    usuarioDao.avancaItemRs();
-                    setJTextAndJTable();
-                    break;
-                case "<":
-                    usuarioDao.voltaItemRs();
-                    setJTextAndJTable();
-                    break;
-                case ">>":
-                    usuarioDao.ultimoItemRs();
-                    setJTextAndJTable();
-                    break;
-                case "<<":
-                    usuarioDao.primeiroItemRs();
-                    setJTextAndJTable();
-                    break;
-            }
+            System.out.println(".actionPerformed()");
         }
     };
 
-    MouseListener mouseListener = new MouseListener() {
+    MouseListener mouseListenerPesq = new MouseListener() {
         @Override
         public void mouseClicked(MouseEvent e) {
-            if (e.getClickCount() == 1) {
-                usuarioDao.setItemRs(usuarioView.getLinhaSelecionada() + 1);
-                usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-                usuarioView.statusInicial();
-                testarNavegacao();
-            } else if (e.getClickCount() == 2) {
+            if (e.getClickCount() == 2) {
                 editar();
+                TelaPrincipal.jDesktopPane.moveToFront(usuarioView);
             }
         }
 
@@ -112,36 +70,44 @@ public class UsuarioController extends AbstractController {
         }
     };
 
+    ActionListener actionListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            switch (e.getActionCommand()) {
+                case "Novo":
+                    novo();
+                    break;
+                case "Salvar":
+                    salvar();
+                    break;
+                case "Editar":
+                    editar();
+                    break;
+                case "Excluir":
+                    excluir();
+                    break;
+                case "Cancelar":
+                    cancelar();
+                    break;
+                case "Pesquisar":
+                    FiltroConsulta[] filtros = new FiltroConsulta[]{
+                        new FiltroConsulta("Código", "codigo", FiltroConsulta.INTEIRO),
+                        new FiltroConsulta("Nome", "nome", FiltroConsulta.STRING),};
+                    p = new UsuarioPesquisa("Pesquisa de Usuário", filtros, actionListenerPesq, mouseListenerPesq, true, true, true, true);
+                    p.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
+                    break;
+            }
+        }
+    };
+
     public UsuarioController() {
 
         this.usuario = new Usuario();
         this.usuarioDao = new UsuarioDao();
         usuarioView = UsuarioView.getTela();
-        usuarioView.AddAction(actionListener, mouseListener);
+        usuarioView.AddAction(actionListener);
         usuario.setInputFilter((usuarioView.getCamposFilter()));
         this.usuarioView.render();
-        usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
-        usuarioDao.primeiroItemRs();
-        usuarioView.setSelecaoLinha(usuarioDao.retornaIndiceRs());
-        usuarioView.statusInicial();
-        usuarioView.setNavIsFirstOrLast(true);
-        JTableHeader jTableHeader = usuarioView.getJTable().getTableHeader();
-        jTableHeader.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent evt) {
-                JTable jTable = ((JTableHeader) evt.getSource()).getTable();
-                jTable.setRowSelectionInterval(0, 0);
-                //usuarioDao.primeiroItemRs();
-                //testarNavegacao();
-                //usuarioDao.setItemRs(usuarioView.getLinhaSelecionada() + 1);
-                //usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-                // usuarioView.statusInicial();
-                // testarNavegacao();
-                //if (jTable.columnAtPoint(evt.getPoint()) >= 0) {
-
-                //}
-            }
-        });
     }
 
     public void novo() {
@@ -169,7 +135,7 @@ public class UsuarioController extends AbstractController {
 
     @Override
     public void editar() {
-        usuarioView.preencheCampos(usuarioDao.retornaUsuario());
+        usuarioView.preencheCampos((Usuario) p.getRegistro());
         usuarioView.statusEditar();
     }
 
@@ -181,9 +147,8 @@ public class UsuarioController extends AbstractController {
         try {
             if (jOptionPane == opcaoSim) {
                 if (usuarioDao.excluir(usuario)) {
-                    usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
+                    // usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
                     usuarioDao.primeiroItemRs();
-                    setJTextAndJTable();
                     usuarioView.statusInicial();
                 } else {
                     JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir usuário", "Exclusão", JOptionPane.ERROR_MESSAGE);
@@ -194,8 +159,7 @@ public class UsuarioController extends AbstractController {
         }
     }
 
-    @Override
-    public void listar(Object chave) {
+    /* public void listar(Object chave) {
         if (chave instanceof Integer) {
             usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario((int) chave), Usuario.class));
         } else if (chave instanceof String) {
@@ -203,41 +167,25 @@ public class UsuarioController extends AbstractController {
         }
         usuarioDao.primeiroItemRs();
         setJTextAndJTable();
-    }
-
+    }*/
     public void cancelar() {
         usuarioView.statusInicial();
-        testarNavegacao();
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
-    }
-
-    public void testarNavegacao() {
-        if (usuarioDao.retornaTamanhoRs() == 1 || usuarioDao.retornaTamanhoRs() == 0) {
-            usuarioView.setNavStatus(false);
-        } else if (usuarioDao.isFirst()) {
-            usuarioView.setNavIsFirstOrLast(true);
-        } else if (usuarioDao.isLast()) {
-            usuarioView.setNavIsFirstOrLast(false);
-        } else {
-            usuarioView.setNavStatus(true);
-        }
-    }
-
-    private void setJTextAndJTable() {
-        usuarioView.setSelecaoLinha(usuarioDao.retornaIndiceRs());
-        testarNavegacao();
-        usuarioView.statusInicial();
     }
 
     public void getTela() {
         usuarioView = UsuarioView.getTela();
-        usuarioView.AddAction(actionListener, mouseListener);
+        //usuarioView.AddAction(actionListener, mouseListener);
         usuario.setInputFilter((usuarioView.getCamposFilter()));
         usuarioView.render();
-        usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
+        // usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
         usuarioDao.primeiroItemRs();
-        usuarioView.setSelecaoLinha(usuarioDao.retornaIndiceRs());
+        //usuarioView.setSelecaoLinha(usuarioDao.retornaIndiceRs());
         usuarioView.statusInicial();
-        usuarioView.setNavIsFirstOrLast(true);
+    }
+
+    @Override
+    public void listar(Object chave) {
+        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
