@@ -18,9 +18,6 @@ import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
 import br.com.brunofarina.view.ViewPesquisa;
 import br.com.brunofarina.view.UsuarioView;
-import java.awt.event.MouseAdapter;
-import javax.swing.JTable;
-import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -127,6 +124,7 @@ public class UsuarioController extends AbstractController {
             } else {
                 usuario.setId(Integer.parseInt(usuarioView.getJtCodigo().getValor()));
                 usuarioView.statusManutencao(usuarioDao.editar(usuario));
+                listar(p.getPesquisa());
             }
             usuarioView.statusInicial();
         }
@@ -150,15 +148,15 @@ public class UsuarioController extends AbstractController {
         try {
             if (jOptionPane == opcaoSim) {
                 if (usuarioDao.excluir(usuario)) {
-                    JOptionPane.showMessageDialog(null, "Usuário excluido com sucesso!");
+                    usuarioView.statusExclusao(true);
                     usuarioView.statusInicial();
                     listar(p.getPesquisa());
                 } else {
-                    JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir usuário", "Exclusão", JOptionPane.ERROR_MESSAGE);
+                    usuarioView.statusExclusao(true);
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir usuário", "Erro", JOptionPane.ERROR_MESSAGE);
+            usuarioView.statusExclusao(false);
         }
     }
 

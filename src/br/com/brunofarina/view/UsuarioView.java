@@ -11,8 +11,6 @@ import br.com.brunofarina.component.CustomJPasswordField;
 import br.com.brunofarina.component.CustomJTextField;
 import br.com.brunofarina.model.Usuario;
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 
 /**
  *

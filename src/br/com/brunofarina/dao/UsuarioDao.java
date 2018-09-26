@@ -10,8 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import br.com.brunofarina.model.Usuario;
 import java.sql.ResultSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

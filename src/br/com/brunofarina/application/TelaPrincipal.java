@@ -6,7 +6,6 @@
 package br.com.brunofarina.application;
 
 import br.com.brunofarina.controller.UsuarioController;
-import br.com.brunofarina.view.AbstractView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JDesktopPane;
@@ -14,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import br.com.brunofarina.view.UsuarioView;
 
 /**
  *
@@ -75,15 +73,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 
             if (this.usuarioController == null) {
                 this.usuarioController = new UsuarioController();
-                // this.jInternalFrame = usuarioController.getView();
-                //usuarioController.getView().setVisible(true);
-                // usuarioController.getView().jDesktopPane.add(usuarioController.getView());
-                //super.setContentPane(jDesktopPane);
             } else {
-                //  if (!usuarioController.getView().isVisible()) {
-                // usuarioController.getView().setVisible(true);
-                //this.jDesktopPane.add(usuarioController.getView());
-                //super.setContentPane(jDesktopPane);
                 this.usuarioController.getTela();
             }
 

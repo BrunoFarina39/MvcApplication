@@ -30,7 +30,7 @@ import javax.swing.JTextField;
  */
 public class AbstractView extends JInternalFrame {
 
-    protected JPanel panel, panelCampos, panelBotoes, panelScroll;
+    protected JPanel panel, panelNorte, panelCentral, panelSul, panelScroll;
     protected JLabel jlTitulo;
     protected JButton jbNovo, jbSalvar, jbEditar, jbExcluir, jbCancelar, jbPesquisar;
     protected JTextField jtPesquisar;
@@ -40,8 +40,9 @@ public class AbstractView extends JInternalFrame {
     public AbstractView(String title, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(title, resizable, closable, maximizable, iconable);
         this.panel = new JPanel();
-        this.panelCampos = new JPanel();
-        this.panelBotoes = new JPanel();
+        this.panelNorte = new JPanel();
+        this.panelCentral = new JPanel();
+        this.panelSul = new JPanel();
         this.panelScroll = new JPanel();
         this.jbNovo = new JButton("Novo");
         this.jbSalvar = new JButton("Salvar");
@@ -58,20 +59,22 @@ public class AbstractView extends JInternalFrame {
         container.add(panel);
         setVisible(true);
         pack();
+        panelNorte.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelNorte.add(jlTitulo);
         this.panel.setLayout(new BorderLayout());
-        panel.add(jlTitulo, BorderLayout.NORTH);
-        panel.add(panelCampos, BorderLayout.CENTER);
-        panel.add(panelBotoes, BorderLayout.SOUTH);
+        panel.add(panelNorte, BorderLayout.NORTH);
+        panel.add(panelCentral, BorderLayout.CENTER);
+        panel.add(panelSul, BorderLayout.SOUTH);
 
         GridBagLayout layoutCampos = new GridBagLayout();
-        this.panelCampos.setLayout(layoutCampos);
-        this.panelBotoes.setLayout(new FlowLayout());
-        this.panelBotoes.add(this.jbNovo);
-        this.panelBotoes.add(this.jbSalvar);
-        this.panelBotoes.add(this.jbEditar);
-        this.panelBotoes.add(this.jbExcluir);
-        this.panelBotoes.add(this.jbCancelar);
-        this.panelBotoes.add(this.jbPesquisar);
+        this.panelCentral.setLayout(layoutCampos);
+        this.panelSul.setLayout(new FlowLayout());
+        this.panelSul.add(this.jbNovo);
+        this.panelSul.add(this.jbSalvar);
+        this.panelSul.add(this.jbEditar);
+        this.panelSul.add(this.jbExcluir);
+        this.panelSul.add(this.jbCancelar);
+        this.panelSul.add(this.jbPesquisar);
     }
 
     protected void adicionaComponente(int linha, int coluna, int largura, int altura, int espVert, int espaHor, JComponent componente) {
@@ -92,13 +95,13 @@ public class AbstractView extends JInternalFrame {
             jlRotulo.setFont(new Font("Arial", Font.BOLD, 12));
             gbc.insets = new Insets(espVert, espVert, espaHor, espaHor);
             gbc.anchor = GridBagConstraints.EAST;
-            panelCampos.add(jlRotulo, gbc);
+            panelCentral.add(jlRotulo, gbc);
             gbc.gridx++;
         }
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridwidth = largura;
         gbc.gridheight = altura;
-        panelCampos.add(componente, gbc);
+        panelCentral.add(componente, gbc);
         //TestGridBagLayout.insereComponente(3, 3, panelCampos);
     }
 
@@ -142,7 +145,7 @@ public class AbstractView extends JInternalFrame {
     }
 
     public void limpaCampos() {
-        Component[] component = panelCampos.getComponents();
+        Component[] component = panelCentral.getComponents();
         for (Component component1 : component) {
             if (component1 instanceof JTextField) {
                 ((JTextField) component1).setText("");
@@ -151,10 +154,16 @@ public class AbstractView extends JInternalFrame {
     }
 
     private void habilitaCampos(boolean status) {
-        Component[] component = panelCampos.getComponents();
+        Component[] component = panelCentral.getComponents();
+        int count = 0;
         for (Component component1 : component) {
             if (component1 instanceof JTextField) {
-                ((JTextField) component1).setEditable(status);
+                if (count == 0) {
+                    ((JTextField) component1).setEditable(false);
+                } else {
+                    ((JTextField) component1).setEditable(status);
+                }
+                count++;
             }
         }
     }
@@ -203,9 +212,17 @@ public class AbstractView extends JInternalFrame {
 
     public void statusManutencao(boolean status) {
         if (status) {
-            JOptionPane.showMessageDialog(panelCampos, "Dados gravado/alterado com sucesso!");
+            JOptionPane.showMessageDialog(panelCentral, "Dados gravado/alterado com sucesso!");
         } else {
-            JOptionPane.showMessageDialog(panelCampos, "Não foi possivel gravar/alterar dados!");
+            JOptionPane.showMessageDialog(panelCentral, "Não foi possivel gravar/alterar dados!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void statusExclusao(boolean status) {
+        if (status) {
+            JOptionPane.showMessageDialog(panelCentral, "Dados excluidos com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(panelCentral, "Não foi possivel excluir dados!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
