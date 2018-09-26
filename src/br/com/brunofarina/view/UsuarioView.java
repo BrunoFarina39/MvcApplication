@@ -57,7 +57,6 @@ public class UsuarioView extends AbstractView {
         jbExcluir.addActionListener(actionListener);
         jbCancelar.addActionListener(actionListener);
         jbPesquisar.addActionListener(actionListener);
-        statusInicial();
 
     }
 
@@ -68,6 +67,7 @@ public class UsuarioView extends AbstractView {
         super.adicionaComponente(0, 1, 2, 1, 5, 5, jtNome);
         super.adicionaComponente(0, 2, 2, 1, 5, 5, jtLogin);
         super.adicionaComponente(0, 3, 2, 1, 5, 5, jtSenha);
+        statusInicial();
     }
 
     public CustomJTextField getJtCodigo() {

@@ -36,15 +36,7 @@ public class UsuarioController extends AbstractController {
     ActionListener actionListenerPesq = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (p.getRadio().equals("codigo")) {
-                try {
-                    p.povoaJtable(new TableModel(usuarioDao.listarUsuario(Integer.parseInt(p.getPesquisa())), Usuario.class));
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Digite apenas Números");
-                }
-            } else {
-                p.povoaJtable(new TableModel(usuarioDao.listarUsuario(p.getPesquisa()), Usuario.class));
-            }
+            listar(p.getPesquisa());
         }
     };
 
@@ -52,7 +44,7 @@ public class UsuarioController extends AbstractController {
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {
-                editar();
+                hidrataCampos();
                 TelaPrincipal.jDesktopPane.moveToFront(usuarioView);
             }
         }
@@ -136,13 +128,17 @@ public class UsuarioController extends AbstractController {
                 usuario.setId(Integer.parseInt(usuarioView.getJtCodigo().getValor()));
                 usuarioView.statusManutencao(usuarioDao.editar(usuario));
             }
-            listar(usuarioView.getPesquisa());
+            usuarioView.statusInicial();
         }
+    }
+
+    public void hidrataCampos() {
+        usuarioView.preencheCampos((Usuario) p.getRegistro());
+        usuarioView.statusPesquisa();
     }
 
     @Override
     public void editar() {
-        usuarioView.preencheCampos((Usuario) p.getRegistro());
         usuarioView.statusEditar();
     }
 
@@ -154,9 +150,9 @@ public class UsuarioController extends AbstractController {
         try {
             if (jOptionPane == opcaoSim) {
                 if (usuarioDao.excluir(usuario)) {
-                    // usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
-
+                    JOptionPane.showMessageDialog(null, "Usuário excluido com sucesso!");
                     usuarioView.statusInicial();
+                    listar(p.getPesquisa());
                 } else {
                     JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir usuário", "Exclusão", JOptionPane.ERROR_MESSAGE);
                 }
@@ -168,18 +164,24 @@ public class UsuarioController extends AbstractController {
 
     public void cancelar() {
         usuarioView.statusInicial();
-        usuarioView.preencheCampos(usuarioDao.retornaUsuario());
     }
 
     public void getTela() {
         usuarioView = UsuarioView.getTela(actionListener);
         usuario.setInputFilter((usuarioView.getCamposFilter()));
         usuarioView.render();
-        usuarioView.statusInicial();
     }
 
     @Override
     public void listar(Object chave) {
-        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (p.getRadio().equals("codigo")) {
+            try {
+                p.povoaJtable(new TableModel(usuarioDao.listarUsuario(Integer.parseInt(chave.toString())), Usuario.class));
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Digite apenas Números");
+            }
+        } else {
+            p.povoaJtable(new TableModel(usuarioDao.listarUsuario(chave.toString()), Usuario.class));
+        }
     }
 }

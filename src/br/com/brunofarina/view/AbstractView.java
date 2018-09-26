@@ -165,6 +165,8 @@ public class AbstractView extends JInternalFrame {
         jbEditar.setEnabled(false);
         jbExcluir.setEnabled(false);
         jbCancelar.setEnabled(true);
+        jbPesquisar.setEnabled(false);
+        limpaCampos();
         habilitaCampos(true);
     }
 
@@ -174,7 +176,18 @@ public class AbstractView extends JInternalFrame {
         jbEditar.setEnabled(false);
         jbExcluir.setEnabled(false);
         jbCancelar.setEnabled(true);
+        jbPesquisar.setEnabled(false);
         habilitaCampos(true);
+    }
+
+    public void statusPesquisa() {
+        jbNovo.setEnabled(false);
+        jbSalvar.setEnabled(false);
+        jbEditar.setEnabled(true);
+        jbExcluir.setEnabled(true);
+        jbCancelar.setEnabled(false);
+        jbPesquisar.setEnabled(false);
+        habilitaCampos(false);
     }
 
     public void statusInicial() {
@@ -184,6 +197,7 @@ public class AbstractView extends JInternalFrame {
         jbExcluir.setEnabled(false);
         jbCancelar.setEnabled(false);
         jbPesquisar.setEnabled(true);
+        limpaCampos();
         habilitaCampos(false);
     }
 
