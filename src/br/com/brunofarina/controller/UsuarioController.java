@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
-import br.com.brunofarina.view.UsuarioPesquisa;
+import br.com.brunofarina.view.ViewPesquisa;
 import br.com.brunofarina.view.UsuarioView;
 import java.awt.event.MouseAdapter;
 import javax.swing.JTable;
@@ -31,12 +31,20 @@ public class UsuarioController extends AbstractController {
     private UsuarioView usuarioView;
     private Usuario usuario;
     private UsuarioDao usuarioDao;
-    UsuarioPesquisa p;
+    ViewPesquisa p;
 
     ActionListener actionListenerPesq = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println(".actionPerformed()");
+            if (p.getRadio().equals("codigo")) {
+                try {
+                    p.povoaJtable(new TableModel(usuarioDao.listarUsuario(Integer.parseInt(p.getPesquisa())), Usuario.class));
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Digite apenas Números");
+                }
+            } else {
+                p.povoaJtable(new TableModel(usuarioDao.listarUsuario(p.getPesquisa()), Usuario.class));
+            }
         }
     };
 
@@ -93,7 +101,7 @@ public class UsuarioController extends AbstractController {
                     FiltroConsulta[] filtros = new FiltroConsulta[]{
                         new FiltroConsulta("Código", "codigo", FiltroConsulta.INTEIRO),
                         new FiltroConsulta("Nome", "nome", FiltroConsulta.STRING),};
-                    p = new UsuarioPesquisa("Pesquisa de Usuário", filtros, actionListenerPesq, mouseListenerPesq, true, true, true, true);
+                    p = ViewPesquisa.getTela(ViewPesquisa.USUARIO, filtros, actionListenerPesq, mouseListenerPesq);
                     p.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
                     break;
             }
@@ -104,8 +112,7 @@ public class UsuarioController extends AbstractController {
 
         this.usuario = new Usuario();
         this.usuarioDao = new UsuarioDao();
-        usuarioView = UsuarioView.getTela();
-        usuarioView.AddAction(actionListener);
+        usuarioView = UsuarioView.getTela(actionListener);
         usuario.setInputFilter((usuarioView.getCamposFilter()));
         this.usuarioView.render();
     }
@@ -148,7 +155,7 @@ public class UsuarioController extends AbstractController {
             if (jOptionPane == opcaoSim) {
                 if (usuarioDao.excluir(usuario)) {
                     // usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
-                    usuarioDao.primeiroItemRs();
+
                     usuarioView.statusInicial();
                 } else {
                     JOptionPane.showMessageDialog(usuarioView, "Não foi possivel excluir usuário", "Exclusão", JOptionPane.ERROR_MESSAGE);
@@ -159,28 +166,15 @@ public class UsuarioController extends AbstractController {
         }
     }
 
-    /* public void listar(Object chave) {
-        if (chave instanceof Integer) {
-            usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario((int) chave), Usuario.class));
-        } else if (chave instanceof String) {
-            usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(chave.toString()), Usuario.class));
-        }
-        usuarioDao.primeiroItemRs();
-        setJTextAndJTable();
-    }*/
     public void cancelar() {
         usuarioView.statusInicial();
         usuarioView.preencheCampos(usuarioDao.retornaUsuario());
     }
 
     public void getTela() {
-        usuarioView = UsuarioView.getTela();
-        //usuarioView.AddAction(actionListener, mouseListener);
+        usuarioView = UsuarioView.getTela(actionListener);
         usuario.setInputFilter((usuarioView.getCamposFilter()));
         usuarioView.render();
-        // usuarioView.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
-        usuarioDao.primeiroItemRs();
-        //usuarioView.setSelecaoLinha(usuarioDao.retornaIndiceRs());
         usuarioView.statusInicial();
     }
 

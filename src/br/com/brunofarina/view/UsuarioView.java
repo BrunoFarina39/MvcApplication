@@ -24,13 +24,13 @@ public class UsuarioView extends AbstractView {
     private CustomJTextField jtCodigo, jtNome, jtLogin;
     private CustomJPasswordField jtSenha;
 
-    public static UsuarioView getTela() {
+    public static UsuarioView getTela(ActionListener actionListener) {
         if (tela != null && tela.isClosed()) {
             TelaPrincipal.jDesktopPane.remove(tela);
             tela = null;
         }
         if (tela == null) {
-            tela = new UsuarioView();
+            tela = new UsuarioView(actionListener);
             TelaPrincipal.jDesktopPane.add(tela);
         }
         TelaPrincipal.jDesktopPane.moveToFront(tela);
@@ -38,7 +38,7 @@ public class UsuarioView extends AbstractView {
         return tela;
     }
 
-    public UsuarioView() {
+    public UsuarioView(ActionListener actionListener) {
         super("Cadastro de Usuário", true, true, true, true);
         super.setSize(650, 300);
         this.jtCodigo = new CustomJTextField(10, true, "ID", "Código");
@@ -51,16 +51,14 @@ public class UsuarioView extends AbstractView {
         super.adicionaArrayComponente((CustomComponent) jtNome);
         super.adicionaArrayComponente((CustomComponent) jtLogin);
         super.adicionaArrayComponente((CustomComponent) jtSenha);
-
-    }
-
-    public void AddAction(ActionListener actionListener) {
         jbNovo.addActionListener(actionListener);
         jbSalvar.addActionListener(actionListener);
         jbEditar.addActionListener(actionListener);
         jbExcluir.addActionListener(actionListener);
         jbCancelar.addActionListener(actionListener);
         jbPesquisar.addActionListener(actionListener);
+        statusInicial();
+
     }
 
     //inicio do posicionamento
@@ -89,10 +87,10 @@ public class UsuarioView extends AbstractView {
     }
 
     public void preencheCampos(Usuario usuario) {
-        jtCodigo.setTexto(String.valueOf(usuario.getId()));
-        jtLogin.setTexto(usuario.getLogin());
-        jtSenha.setTexto(usuario.getSenha());
-        jtNome.setTexto(usuario.getNome());
+        jtCodigo.setValor(String.valueOf(usuario.getId()));
+        jtLogin.setValor(usuario.getLogin());
+        jtSenha.setValor(usuario.getSenha());
+        jtNome.setValor(usuario.getNome());
     }
 
 }

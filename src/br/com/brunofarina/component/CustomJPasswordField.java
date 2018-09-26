@@ -59,7 +59,7 @@ public class CustomJPasswordField extends JPasswordField implements CustomCompon
     }
 
     @Override
-    public void setTexto(String texto) {
+    public void setValor(String texto) {
         super.setText(texto);
     }
 

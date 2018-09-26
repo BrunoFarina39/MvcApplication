@@ -180,9 +180,10 @@ public class AbstractView extends JInternalFrame {
     public void statusInicial() {
         jbNovo.setEnabled(true);
         jbSalvar.setEnabled(false);
-        jbEditar.setEnabled(true);
-        jbExcluir.setEnabled(true);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
         jbCancelar.setEnabled(false);
+        jbPesquisar.setEnabled(true);
         habilitaCampos(false);
     }
 

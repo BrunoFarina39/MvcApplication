@@ -13,7 +13,6 @@ public class FiltroConsulta {
 
     public static final int INTEIRO = 1;
     public static final int STRING = 2;
-
     private String filtro;
     private String campo;
     private int tipo;

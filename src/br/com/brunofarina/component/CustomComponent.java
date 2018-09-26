@@ -23,7 +23,7 @@ public interface CustomComponent extends Filter {
 
     public boolean getFiltro();
 
-    public void setTexto(String texto);
+    public void setValor(String texto);
 
     public String getValor();
 }

@@ -15,9 +15,10 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.ScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.util.Enumeration;
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -32,8 +33,11 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author Bruno
  */
-public abstract class AbstractViewPesquisa extends JInternalFrame {
+public class ViewPesquisa extends JInternalFrame {
 
+    public static final int USUARIO = 0;
+    public static final int CLIENTE = 1;
+    public static ViewPesquisa tela;
     private JPanel panel, panelNorte, panelCentral, panelSul, panelScroll;
     private JLabel jlTitulo, jlPesquisa;
     private JButton jBPesquisar;
@@ -43,14 +47,30 @@ public abstract class AbstractViewPesquisa extends JInternalFrame {
     private FiltroConsulta[] filtros;
     private ButtonGroup buttonGroup;
 
-    public AbstractViewPesquisa(String titulo, FiltroConsulta[] filtroConsulta, ActionListener actionListener, MouseListener mouseListener, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
+    public static ViewPesquisa getTela(int entidade, FiltroConsulta[] filtroConsulta, ActionListener actionListener, MouseListener mouseListener) {
+        if (tela != null && tela.isClosed()) {
+            TelaPrincipal.jDesktopPane.remove(tela);
+            tela = null;
+        }
+        if (tela == null) {
+            switch (entidade) {
+                case 0:
+                    tela = new ViewPesquisa("Pesquisa de Usuário", filtroConsulta, actionListener, mouseListener, true, true, true, true);
+                    break;
+            }
+
+            TelaPrincipal.jDesktopPane.add(tela);
+        }
+        TelaPrincipal.jDesktopPane.moveToFront(tela);
+        TelaPrincipal.jDesktopPane.selectFrame(true);
+        return tela;
+    }
+
+    public ViewPesquisa(String titulo, FiltroConsulta[] filtroConsulta, ActionListener actionListener, MouseListener mouseListener, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(titulo, resizable, closable, maximizable, iconable);
         this.setVisible(true);
         this.setSize(600, 400);
         this.filtros = filtroConsulta;
-        TelaPrincipal.jDesktopPane.add(this);
-        TelaPrincipal.jDesktopPane.moveToFront(this);
-        TelaPrincipal.jDesktopPane.selectFrame(true);
 
         this.panel = new JPanel();
         this.panelNorte = new JPanel();
@@ -61,7 +81,6 @@ public abstract class AbstractViewPesquisa extends JInternalFrame {
         this.jtPesquisa = new CustomJTextField(20, true, "Pesquisa", "Pesquisa");
         this.jBPesquisar = new JButton("Pesquisar");
         this.buttonGroup = new ButtonGroup();
-        this.jBPesquisar.addActionListener(actionListener);
         this.panelCentral.setLayout(new FlowLayout());
         this.panelCentral.add(this.jlPesquisa);
         this.panelCentral.add(this.jtPesquisa);
@@ -83,10 +102,12 @@ public abstract class AbstractViewPesquisa extends JInternalFrame {
             }
         };
 
+        this.jBPesquisar.addActionListener(actionListener);
+        this.jTable.addMouseListener(mouseListener);
+
         this.jTable.setAutoCreateRowSorter(true);
         //jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        jTable.addMouseListener(mouseListener);
         this.jScrollPane = new JScrollPane(jTable);
         this.jScrollPane.setViewportView(jTable);
         this.panelScroll = new JPanel();
@@ -106,10 +127,13 @@ public abstract class AbstractViewPesquisa extends JInternalFrame {
 
         Container container = getContentPane();
         container.add(this.panel);
-
         for (int i = 0; i < filtros.length; i++) {
             JRadioButton jr = new JRadioButton(filtros[i].getFiltro());
             jr.setName(filtros[i].getCampo());
+
+            if (i == 1) {
+                jr.setSelected(true);
+            }
             buttonGroup.add(jr);
             panelCentral.add(jr);
         }
@@ -117,6 +141,21 @@ public abstract class AbstractViewPesquisa extends JInternalFrame {
 
     public void povoaJtable(TableModel tb) {
         jTable.setModel(tb);
+    }
+
+    public String getPesquisa() {
+        return this.jtPesquisa.getValor();
+    }
+
+    public String getRadio() {
+        for (int i = 0; i < panelCentral.getComponentCount(); i++) {
+            if (panelCentral.getComponent(i) instanceof JRadioButton) {
+                if (((JRadioButton) panelCentral.getComponent(i)).getModel() == buttonGroup.getSelection()) {
+                    return ((JRadioButton) panelCentral.getComponent(i)).getName();
+                }
+            }
+        }
+        return "codigo";
     }
 
     public Object getRegistro() {
