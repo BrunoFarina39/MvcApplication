@@ -76,7 +76,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
             } else {
                 this.usuarioController.getTela();
             }
-
         }
     }
 }

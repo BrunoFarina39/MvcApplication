@@ -212,17 +212,17 @@ public class AbstractView extends JInternalFrame {
 
     public void statusManutencao(boolean status) {
         if (status) {
-            JOptionPane.showMessageDialog(panelCentral, "Dados gravado/alterado com sucesso!");
+            JOptionPane.showMessageDialog(null, "Dados gravado/alterado com sucesso!");
         } else {
-            JOptionPane.showMessageDialog(panelCentral, "Não foi possivel gravar/alterar dados!", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possivel gravar/alterar dados!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void statusExclusao(boolean status) {
         if (status) {
-            JOptionPane.showMessageDialog(panelCentral, "Dados excluidos com sucesso!");
+            JOptionPane.showMessageDialog(null, "Dados excluidos com sucesso!");
         } else {
-            JOptionPane.showMessageDialog(panelCentral, "Não foi possivel excluir dados!", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possivel excluir dados!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 

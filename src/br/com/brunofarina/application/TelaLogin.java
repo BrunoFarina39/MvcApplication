@@ -7,6 +7,7 @@ package br.com.brunofarina.application;
 
 import br.com.brunofarina.model.Usuario;
 import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -16,6 +17,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -101,7 +103,7 @@ public class TelaLogin implements ActionListener {
         gbc.gridheight = 1;
         gbc.anchor = GridBagConstraints.CENTER;
         container.add(jpBotoes, gbc);
-        jpBotoes.setLayout(new GridLayout(1, 2));
+        jpBotoes.setLayout(new FlowLayout());
         jpBotoes.add(jbLogin);
         jpBotoes.add(jbCancelar);
         jFrame.setSize(400, 200);
@@ -120,7 +122,7 @@ public class TelaLogin implements ActionListener {
                 jFrame.dispose();
                 new TelaPrincipal().setVisible(true);
             } else {
-                System.err.println("Não Logado");
+                JOptionPane.showMessageDialog(null, "Usuário/Senha incorreto(s)", "Autenticação no Sistema", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

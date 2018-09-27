@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import br.com.brunofarina.annotations.CampoObr;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -53,6 +58,7 @@ public class Usuario extends AbstractModel {
     }
 
     public void setSenha(String senha) {
+        senha = digest(senha);
         this.senha = senha;
     }
 
@@ -79,7 +85,7 @@ public class Usuario extends AbstractModel {
         try {
             PreparedStatement stmt = Database.getConnection().prepareStatement(sql);
             stmt.setString(1, login);
-            stmt.setString(2, senha);
+            stmt.setString(2, digest(senha));
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return true;
@@ -102,6 +108,21 @@ public class Usuario extends AbstractModel {
                 }
             }
         }
+    }
+
+    public String digest(String password) {
+        try {
+            MessageDigest algoritmo = MessageDigest.getInstance("SHA-256");
+            byte digestMessage[] = algoritmo.digest(password.getBytes("UTF-8"));
+            StringBuilder hexPassword = new StringBuilder();
+            for (byte aByte : digestMessage) {
+                hexPassword.append(String.format("%02X", 0xFF & aByte));
+            }
+            return hexPassword.toString();
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
