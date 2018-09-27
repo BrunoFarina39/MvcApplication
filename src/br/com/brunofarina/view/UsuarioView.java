@@ -10,7 +10,9 @@ import br.com.brunofarina.component.CustomComponent;
 import br.com.brunofarina.component.CustomJPasswordField;
 import br.com.brunofarina.component.CustomJTextField;
 import br.com.brunofarina.model.Usuario;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionListener;
+import javax.swing.JLabel;
 
 /**
  *
@@ -91,4 +93,19 @@ public class UsuarioView extends AbstractView {
         jtNome.setValor(usuario.getNome());
     }
 
+    public void statusEditando() {
+        jtSenha.setValor("");
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        this.panelCentral.add(new JLabel("Senha:*"), gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        //gbc.gridwidth = 1;
+        //gbc.gridheight = 1;
+        // gbc.anchor = GridBagConstraints.WEST;
+        this.panelCentral.add(new CustomJTextField(20, false, "Senha2", "Senha2"), gbc);
+    }
 }

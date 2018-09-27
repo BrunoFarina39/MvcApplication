@@ -58,7 +58,7 @@ public class Usuario extends AbstractModel {
     }
 
     public void setSenha(String senha) {
-        senha = digest(senha);
+        senha = encriptar(senha);
         this.senha = senha;
     }
 
@@ -85,7 +85,7 @@ public class Usuario extends AbstractModel {
         try {
             PreparedStatement stmt = Database.getConnection().prepareStatement(sql);
             stmt.setString(1, login);
-            stmt.setString(2, digest(senha));
+            stmt.setString(2, encriptar(senha));
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return true;
@@ -110,7 +110,7 @@ public class Usuario extends AbstractModel {
         }
     }
 
-    public String digest(String password) {
+    public String encriptar(String password) {
         try {
             MessageDigest algoritmo = MessageDigest.getInstance("SHA-256");
             byte digestMessage[] = algoritmo.digest(password.getBytes("UTF-8"));

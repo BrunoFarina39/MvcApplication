@@ -132,6 +132,7 @@ public class UsuarioController extends AbstractController {
 
     public void hidrataCampos() {
         usuarioView.preencheCampos((Usuario) p.getRegistro());
+        usuarioView.statusEditando();
         usuarioView.statusPesquisa();
     }
 
