@@ -30,6 +30,7 @@ public class Usuario extends AbstractModel {
 
     private String login;
     private String senha;
+    private String confSenha;
     private String nome;
     private Date ultimoAcesso;
 
@@ -53,13 +54,27 @@ public class Usuario extends AbstractModel {
     }
 
     @CampoObr
-    public String getSenha() {
-        return senha;
+    public String getSenha() throws Exception {
+        if (this.senha.equals(this.confSenha)) {
+            return senha;
+        } else {
+            throw new Exception("As senhas não correspindem");
+        }
     }
 
     public void setSenha(String senha) {
         senha = encriptar(senha);
         this.senha = senha;
+    }
+
+    @CampoObr
+    public String getConfSenha() {
+        return confSenha;
+    }
+
+    public void setConfSenha(String confSenha) {
+        confSenha = encriptar(confSenha);
+        this.confSenha = confSenha;
     }
 
     @Coluna(posicao = 2, nome = "Nome")

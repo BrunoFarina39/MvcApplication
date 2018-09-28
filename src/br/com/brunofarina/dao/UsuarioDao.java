@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import br.com.brunofarina.model.Usuario;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +25,9 @@ public class UsuarioDao extends AbstractDao<Usuario> {
     }
 
     public boolean salvar(Usuario usuario) {
+        // if (!usuario.getSenha().equals(usuario.getConfSenha())) {
+        //return false;
+        //}
         String sql = "insert into usuario (login,nome,senha) values(?,?,?)";
         try {
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -32,20 +38,40 @@ public class UsuarioDao extends AbstractDao<Usuario> {
             return true;
         } catch (SQLException ex) {
             return false;
+        } catch (Exception ex) {
+            return false;
         }
     }
 
     public boolean editar(Usuario usuario) {
-        String sql = "update usuario set login=?, nome=?, senha=? where id=?";
+        String sql = "update usuario set login=?, nome=? where id=?";
         try {
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, usuario.getLogin());
             ps.setString(2, usuario.getNome());
-            ps.setString(3, usuario.getSenha());
-            ps.setInt(4, usuario.getId());
+            ps.setInt(3, usuario.getId());
             ps.execute();
             return true;
         } catch (SQLException ex) {
+            return false;
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+            return false;
+        }
+    }
+
+    public boolean editarSenha(Usuario usuario) {
+        String sql = "update usuario set senha=? where id=?";
+        try {
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setString(1, usuario.getSenha());
+            ps.setInt(1, usuario.getId());
+            ps.execute();
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
             return false;
         }
     }

@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import br.com.brunofarina.model.TableModel;
 import br.com.brunofarina.model.Usuario;
+import br.com.brunofarina.view.AlteraSenhaView;
 import br.com.brunofarina.view.ViewPesquisa;
 import br.com.brunofarina.view.UsuarioView;
 
@@ -89,9 +90,14 @@ public class UsuarioController extends AbstractController {
                 case "Pesquisar":
                     FiltroConsulta[] filtros = new FiltroConsulta[]{
                         new FiltroConsulta("Código", "codigo", FiltroConsulta.INTEIRO),
-                        new FiltroConsulta("Nome", "nome", FiltroConsulta.STRING),};
+                        new FiltroConsulta("Nome", "nome", FiltroConsulta.STRING)};
                     p = ViewPesquisa.getTela(ViewPesquisa.USUARIO, filtros, actionListenerPesq, mouseListenerPesq);
                     p.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
+                    break;
+                case "Alterar Senha":
+                    //usuarioView.statusEditar2();
+                    AlteraSenhaView alteraSenhaView = new AlteraSenhaView();
+
                     break;
             }
         }
@@ -116,17 +122,16 @@ public class UsuarioController extends AbstractController {
         if (usuarioView.valida()) {
             usuario.setLogin(usuarioView.getJtLogin().getValor());
             usuario.setSenha(usuarioView.getJtSenha().getValor());
+            usuario.setConfSenha(usuarioView.getJtConfSenha().getValor());
             usuario.setNome(usuarioView.getJtNome().getValor());
 
             if (usuarioView.getJtCodigo().getVazio()) {
                 usuarioView.statusManutencao(usuarioDao.salvar(usuario));
-                usuarioView.limpaCampos();
             } else {
                 usuario.setId(Integer.parseInt(usuarioView.getJtCodigo().getValor()));
                 usuarioView.statusManutencao(usuarioDao.editar(usuario));
                 listar(p.getPesquisa());
             }
-            usuarioView.statusInicial();
         }
     }
 
