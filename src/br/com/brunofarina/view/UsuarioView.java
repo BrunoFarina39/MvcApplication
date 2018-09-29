@@ -104,20 +104,6 @@ public class UsuarioView extends AbstractView {
         jtNome.setValor(usuario.getNome());
     }
 
-    @Override
-    public void statusEditar() {
-        super.statusEditar();
-        jtSenha.setEnabled(false);
-        jtConfSenha.setEnabled(false);
-        jtSenha.setObrigatorio(false);
-        jtConfSenha.setObrigatorio(false);
-    }
-
-    public void statusEditar2() {
-        jtSenha.setEnabled(true);
-        jtConfSenha.setEnabled(true);
-    }
-
     public void statusEditando() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 4;

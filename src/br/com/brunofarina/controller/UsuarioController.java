@@ -31,6 +31,13 @@ public class UsuarioController extends AbstractController {
     private UsuarioDao usuarioDao;
     ViewPesquisa p;
 
+    ActionListener actionListenerSenha = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println(".actionPerformed()");
+        }
+    };
+
     ActionListener actionListenerPesq = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -96,8 +103,7 @@ public class UsuarioController extends AbstractController {
                     break;
                 case "Alterar Senha":
                     //usuarioView.statusEditar2();
-                    AlteraSenhaView alteraSenhaView = new AlteraSenhaView();
-
+                    AlteraSenhaView alteraSenhaView = new AlteraSenhaView(actionListenerSenha);
                     break;
             }
         }
