@@ -102,7 +102,7 @@ public class AlteraSenhaView extends JInternalFrame {
 
     public void statusManutencao(Object status) {
         if (status instanceof ExecptionPassword) {
-            JOptionPane.showMessageDialog(null, "As senhas nao correspondem!");
+            JOptionPane.showMessageDialog(null, ((ExecptionPassword) status).getMessage());
         } else {
             if ((boolean) status) {
                 JOptionPane.showMessageDialog(null, "Sua senha foi altarada com sucesso!");

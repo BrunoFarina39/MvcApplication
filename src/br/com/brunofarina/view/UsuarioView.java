@@ -28,6 +28,7 @@ public class UsuarioView extends AbstractView {
     public static UsuarioView tela;
     private CustomJTextField jtCodigo, jtNome, jtLogin;
     private CustomJPasswordField jtSenha, jtConfSenha;
+    private JButton jbSenha; 
     private ActionListener actionListener;
 
     public static UsuarioView getTela(ActionListener actionListener) {
@@ -53,7 +54,7 @@ public class UsuarioView extends AbstractView {
         this.jtSenha = new CustomJPasswordField(20, false, "Senha", "Senha");
         this.jtConfSenha = new CustomJPasswordField(20, false, "ConfSenha", "Conf.Senha");
         this.jlTitulo.setText("Manutenção de Usuário");
-
+        this.jbSenha = new JButton("Alterae Senha");
         super.adicionaArrayComponente((CustomComponent) jtCodigo);
         super.adicionaArrayComponente((CustomComponent) jtNome);
         super.adicionaArrayComponente((CustomComponent) jtLogin);
@@ -125,17 +126,31 @@ public class UsuarioView extends AbstractView {
         gbc.gridheight = 1;
         gbc.anchor = GridBagConstraints.EAST;
         gbc.insets = new Insets(5, 5, 5, 5);
-        JButton jbSenha = new JButton("Alterar Senha");
+        jbSenha = new JButton("Alterar Senha");
+        jbSenha.setEnabled(false);
         jbSenha.addActionListener(actionListener);
         this.panelCentral.add(jbSenha, gbc);
         paintComponents(this.getGraphics());
     }
 
+    @Override
     public void statusManutencao(Object status) {
         if (status instanceof ExecptionPassword) {
-            JOptionPane.showMessageDialog(null, "As senhas nao correspondem!");
+            JOptionPane.showMessageDialog(null, ((ExecptionPassword) status).getMessage());
         } else if (status instanceof Boolean) {
-            super((boolean) status);
+            super.statusManutencao((boolean) status);
         }
+    }
+    
+    @Override
+    public void statusEditar(){
+        jbSenha.setEnabled(true);
+        super.statusEditar();
+    }
+    
+    @Override
+     public void statusInicial(){
+        jbSenha.setEnabled(false);
+        super.statusInicial();
     }
 }
