@@ -78,6 +78,13 @@ public class UsuarioView extends AbstractView {
         statusInicial();
     }
 
+    public void renderUpdate() {
+        super.adicionaComponente(0, 0, 1, 1, 5, 5, jtCodigo);
+        super.adicionaComponente(0, 1, 2, 1, 5, 5, jtNome);
+        super.adicionaComponente(0, 2, 2, 1, 5, 5, jtLogin);
+        statusInicial();
+    }
+
     public CustomJTextField getJtCodigo() {
         return jtCodigo;
     }
@@ -106,8 +113,12 @@ public class UsuarioView extends AbstractView {
 
     public void statusEditando() {
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 4;
-        gbc.gridy = 3;
+        this.campos.remove(jtSenha);
+        this.campos.remove(jtConfSenha);
+        this.panelCentral.removeAll();
+        this.renderUpdate();
+        gbc.gridx = 3;
+        gbc.gridy = 2;
         gbc.gridwidth = 1;
         gbc.gridheight = 1;
         gbc.anchor = GridBagConstraints.EAST;

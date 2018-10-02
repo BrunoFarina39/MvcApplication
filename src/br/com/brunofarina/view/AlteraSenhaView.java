@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -84,5 +85,25 @@ public class AlteraSenhaView extends JInternalFrame {
         this.panel.add(panelCentral, BorderLayout.CENTER);
         this.panel.add(panelSul, BorderLayout.SOUTH);
         this.getContentPane().add(this.panel);
+    }
+
+    public String getSenhaAtual() {
+        return jtSenhaAtual.getValor();
+    }
+
+    public String getNovaSenha() {
+        return jtSenha.getValor();
+    }
+
+    public String getConfSenha() {
+        return jtConfSenha.getValor();
+    }
+
+    public void statusManutencao(boolean status) {
+        if (status) {
+            JOptionPane.showMessageDialog(null, "Sua senha foi altarada com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Não foi possivel alterar sua senha!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

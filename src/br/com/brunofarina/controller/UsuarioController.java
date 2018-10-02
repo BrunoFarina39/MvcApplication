@@ -29,12 +29,16 @@ public class UsuarioController extends AbstractController {
     private UsuarioView usuarioView;
     private Usuario usuario;
     private UsuarioDao usuarioDao;
+    private AlteraSenhaView alteraSenhaView;
     ViewPesquisa p;
 
     ActionListener actionListenerSenha = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println(".actionPerformed()");
+            usuario.setId(Integer.parseInt(usuarioView.getJtCodigo().getValor()));
+            usuario.setSenha(alteraSenhaView.getNovaSenha());
+            usuario.setConfSenha(alteraSenhaView.getConfSenha());
+            alteraSenhaView.statusManutencao(usuarioDao.editarSenha(usuario));
         }
     };
 
@@ -103,7 +107,7 @@ public class UsuarioController extends AbstractController {
                     break;
                 case "Alterar Senha":
                     //usuarioView.statusEditar2();
-                    AlteraSenhaView alteraSenhaView = new AlteraSenhaView(actionListenerSenha);
+                    alteraSenhaView = new AlteraSenhaView(actionListenerSenha);
                     break;
             }
         }
@@ -142,8 +146,8 @@ public class UsuarioController extends AbstractController {
     }
 
     public void hidrataCampos() {
-        usuarioView.preencheCampos((Usuario) p.getRegistro());
         usuarioView.statusEditando();
+        usuarioView.preencheCampos((Usuario) p.getRegistro());
         usuarioView.statusPesquisa();
     }
 

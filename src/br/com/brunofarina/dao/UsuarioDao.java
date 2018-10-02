@@ -65,7 +65,7 @@ public class UsuarioDao extends AbstractDao<Usuario> {
         try {
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, usuario.getSenha());
-            ps.setInt(1, usuario.getId());
+            ps.setInt(2, usuario.getId());
             ps.execute();
             return true;
         } catch (SQLException ex) {
