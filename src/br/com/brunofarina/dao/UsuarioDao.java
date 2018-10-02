@@ -5,6 +5,7 @@
  */
 package br.com.brunofarina.dao;
 
+import br.com.brunofarina.component.ExecptionPassword;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class UsuarioDao extends AbstractDao<Usuario> {
         super(Usuario.class);
     }
 
-    public boolean salvar(Usuario usuario) {
+    public Object salvar(Usuario usuario) {
         // if (!usuario.getSenha().equals(usuario.getConfSenha())) {
         //return false;
         //}
@@ -38,8 +39,8 @@ public class UsuarioDao extends AbstractDao<Usuario> {
             return true;
         } catch (SQLException ex) {
             return false;
-        } catch (Exception ex) {
-            return false;
+        } catch (ExecptionPassword ex) {
+            return ex;
         }
     }
 
@@ -60,7 +61,7 @@ public class UsuarioDao extends AbstractDao<Usuario> {
         }
     }
 
-    public boolean editarSenha(Usuario usuario) {
+    public Object editarSenha(Usuario usuario) {
         String sql = "update usuario set senha=? where id=?";
         try {
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -70,9 +71,8 @@ public class UsuarioDao extends AbstractDao<Usuario> {
             return true;
         } catch (SQLException ex) {
             return false;
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-            return false;
+        } catch (ExecptionPassword ex) {
+            return ex;
         }
     }
 

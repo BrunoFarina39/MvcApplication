@@ -9,12 +9,14 @@ import br.com.brunofarina.application.TelaPrincipal;
 import br.com.brunofarina.component.CustomComponent;
 import br.com.brunofarina.component.CustomJPasswordField;
 import br.com.brunofarina.component.CustomJTextField;
+import br.com.brunofarina.component.ExecptionPassword;
 import br.com.brunofarina.model.Usuario;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JViewport;
 
 /**
@@ -127,5 +129,13 @@ public class UsuarioView extends AbstractView {
         jbSenha.addActionListener(actionListener);
         this.panelCentral.add(jbSenha, gbc);
         paintComponents(this.getGraphics());
+    }
+
+    public void statusManutencao(Object status) {
+        if (status instanceof ExecptionPassword) {
+            JOptionPane.showMessageDialog(null, "As senhas nao correspondem!");
+        } else if (status instanceof Boolean) {
+            super((boolean) status);
+        }
     }
 }

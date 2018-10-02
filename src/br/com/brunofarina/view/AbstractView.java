@@ -210,8 +210,8 @@ public class AbstractView extends JInternalFrame {
         habilitaCampos(false);
     }
 
-    public void statusManutencao(boolean status) {
-        if (status) {
+    public void statusManutencao(Object status) {
+        if ((boolean) status) {
             JOptionPane.showMessageDialog(null, "Dados gravado/alterado com sucesso!");
             this.statusInicial();
         } else {

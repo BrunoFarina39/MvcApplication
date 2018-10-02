@@ -7,6 +7,7 @@ package br.com.brunofarina.view;
 
 import br.com.brunofarina.application.TelaPrincipal;
 import br.com.brunofarina.component.CustomJPasswordField;
+import br.com.brunofarina.component.ExecptionPassword;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -99,11 +100,15 @@ public class AlteraSenhaView extends JInternalFrame {
         return jtConfSenha.getValor();
     }
 
-    public void statusManutencao(boolean status) {
-        if (status) {
-            JOptionPane.showMessageDialog(null, "Sua senha foi altarada com sucesso!");
+    public void statusManutencao(Object status) {
+        if (status instanceof ExecptionPassword) {
+            JOptionPane.showMessageDialog(null, "As senhas nao correspondem!");
         } else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel alterar sua senha!", "Erro", JOptionPane.ERROR_MESSAGE);
+            if ((boolean) status) {
+                JOptionPane.showMessageDialog(null, "Sua senha foi altarada com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Não foi possivel alterar sua senha!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import br.com.brunofarina.annotations.CampoObr;
+import br.com.brunofarina.component.ExecptionPassword;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -54,11 +55,11 @@ public class Usuario extends AbstractModel {
     }
 
     @CampoObr
-    public String getSenha() throws Exception {
+    public String getSenha() throws ExecptionPassword {
         if (this.senha.equals(this.confSenha)) {
             return senha;
         } else {
-            throw new Exception("As senhas não correspindem");
+            throw new ExecptionPassword();
         }
     }
 
