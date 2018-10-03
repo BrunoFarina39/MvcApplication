@@ -36,6 +36,7 @@ public class UsuarioController extends AbstractController {
         @Override
         public void actionPerformed(ActionEvent e) {
             usuario.setInputFilter((alteraSenhaView.getCamposFilter()));
+            usuario.setId(Integer.parseInt(usuarioView.getJtCodigo().getValor()));
             usuario.setSenhaAtual(alteraSenhaView.getSenhaAtual());
             usuario.setSenha(alteraSenhaView.getNovaSenha());
             usuario.setConfSenha(alteraSenhaView.getConfSenha());

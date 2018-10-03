@@ -63,17 +63,20 @@ public class Usuario extends AbstractModel {
                 PreparedStatement stmt = Database.getConnection().prepareStatement(sql);
                 stmt.setInt(1, id);
                 ResultSet rs = stmt.executeQuery();
-                rs.next();
-                if (rs.getString("senha").equals(senhaAtual)) {
-                    return senha;
+                if (rs.next()) {
+                    if (rs.getString("senha").equals(senhaAtual)) {
+                        return this.senha;
+                    } else {
+                        throw new ExceptionPassword("Senha Atual esta incorreta!");
+                    }
                 } else {
-                    throw new ExceptionPassword();
+                    return this.senha;
                 }
             } catch (SQLException ex) {
                 return null;
             }
         } else {
-            throw new ExceptionPassword();
+            throw new ExceptionPassword("Os campos Senha e Conf. Senha não são iguais!");
         }
     }
 

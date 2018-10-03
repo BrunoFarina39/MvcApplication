@@ -11,7 +11,14 @@ package br.com.brunofarina.component;
  */
 public class ExceptionPassword extends Exception {
 
-    public ExceptionPassword() {
-        super("Não foi pessivel alterar a senha verifique se a senha atual esta correta ou se os campos Nova Senha e Conf. Senha são iguais!");
+    String message;
+
+    public ExceptionPassword(String menssage) {
+        this.message = menssage;
+    }
+
+    @Override
+    public String getMessage() {
+        return this.message;
     }
 }

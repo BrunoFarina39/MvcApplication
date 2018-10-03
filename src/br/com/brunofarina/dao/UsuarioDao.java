@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import br.com.brunofarina.model.Usuario;
 import java.sql.ResultSet;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -51,7 +50,6 @@ public class UsuarioDao extends AbstractDao<Usuario> {
         } catch (SQLException ex) {
             return false;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
             return false;
         }
     }
