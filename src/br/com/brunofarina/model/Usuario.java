@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import br.com.brunofarina.annotations.CampoObr;
-import br.com.brunofarina.component.ExecptionPassword;
+import br.com.brunofarina.component.ExceptionPassword;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -32,6 +32,7 @@ public class Usuario extends AbstractModel {
     private String login;
     private String senha;
     private String confSenha;
+    private String senhaAtual;
     private String nome;
     private Date ultimoAcesso;
 
@@ -55,11 +56,24 @@ public class Usuario extends AbstractModel {
     }
 
     @CampoObr
-    public String getSenha() throws ExecptionPassword {
+    public String getSenha() throws ExceptionPassword {
         if (this.senha.equals(this.confSenha)) {
-            return senha;
+            String sql = "select senha from usuario where id=?";
+            try {
+                PreparedStatement stmt = Database.getConnection().prepareStatement(sql);
+                stmt.setInt(1, id);
+                ResultSet rs = stmt.executeQuery();
+                rs.next();
+                if (rs.getString("senha").equals(senhaAtual)) {
+                    return senha;
+                } else {
+                    throw new ExceptionPassword();
+                }
+            } catch (SQLException ex) {
+                return null;
+            }
         } else {
-            throw new ExecptionPassword();
+            throw new ExceptionPassword();
         }
     }
 
@@ -76,6 +90,15 @@ public class Usuario extends AbstractModel {
     public void setConfSenha(String confSenha) {
         confSenha = encriptar(confSenha);
         this.confSenha = confSenha;
+    }
+
+    @CampoObr
+    public String getSenhaAtual() {
+        return this.senhaAtual;
+    }
+
+    public void setSenhaAtual(String senhaAtual) {
+        this.senhaAtual = encriptar(senhaAtual);
     }
 
     @Coluna(posicao = 2, nome = "Nome")
@@ -101,7 +124,7 @@ public class Usuario extends AbstractModel {
         try {
             PreparedStatement stmt = Database.getConnection().prepareStatement(sql);
             stmt.setString(1, login);
-            stmt.setString(2, encriptar(senha));
+            stmt.setString(2, senha);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return true;

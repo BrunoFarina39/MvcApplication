@@ -9,15 +9,13 @@ import br.com.brunofarina.application.TelaPrincipal;
 import br.com.brunofarina.component.CustomComponent;
 import br.com.brunofarina.component.CustomJPasswordField;
 import br.com.brunofarina.component.CustomJTextField;
-import br.com.brunofarina.component.ExecptionPassword;
+import br.com.brunofarina.component.ExceptionPassword;
 import br.com.brunofarina.model.Usuario;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JViewport;
 
 /**
  *
@@ -28,7 +26,7 @@ public class UsuarioView extends AbstractView {
     public static UsuarioView tela;
     private CustomJTextField jtCodigo, jtNome, jtLogin;
     private CustomJPasswordField jtSenha, jtConfSenha;
-    private JButton jbSenha; 
+    private JButton jbSenha;
     private ActionListener actionListener;
 
     public static UsuarioView getTela(ActionListener actionListener) {
@@ -135,21 +133,21 @@ public class UsuarioView extends AbstractView {
 
     @Override
     public void statusManutencao(Object status) {
-        if (status instanceof ExecptionPassword) {
-            JOptionPane.showMessageDialog(null, ((ExecptionPassword) status).getMessage());
-        } else if (status instanceof Boolean) {
-            super.statusManutencao((boolean) status);
+        if (status instanceof ExceptionPassword) {
+            JOptionPane.showMessageDialog(null, ((ExceptionPassword) status).getMessage());
+        } else {
+            super.statusManutencao(status);
         }
     }
-    
+
     @Override
-    public void statusEditar(){
+    public void statusEditar() {
         jbSenha.setEnabled(true);
         super.statusEditar();
     }
-    
+
     @Override
-     public void statusInicial(){
+    public void statusInicial() {
         jbSenha.setEnabled(false);
         super.statusInicial();
     }

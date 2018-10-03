@@ -211,11 +211,13 @@ public class AbstractView extends JInternalFrame {
     }
 
     public void statusManutencao(Object status) {
-        if ((boolean) status) {
-            JOptionPane.showMessageDialog(null, "Dados gravado/alterado com sucesso!");
-            this.statusInicial();
-        } else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel gravar/alterar dados!", "Erro", JOptionPane.ERROR_MESSAGE);
+        if (status instanceof Boolean) {
+            if ((boolean) status) {
+                JOptionPane.showMessageDialog(null, "Dados gravado/alterado com sucesso!");
+                this.statusInicial();
+            } else {
+                JOptionPane.showMessageDialog(null, "Não foi possivel gravar/alterar dados!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 

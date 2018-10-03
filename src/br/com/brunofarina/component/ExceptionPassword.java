@@ -9,9 +9,9 @@ package br.com.brunofarina.component;
  *
  * @author Bruno
  */
-public class ExecptionPassword extends Exception {
+public class ExceptionPassword extends Exception {
 
-    public ExecptionPassword() {
-        super("As senhas não correspondem!");
+    public ExceptionPassword() {
+        super("Não foi pessivel alterar a senha verifique se a senha atual esta correta ou se os campos Nova Senha e Conf. Senha são iguais!");
     }
 }

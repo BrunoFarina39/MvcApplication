@@ -16,6 +16,6 @@ public class MvcApplication {
      */
     public static void main(String[] args) {
         //TelaLogin telaLogin = new TelaLogin();
-        TelaPrincipal telaLogin = new TelaPrincipal();
+        TelaPrincipal telaPrincipal = new TelaPrincipal();
     }
 }

@@ -5,14 +5,12 @@
  */
 package br.com.brunofarina.dao;
 
-import br.com.brunofarina.component.ExecptionPassword;
+import br.com.brunofarina.component.ExceptionPassword;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import br.com.brunofarina.model.Usuario;
 import java.sql.ResultSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,9 +24,6 @@ public class UsuarioDao extends AbstractDao<Usuario> {
     }
 
     public Object salvar(Usuario usuario) {
-        // if (!usuario.getSenha().equals(usuario.getConfSenha())) {
-        //return false;
-        //}
         String sql = "insert into usuario (login,nome,senha) values(?,?,?)";
         try {
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -39,7 +34,7 @@ public class UsuarioDao extends AbstractDao<Usuario> {
             return true;
         } catch (SQLException ex) {
             return false;
-        } catch (ExecptionPassword ex) {
+        } catch (ExceptionPassword ex) {
             return ex;
         }
     }
@@ -71,7 +66,7 @@ public class UsuarioDao extends AbstractDao<Usuario> {
             return true;
         } catch (SQLException ex) {
             return false;
-        } catch (ExecptionPassword ex) {
+        } catch (ExceptionPassword ex) {
             return ex;
         }
     }

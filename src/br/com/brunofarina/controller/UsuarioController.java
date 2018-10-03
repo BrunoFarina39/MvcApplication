@@ -35,10 +35,13 @@ public class UsuarioController extends AbstractController {
     ActionListener actionListenerSenha = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            usuario.setId(Integer.parseInt(usuarioView.getJtCodigo().getValor()));
+            usuario.setInputFilter((alteraSenhaView.getCamposFilter()));
+            usuario.setSenhaAtual(alteraSenhaView.getSenhaAtual());
             usuario.setSenha(alteraSenhaView.getNovaSenha());
             usuario.setConfSenha(alteraSenhaView.getConfSenha());
-            alteraSenhaView.statusManutencao(usuarioDao.editarSenha(usuario));
+            if (alteraSenhaView.valida()) {
+                alteraSenhaView.statusManutencao(usuarioDao.editarSenha(usuario));
+            }
         }
     };
 

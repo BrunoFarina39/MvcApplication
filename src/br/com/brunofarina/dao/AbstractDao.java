@@ -43,14 +43,6 @@ public abstract class AbstractDao<T extends AbstractModel> {
         ps.setInt(1, absModel.getId());
         this.rs = ps.executeQuery();
         this.rs.next();
-
-        /*for (Method method : entyClass.getDeclaredMethods()) {
-
-            if (method.isAnnotationPresent(CampoObr.class)) {
-                CampoObr anotacao = method.getAnnotation(CampoObr.class);
-                method.invoke(absModel, rs.getString(anotacao.nome()));
-            }
-        }*/
         return absModel;
     }
 

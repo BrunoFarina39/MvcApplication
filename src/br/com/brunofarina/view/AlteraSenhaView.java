@@ -6,15 +6,19 @@
 package br.com.brunofarina.view;
 
 import br.com.brunofarina.application.TelaPrincipal;
+import br.com.brunofarina.component.CustomComponent;
 import br.com.brunofarina.component.CustomJPasswordField;
-import br.com.brunofarina.component.ExecptionPassword;
+import br.com.brunofarina.component.ExceptionPassword;
+import br.com.brunofarina.component.Filter;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -32,6 +36,7 @@ public class AlteraSenhaView extends JInternalFrame {
     private JLabel jlTitulo;
     private CustomJPasswordField jtSenhaAtual, jtSenha, jtConfSenha;
     private JButton jbSalvar;
+    private ArrayList<CustomComponent> campos;
 
     public AlteraSenhaView(ActionListener actionListener) {
         super("Manutenção de Senha", true, true, true, true);
@@ -52,6 +57,10 @@ public class AlteraSenhaView extends JInternalFrame {
         this.panel.setLayout(new BorderLayout());
         this.panelNorte.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.panelNorte.add(jlTitulo);
+        this.campos = new ArrayList<>();
+        this.campos.add(jtSenhaAtual);
+        this.campos.add(jtSenha);
+        this.campos.add(jtConfSenha);
         this.panelCentral.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 0, 5, 5);
@@ -100,9 +109,32 @@ public class AlteraSenhaView extends JInternalFrame {
         return jtConfSenha.getValor();
     }
 
+    public boolean valida() {
+        StringBuilder obr = new StringBuilder();
+        boolean retorno = true;
+        for (int i = 0; i < this.campos.size(); i++) {
+            if (this.campos.get(i).getObrigatorio() && campos.get(i).getVazio()) {
+                obr.append(this.campos.get(i).getRotulo()).append("\n");
+                retorno = false;
+            }
+        }
+        if (obr.length() > 0) {
+            JOptionPane.showMessageDialog(null, "Campo(s) obrigatório(s):\n" + obr.toString());
+        }
+        return retorno;
+    }
+
+    public ArrayList<Filter> getCamposFilter() {
+        ArrayList<Filter> filter = new ArrayList<>();
+        for (int i = 0; i < this.campos.size(); i++) {
+            filter.add(this.campos.get(i));
+        }
+        return filter;
+    }
+
     public void statusManutencao(Object status) {
-        if (status instanceof ExecptionPassword) {
-            JOptionPane.showMessageDialog(null, ((ExecptionPassword) status).getMessage());
+        if (status instanceof ExceptionPassword) {
+            JOptionPane.showMessageDialog(null, ((ExceptionPassword) status).getMessage());
         } else {
             if ((boolean) status) {
                 JOptionPane.showMessageDialog(null, "Sua senha foi altarada com sucesso!");
