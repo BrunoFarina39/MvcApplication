@@ -52,12 +52,12 @@ public class UsuarioView extends AbstractView {
         this.jtSenha = new CustomJPasswordField(20, false, "Senha", "Senha");
         this.jtConfSenha = new CustomJPasswordField(20, false, "ConfSenha", "Conf.Senha");
         this.jlTitulo.setText("Manutenção de Usuário");
-        this.jbSenha = new JButton("Alterae Senha");
-        super.adicionaArrayComponente((CustomComponent) jtCodigo);
-        super.adicionaArrayComponente((CustomComponent) jtNome);
-        super.adicionaArrayComponente((CustomComponent) jtLogin);
-        super.adicionaArrayComponente((CustomComponent) jtSenha);
-        super.adicionaArrayComponente((CustomComponent) jtConfSenha);
+        this.jbSenha = new JButton("Alterar Senha");
+        super.listaValidacao(jtCodigo);
+        super.listaValidacao(jtNome);
+        super.listaValidacao(jtLogin);
+        super.listaValidacao(jtSenha);
+        super.listaValidacao(jtConfSenha);
         jbNovo.addActionListener(actionListener);
         jbSalvar.addActionListener(actionListener);
         jbEditar.addActionListener(actionListener);
@@ -65,7 +65,6 @@ public class UsuarioView extends AbstractView {
         jbCancelar.addActionListener(actionListener);
         jbPesquisar.addActionListener(actionListener);
         this.actionListener = actionListener;
-
     }
 
     //inicio do posicionamento

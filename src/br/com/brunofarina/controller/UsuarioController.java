@@ -110,7 +110,6 @@ public class UsuarioController extends AbstractController {
                     p.povoaJtable(new TableModel(usuarioDao.listarUsuario(), Usuario.class));
                     break;
                 case "Alterar Senha":
-                    //usuarioView.statusEditar2();
                     alteraSenhaView = new AlteraSenhaView(actionListenerSenha);
                     break;
             }

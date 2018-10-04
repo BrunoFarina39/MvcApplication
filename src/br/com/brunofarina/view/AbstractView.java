@@ -36,6 +36,7 @@ public class AbstractView extends JInternalFrame {
     protected JTextField jtPesquisar;
     private StringBuffer rotulo;
     protected ArrayList<CustomComponent> campos;
+    private ArrayList<Filter> filter;
 
     public AbstractView(String title, boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(title, resizable, closable, maximizable, iconable);
@@ -105,16 +106,18 @@ public class AbstractView extends JInternalFrame {
         //TestGridBagLayout.insereComponente(3, 3, panelCampos);
     }
 
-    public void adicionaArrayComponente(CustomComponent componente) {
+    public void listaValidacao(CustomComponent componente) {
         campos.add((CustomComponent) componente);
     }
 
     public ArrayList<Filter> getCamposFilter() {
-        ArrayList<Filter> filter = new ArrayList<>();
-        for (int i = 0; i < this.campos.size(); i++) {
-            filter.add(this.campos.get(i));
+        if (filter == null) {
+            this.filter = new ArrayList<>();
+            for (int i = 0; i < this.campos.size(); i++) {
+                this.filter.add(this.campos.get(i));
+            }
         }
-        return filter;
+        return this.filter;
     }
 
     public boolean valida() {
