@@ -6,7 +6,6 @@
 package br.com.brunofarina.view;
 
 import br.com.brunofarina.application.TelaPrincipal;
-import br.com.brunofarina.component.CustomComponent;
 import br.com.brunofarina.component.CustomJPasswordField;
 import br.com.brunofarina.component.CustomJTextField;
 import br.com.brunofarina.component.ExceptionPassword;

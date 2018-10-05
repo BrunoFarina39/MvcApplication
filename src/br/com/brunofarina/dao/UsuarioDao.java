@@ -70,7 +70,6 @@ public class UsuarioDao extends AbstractDao<Usuario> {
     }
 
     public ArrayList<Usuario> listarUsuario() {
-        tamanhoRs = 0;
         try {
             rs = super.listar("select id,login,nome,senha from usuario order by nome limit 30");
             ArrayList<Usuario> usuarios = new ArrayList();
@@ -81,7 +80,6 @@ public class UsuarioDao extends AbstractDao<Usuario> {
                 usuario.setNome(rs.getString("nome"));
                 usuario.setSenha(rs.getString("senha"));
                 usuarios.add(usuario);
-                tamanhoRs++;
             }
             return usuarios;
         } catch (SQLException ex) {
@@ -90,7 +88,6 @@ public class UsuarioDao extends AbstractDao<Usuario> {
     }
 
     public ArrayList<Usuario> listarUsuario(String chave) {
-        tamanhoRs = 0;
         String sql = "select id,login,nome,senha from usuario where nome ilike ? limit 30";
         try {
             PreparedStatement ps = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -104,7 +101,6 @@ public class UsuarioDao extends AbstractDao<Usuario> {
                 usuario.setNome(rs.getString("nome"));
                 usuario.setSenha(rs.getString("senha"));
                 usuarios.add(usuario);
-                tamanhoRs++;
             }
             return usuarios;
         } catch (SQLException e) {
@@ -113,12 +109,11 @@ public class UsuarioDao extends AbstractDao<Usuario> {
     }
 
     public ArrayList<Usuario> listarUsuario(int id) {
-        tamanhoRs = 0;
         String sql = "select id,login,nome,senha from usuario where id=?";
+        ArrayList<Usuario> usuarios = new ArrayList();
         try {
             PreparedStatement ps = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps.setInt(1, id);
-            ArrayList<Usuario> usuarios = new ArrayList();
             rs = ps.executeQuery();
             if (rs.next()) {
                 Usuario usuario = new Usuario();
@@ -127,28 +122,10 @@ public class UsuarioDao extends AbstractDao<Usuario> {
                 usuario.setNome(rs.getString("nome"));
                 usuario.setSenha(rs.getString("senha"));
                 usuarios.add(usuario);
-                tamanhoRs++;
             }
             return usuarios;
         } catch (SQLException e) {
             return null;
         }
-    }
-
-    public Usuario retornaUsuario() {
-        Usuario usuario = new Usuario();
-        try {
-            usuario.setId(rs.getInt("id"));
-            usuario.setLogin(rs.getString("login"));
-            usuario.setNome(rs.getString("nome"));
-            usuario.setSenha(rs.getString("senha"));
-        } catch (SQLException ex) {
-            return usuario;
-        }
-        return usuario;
-    }
-
-    public int retornaTamanhoRs() {
-        return tamanhoRs;
     }
 }

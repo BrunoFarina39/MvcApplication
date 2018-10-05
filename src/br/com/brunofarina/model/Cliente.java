@@ -37,12 +37,12 @@ public class Cliente extends AbstractModel {
         return super.getId();
     }
 
-    @Coluna(posicao = 0, nome = "Código")
+    @Coluna(posicao = 1, nome = "Nome")
+    @CampoObr
     public String getNome() {
         return nome;
     }
 
-    @CampoObr
     public void setNome(String nome) {
         this.nome = nome;
     }
